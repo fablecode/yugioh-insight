@@ -50,10 +50,15 @@
     <Compile Include="Domain\BanlistManager.cs" />
     <Compile Include="Domain\Client\IYugiohClient.cs" />
     <Compile Include="Domain\Client\YugiohClient.cs" />
-    <Compile Include="Enums\BanlistSection.cs" />
+    <Compile Include="Domain\IBanlistManager.cs" />
+    <Compile Include="Enums\BanlistSectionType.cs" />
     <Compile Include="Enums\BanlistType.cs" />
+    <Compile Include="Helpers\BanlistHelpers.cs" />
+    <Compile Include="Helpers\ContentResultHelpers.cs" />
+    <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Models\BanlistModels\Banlist.cs" />
     <Compile Include="Models\BanlistModels\BanlistArticleSummary.cs" />
+    <Compile Include="Models\BanlistModels\BanlistSection.cs" />
     <Compile Include="Models\BanlistModels\Card.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

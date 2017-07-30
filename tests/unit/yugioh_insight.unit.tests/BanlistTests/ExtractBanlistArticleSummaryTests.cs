@@ -3,6 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using yugioh_insight.Domain;
 using yugioh_insight.Enums;
+using yugioh_insight.Helpers;
 
 namespace yugioh_insight.unit.tests.BanlistTests
 {
@@ -17,7 +18,7 @@ namespace yugioh_insight.unit.tests.BanlistTests
             // Arrange
 
             // Act
-            var result = BanlistHelpers.ExtractBanlistDetails(titleText);
+            var result = BanlistHelpers.ExtractBanlistArticleDetails(titleText);
 
             // Assert
             result.BanlistType.Should().Be(expected);
@@ -31,7 +32,7 @@ namespace yugioh_insight.unit.tests.BanlistTests
             // Arrange
 
             // Act
-            var result = BanlistHelpers.ExtractBanlistDetails(titleText);
+            var result = BanlistHelpers.ExtractBanlistArticleDetails(titleText);
 
             // Assert
             result.StartDate.Should().Be(expected);

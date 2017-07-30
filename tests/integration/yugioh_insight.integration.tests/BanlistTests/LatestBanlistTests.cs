@@ -28,5 +28,18 @@ namespace yugioh_insight.integration.tests.BanlistTests
             // Assert
             result.Should().NotBeNull();
         }
+
+        [TestCase(BanlistType.Tcg)]
+        [TestCase(BanlistType.Ocg)]
+        public async Task Given_A_BanlistType_Banlist_Sections_Should_Not_Be_Empty(BanlistType banlistType)
+        {
+            // Arrange
+            // Act
+            var result = await _sut.LatestBanlist(banlistType);
+
+            // Assert
+            result.Sections.Should().NotBeEmpty();
+        }
+
     }
 }

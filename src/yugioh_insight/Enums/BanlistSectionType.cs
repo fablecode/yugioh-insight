@@ -1,6 +1,6 @@
 ﻿namespace yugioh_insight.Enums
 {
-    public enum BanlistSection
+    public enum BanlistSectionType
     {
         Forbidden,
         Unlimited,
