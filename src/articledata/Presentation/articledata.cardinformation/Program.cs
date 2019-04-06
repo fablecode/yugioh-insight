@@ -1,4 +1,5 @@
-﻿using articledata.application;
+﻿using System.Configuration;
+using articledata.application;
 using articledata.cardinformation.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,13 +27,22 @@ namespace articledata.cardinformation
                 })
                 .ConfigureAppConfiguration((hostContext, config) =>
                 {
-                    config.AddJsonFile("appsettings.json");
+                    config.AddJsonFile("appsettings.json", false, true);
                     config.AddCommandLine(args);
+                    
+                    if (hostContext.HostingEnvironment.IsDevelopment())
+                    {
+                        config.AddUserSecrets<AppSettings>();
+                    }
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddLogging();
+
                     services.AddScoped<IJob, CardInformationJob>();
+                    services.Configure<AppSettings>(hostContext.Configuration.GetSection(nameof(AppSettings)));
+
+                    // hosted service
                     services.AddHostedService<CardInformationHostedService>();
 
                     services.AddApplicationServices();
@@ -50,5 +60,10 @@ namespace articledata.cardinformation
             }
 
         }
+    }
+
+    public class AppSettings
+    {
+        public string CronSchedule { get; set; }
     }
 }

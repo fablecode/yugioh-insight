@@ -7,6 +7,7 @@ using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
 using articledata.cardinformation.QuartzConfiguration;
+using Microsoft.Extensions.Options;
 
 namespace articledata.cardinformation.Services
 {
@@ -15,11 +16,18 @@ namespace articledata.cardinformation.Services
         public IServiceProvider Services { get; }
 
         private readonly ILogger<CardInformationHostedService> _logger;
+        private readonly IOptions<AppSettings> _options;
 
-        public CardInformationHostedService(IServiceProvider services, ILogger<CardInformationHostedService> logger)
+        public CardInformationHostedService
+        (
+            IServiceProvider services, 
+            ILogger<CardInformationHostedService> logger, 
+            IOptions<AppSettings> options
+        )
         {
             Services = services;
             _logger = logger;
+            _options = options;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
