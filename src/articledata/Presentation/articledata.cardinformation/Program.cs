@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.IO;
 using articledata.application;
 using articledata.cardinformation.Services;
 using Microsoft.Extensions.Configuration;
@@ -27,9 +28,15 @@ namespace articledata.cardinformation
                 })
                 .ConfigureAppConfiguration((hostContext, config) =>
                 {
+                    config.SetBasePath(Directory.GetCurrentDirectory());
                     config.AddJsonFile("appsettings.json", false, true);
                     config.AddCommandLine(args);
-                    
+
+                    if (hostContext.HostingEnvironment.IsEnvironment("Development"))
+                    {
+                        // code to be executed in development environment 
+
+                    }
                     if (hostContext.HostingEnvironment.IsDevelopment())
                     {
                         config.AddUserSecrets<AppSettings>();
@@ -37,6 +44,10 @@ namespace articledata.cardinformation
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
+                    if (hostContext.HostingEnvironment.IsDevelopment())
+                    {
+                    }
+
                     services.AddLogging();
 
                     services.AddScoped<IJob, CardInformationJob>();
