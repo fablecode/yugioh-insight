@@ -1,16 +1,14 @@
-﻿using System;
-using System.Configuration;
-using System.IO;
-using articledata.application;
+﻿using articledata.application;
+using articledata.application.Configuration;
+using articledata.cardinformation.QuartzConfiguration;
 using articledata.cardinformation.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Quartz;
+using System.IO;
 using System.Threading.Tasks;
-using articledata.application.Configuration;
-using articledata.cardinformation.QuartzConfiguration;
 
 namespace articledata.cardinformation
 {
