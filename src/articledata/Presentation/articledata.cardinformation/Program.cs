@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Quartz;
 using System.Threading.Tasks;
+using articledata.application.Configuration;
 using articledata.cardinformation.QuartzConfiguration;
 
 namespace articledata.cardinformation
@@ -39,7 +40,7 @@ namespace articledata.cardinformation
 
                     if (hostContext.HostingEnvironment.IsDevelopment())
                     {
-                        config.AddUserSecrets<AppSettings>();
+                        config.AddUserSecrets<Program>();
                     }
                 })
                 .ConfigureServices((hostContext, services) =>
@@ -67,10 +68,5 @@ namespace articledata.cardinformation
             }
 
         }
-    }
-
-    public class AppSettings
-    {
-        public string CronSchedule { get; set; }
     }
 }
