@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.IO;
 using articledata.application;
 using articledata.cardinformation.Services;
@@ -24,7 +25,11 @@ namespace articledata.cardinformation
                 })
                 .ConfigureHostConfiguration(config =>
                 {
-                    config.AddEnvironmentVariables();
+                    #if DEBUG
+                        config.AddEnvironmentVariables(prefix: "ASPNETCORE_");
+                    #else
+                        config.AddEnvironmentVariables();
+                    #endif
                 })
                 .ConfigureAppConfiguration((hostContext, config) =>
                 {
@@ -32,11 +37,6 @@ namespace articledata.cardinformation
                     config.AddJsonFile("appsettings.json", false, true);
                     config.AddCommandLine(args);
 
-                    if (hostContext.HostingEnvironment.IsEnvironment("Development"))
-                    {
-                        // code to be executed in development environment 
-
-                    }
                     if (hostContext.HostingEnvironment.IsDevelopment())
                     {
                         config.AddUserSecrets<AppSettings>();
@@ -44,10 +44,6 @@ namespace articledata.cardinformation
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    if (hostContext.HostingEnvironment.IsDevelopment())
-                    {
-                    }
-
                     services.AddLogging();
 
                     services.AddScoped<IJob, CardInformationJob>();

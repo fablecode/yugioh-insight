@@ -67,10 +67,15 @@ namespace articledata.cardinformation.Services
             // Trigger the job to run
             var trigger = TriggerBuilder.Create()
                 .WithIdentity("cardInformationTrigger", "triggerGroup")
+#if DEBUG
                 .StartNow()
                 .WithSimpleSchedule(x => x
                     .WithIntervalInSeconds(5)
                     .RepeatForever())
+#else
+                .StartNow()
+                .WithCronSchedule(_options.Value.CronSchedule)
+#endif
                 .Build();
 
             await scheduler.ScheduleJob(job, trigger, cancellationToken);
