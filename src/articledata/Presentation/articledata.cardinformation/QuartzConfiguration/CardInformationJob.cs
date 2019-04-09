@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using articledata.application.ScheduledTasks.CardInformation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Quartz;
@@ -15,9 +17,15 @@ namespace articledata.cardinformation.QuartzConfiguration
             _mediator = mediator;
             _logger = logger;
         }
-        public Task Execute(IJobExecutionContext context)
+        public async Task Execute(IJobExecutionContext context)
         {
-            return Task.Run(() => _logger.LogInformation("Hello, Job executed"));
+            const int pageSize = 500;
+            const string tcgCards = "TCG cards";
+            const string ocgCards = "OCG cards";
+
+            var categories = new List<string> { tcgCards, ocgCards };
+
+            await _mediator.Send(new CardInformationTask { Categories = categories, PageSize = pageSize });
         }
     }
 }
