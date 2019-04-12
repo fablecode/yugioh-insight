@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using articledata.domain.ArticleList.Processor;
+using articledata.tests.core;
 using AutoFixture;
 using FluentAssertions;
 using NSubstitute;
@@ -13,6 +14,7 @@ using wikia.Models.Article.AlphabeticalList;
 namespace articledata.domain.unit.tests
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class ArticleCategoryDataSourceTests
     {
         private IWikiArticleList _articleList;
