@@ -6,12 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.2" />
-    <PackageReference Include="MediatR" Version="6.0.0" />
-    <PackageReference Include="wikia.core" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\articledata.core\articledata.core.csproj" />
+    <ProjectReference Include="..\..\Domain\articledata.domain\articledata.domain.csproj" />
   </ItemGroup>
 
 </Project>

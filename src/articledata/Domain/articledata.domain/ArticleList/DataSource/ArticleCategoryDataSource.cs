@@ -5,7 +5,7 @@ using wikia.Api;
 using wikia.Models.Article;
 using wikia.Models.Article.AlphabeticalList;
 
-namespace articledata.domain.ArticleList.Processor
+namespace articledata.domain.ArticleList.DataSource
 {
     public class ArticleCategoryDataSource : IArticleCategoryDataSource
     {

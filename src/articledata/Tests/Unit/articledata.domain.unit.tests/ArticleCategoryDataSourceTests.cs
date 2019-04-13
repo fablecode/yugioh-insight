@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
-using articledata.domain.ArticleList.Processor;
+using articledata.domain.ArticleList.DataSource;
 using articledata.tests.core;
 using AutoFixture;
 using FluentAssertions;
@@ -54,7 +54,7 @@ namespace articledata.domain.unit.tests
         }
 
         [Test]
-        public async Task Given_Batches_Of_UnexpandedArticle_Should_Process_All_Batches()
+        public async Task Given_Batches_Of_UnexpandedArticles_Should_Process_All_Batches()
         {
             // Arrange
             const int expected = 5;
@@ -84,7 +84,7 @@ namespace articledata.domain.unit.tests
                 );
 
             // Act
-            await _sut.Producer("a category", 500, articleBatchBufferBlock);
+            await _sut.Producer("category", 500, articleBatchBufferBlock);
 
 
             // Assert

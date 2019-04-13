@@ -6,8 +6,8 @@ using System;
 using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
-using articledata.application.Configuration;
 using articledata.cardinformation.QuartzConfiguration;
+using articledata.domain.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace articledata.cardinformation.Services

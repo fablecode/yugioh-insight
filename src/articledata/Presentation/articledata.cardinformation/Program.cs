@@ -1,5 +1,4 @@
 ﻿using articledata.application;
-using articledata.application.Configuration;
 using articledata.cardinformation.QuartzConfiguration;
 using articledata.cardinformation.Services;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Quartz;
 using System.IO;
 using System.Threading.Tasks;
+using articledata.domain.Configuration;
 
 namespace articledata.cardinformation
 {
