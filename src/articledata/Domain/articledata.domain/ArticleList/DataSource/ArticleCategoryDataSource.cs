@@ -24,7 +24,7 @@ namespace articledata.domain.ArticleList.DataSource
                 throw new ArgumentException(nameof(targetBlock));
 
 
-            var nextBatch = await _articleList.AlphabeticalList(new ArticleListRequestParameters { Category = Uri.EscapeDataString(category), Limit = pageSize });
+            var nextBatch = await _articleList.AlphabeticalList(new ArticleListRequestParameters { Category = category, Limit = pageSize });
 
             bool isNextBatchAvailable;
 

@@ -1,4 +1,4 @@
-﻿namespace articledata.domain.Configuration
+﻿namespace articledata.application.Configuration
 {
     public class AppSettings
     {

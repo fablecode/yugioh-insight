@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using articledata.domain.mo;
+using articledata.core.ArticleList.Processor;
+using articledata.core.Models;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace articledata.domain.ArticleList.Processor

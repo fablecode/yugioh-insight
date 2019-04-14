@@ -6,8 +6,8 @@ using System;
 using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
+using articledata.application.Configuration;
 using articledata.cardinformation.QuartzConfiguration;
-using articledata.domain.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace articledata.cardinformation.Services
@@ -70,9 +70,9 @@ namespace articledata.cardinformation.Services
                 .WithIdentity("cardInformationTrigger", "triggerGroup")
 #if DEBUG
                 .StartNow()
-                .WithSimpleSchedule(x => x
-                    .WithIntervalInSeconds(5)
-                    .RepeatForever())
+                //.WithSimpleSchedule(x => x
+                //    .WithIntervalInSeconds(5)
+                //    .RepeatForever())
 #else
                 .StartNow()
                 .WithCronSchedule(_options.Value.CronSchedule)

@@ -1,10 +1,11 @@
 ﻿using articledata.domain.ArticleList.Processor;
-using articledata.domain.mo;
 using articledata.tests.core;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using articledata.core.ArticleList.Processor;
+using articledata.core.Models;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace articledata.domain.unit.tests

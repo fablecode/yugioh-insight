@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using articledata.domain.mo;
+using articledata.core.Models;
 using wikia.Models.Article.AlphabeticalList;
 
-namespace articledata.domain.ArticleList.Processor
+namespace articledata.core.ArticleList.Processor
 {
     public interface IArticleProcessor
     {

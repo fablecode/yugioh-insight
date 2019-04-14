@@ -1,7 +1,7 @@
 ﻿using System;
 using wikia.Models.Article.AlphabeticalList;
 
-namespace articledata.domain.Exceptions
+namespace articledata.core.Exceptions
 {
     public class ArticleException
     {

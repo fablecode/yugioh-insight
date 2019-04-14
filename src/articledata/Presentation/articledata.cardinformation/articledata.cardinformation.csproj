@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Application\articledata.application\articledata.application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\articledata.infrastructure\articledata.infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,8 +1,7 @@
-﻿using articledata.domain.ArticleList.DataSource;
-using articledata.domain.Exceptions;
+﻿using articledata.core.Exceptions;
 using wikia.Models.Article.AlphabeticalList;
 
-namespace articledata.domain.mo
+namespace articledata.core.Models
 {
     public class ArticleTaskResult
     {

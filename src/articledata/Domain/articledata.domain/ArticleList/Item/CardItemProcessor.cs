@@ -1,34 +1,38 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using articledata.core.ArticleList.Processor;
 using articledata.core.Constants;
-using articledata.domain.ArticleList.Processor;
-using articledata.domain.Configuration;
-using articledata.domain.mo;
-using articledata.domain.WebPages.Cards;
-using Microsoft.Extensions.Options;
+using articledata.core.Exceptions;
+using articledata.core.Models;
+using articledata.domain.Services.Messaging.Cards;
+using System;
+using System.Threading.Tasks;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace articledata.domain.ArticleList.Item
 {
     public class CardItemProcessor : IArticleItemProcessor
     {
-        private readonly IOptions<AppSettings> _settings;
-        private readonly ICardWebPage _cardWebPage;
+        private readonly ICardArticleQueue _cardArticleQueue;
 
-        public CardItemProcessor(IOptions<AppSettings> settings, ICardWebPage cardWebPage)
+        public CardItemProcessor(ICardArticleQueue cardArticleQueue)
         {
-            _settings = settings;
-            _cardWebPage = cardWebPage;
+            _cardArticleQueue = cardArticleQueue;
         }
-        public Task<ArticleTaskResult> ProcessItem(UnexpandedArticle item)
+        public async Task<ArticleTaskResult> ProcessItem(UnexpandedArticle item)
         {
-            //var response = new ArticleTaskResult { Article = item };
+            var articleTaskResult = new ArticleTaskResult { Article = item };
 
-            //var yugiohCard = _cardWebPage.GetYugiohCard(new Uri(new Uri(_settings.Value.WikiaDomainUrl), item.Url));
+            try
+            {
+                await _cardArticleQueue.Publish(item);
 
-            //return response;
+                articleTaskResult.IsSuccessfullyProcessed = true;
+            }
+            catch (Exception ex)
+            {
+                articleTaskResult.Failed = new ArticleException{ Article = item, Exception = ex};
+            }
 
-            throw new NotImplementedException();
+            return articleTaskResult;
         }
 
         public bool Handles(string category)
