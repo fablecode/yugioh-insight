@@ -1,17 +1,13 @@
-﻿using articledata.domain.Contracts;
-using GreenPipes;
-using MassTransit;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using System.Reflection;
-using articledata.application.ScheduledTasks.CardInformation;
+﻿using articledata.application.ScheduledTasks.CardInformation;
 using articledata.core.ArticleList.Processor;
 using articledata.domain.ArticleList.DataSource;
 using articledata.domain.ArticleList.Item;
 using articledata.domain.ArticleList.Processor;
 using FluentValidation;
-using RabbitMQ.Client;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using System.Reflection;
 using wikia.Api;
 
 namespace articledata.application
@@ -22,7 +18,6 @@ namespace articledata.application
         {
             services
                 .AddCqrs()
-                .AddMassTransitConfiguration()
                 .AddValidation()
                 .AddDomainServices();
 
@@ -49,39 +44,6 @@ namespace articledata.application
             var appSettings = services.BuildServiceProvider().GetService<IOptions<Configuration.AppSettings>>();
 
             services.AddSingleton<IWikiArticleList>(new WikiArticleList(appSettings.Value.WikiaDomainUrl));
-
-            return services;
-        }
-
-        private static IServiceCollection AddMassTransitConfiguration(this IServiceCollection services)
-        {
-            var rabbitMqSettings = services.BuildServiceProvider().GetService<IOptions<Configuration.RabbitMqSettings>>();
-
-            // Register MassTransit
-            services.AddMassTransit(x =>
-            {
-                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
-                {
-                    var host = cfg.Host(rabbitMqSettings.Value.Host, h =>
-                    {
-                        h.Username(rabbitMqSettings.Value.Username);
-                        h.Password(rabbitMqSettings.Value.Password);
-                    });
-
-                    cfg.ReceiveEndpoint(host, "card-article", e =>
-                    {
-                        e.PrefetchCount = 16;
-                        e.UseMessageRetry(c => c.Interval(2, 100));
-
-                        EndpointConvention.Map<ISubmitArticle>(e.InputAddress);
-                    });
-
-                    // or, configure the endpoints by convention
-                    cfg.ConfigureEndpoints(provider);
-                }));
-
-                //x.AddRequestClient<ISubmitArticle>();
-            });
 
             return services;
         }

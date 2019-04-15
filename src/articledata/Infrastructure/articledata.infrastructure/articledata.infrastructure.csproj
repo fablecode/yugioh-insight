@@ -6,9 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.2" />
-    <PackageReference Include="MassTransit" Version="5.3.2" />
-    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="5.3.2" />
-    <PackageReference Include="MassTransit.RabbitMQ" Version="5.3.2" />
+    <PackageReference Include="RabbitMQ.Client" Version="5.1.0" />
     <PackageReference Include="wikia.core" Version="1.0.4" />
   </ItemGroup>
 

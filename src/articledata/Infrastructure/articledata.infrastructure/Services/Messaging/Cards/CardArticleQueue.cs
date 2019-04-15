@@ -1,21 +1,16 @@
-﻿using articledata.domain.Contracts;
+﻿using System.Collections.Generic;
+using articledata.domain.Contracts;
 using articledata.domain.Services.Messaging.Cards;
-using MassTransit;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace articledata.infrastructure.Services.Messaging.Cards
 {
     public class CardArticleQueue : ICardArticleQueue
     {
-        private readonly IBus _bus;
-
-        public CardArticleQueue(IBus bus)
-        {
-            _bus = bus;
-        }
-
-        public async Task Publish(UnexpandedArticle article)
+        public Task Publish(UnexpandedArticle article)
         {
             var messageToBeSent = new SubmitArticle
             {
@@ -24,7 +19,32 @@ namespace articledata.infrastructure.Services.Messaging.Cards
                 Url = article.Url
             };
 
-            await _bus.Publish(messageToBeSent);
+            var messageBodyBytes = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(messageToBeSent));
+
+            var factory = new ConnectionFactory() { HostName = "localhost" };
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
+            {
+                var props = channel.CreateBasicProperties();
+                props.ContentType = "application/json";
+                props.DeliveryMode = 2;
+
+                props.Headers = new Dictionary<string, object>
+                {
+                    {"message-type", "cardarticle"},
+                    { "x-match", "all"}
+                };
+
+                channel.BasicPublish
+                (
+                    "yugioh.headers.card",
+                    "", 
+                    props,
+                    messageBodyBytes
+                );
+            }
+
+            return Task.CompletedTask;
         }
     }
 }
