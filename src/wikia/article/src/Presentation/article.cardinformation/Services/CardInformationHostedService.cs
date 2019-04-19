@@ -7,6 +7,8 @@ using System;
 using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
+using article.application.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace article.cardinformation.Services
 {
@@ -14,15 +16,18 @@ namespace article.cardinformation.Services
     {
         public IServiceProvider Services { get; }
 
+        private readonly IOptions<AppSettings> _options;
         private readonly ILogger<CardInformationHostedService> _logger;
 
         public CardInformationHostedService
         (
-            IServiceProvider services, 
+            IServiceProvider services,
+            IOptions<AppSettings> options,
             ILogger<CardInformationHostedService> logger
         )
         {
             Services = services;
+            _options = options;
             _logger = logger;
         }
 
