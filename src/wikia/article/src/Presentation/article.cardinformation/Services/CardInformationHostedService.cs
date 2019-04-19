@@ -1,14 +1,12 @@
-﻿using System;
+﻿using article.cardinformation.QuartzConfiguration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Quartz;
+using Quartz.Impl;
+using System;
 using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
-using article.application.Configuration;
-using article.cardinformation.QuartzConfiguration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Quartz;
-using Quartz.Impl;
 
 namespace article.cardinformation.Services
 {
@@ -17,18 +15,15 @@ namespace article.cardinformation.Services
         public IServiceProvider Services { get; }
 
         private readonly ILogger<CardInformationHostedService> _logger;
-        private readonly IOptions<AppSettings> _options;
 
         public CardInformationHostedService
         (
             IServiceProvider services, 
-            ILogger<CardInformationHostedService> logger, 
-            IOptions<AppSettings> options
+            ILogger<CardInformationHostedService> logger
         )
         {
             Services = services;
             _logger = logger;
-            _options = options;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -70,9 +65,6 @@ namespace article.cardinformation.Services
                 .WithIdentity("cardInformationTrigger", "triggerGroup")
 #if DEBUG
                 .StartNow()
-                //.WithSimpleSchedule(x => x
-                //    .WithIntervalInSeconds(5)
-                //    .RepeatForever())
 #else
                 .StartNow()
                 .WithCronSchedule(_options.Value.CronSchedule)

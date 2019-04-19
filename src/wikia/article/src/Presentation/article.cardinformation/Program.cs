@@ -37,10 +37,9 @@ namespace article.cardinformation
                     config.AddJsonFile("appsettings.json", false, true);
                     config.AddCommandLine(args);
 
-                    if (hostContext.HostingEnvironment.IsDevelopment())
-                    {
+                    #if DEBUG
                         config.AddUserSecrets<Program>();
-                    }
+                    #endif
                 })
                 .ConfigureServices((hostContext, services) =>
                 {

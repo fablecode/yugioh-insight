@@ -1,4 +1,5 @@
-﻿using article.domain.Services.Messaging.Cards;
+﻿using article.domain;
+using article.domain.Services.Messaging.Cards;
 using article.infrastructure.Services.Messaging.Cards;
 using Microsoft.Extensions.DependencyInjection;
 

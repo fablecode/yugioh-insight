@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using article.application.ScheduledTasks.CardInformation;
+﻿using article.application.ScheduledTasks.CardInformation;
 using article.core.ArticleList.Processor;
 using article.domain.ArticleList.DataSource;
 using article.domain.ArticleList.Item;
@@ -8,6 +7,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System.Reflection;
 using wikia.Api;
 
 namespace article.application
