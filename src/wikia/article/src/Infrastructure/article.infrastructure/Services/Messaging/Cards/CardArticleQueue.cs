@@ -1,4 +1,5 @@
-﻿using article.application.Configuration;
+﻿using System;
+using article.application.Configuration;
 using article.core.Models;
 using article.domain.Services.Messaging.Cards;
 using Microsoft.Extensions.Options;
@@ -13,10 +14,12 @@ namespace article.infrastructure.Services.Messaging.Cards
     public class CardArticleQueue : ICardArticleQueue
     {
         private readonly IOptions<RabbitMqSettings> _rabbitMqConfig;
+        private readonly IOptions<AppSettings> _appSettings;
 
-        public CardArticleQueue(IOptions<RabbitMqSettings> rabbitMqConfig)
+        public CardArticleQueue(IOptions<RabbitMqSettings> rabbitMqConfig, IOptions<AppSettings> appSettings)
         {
             _rabbitMqConfig = rabbitMqConfig;
+            _appSettings = appSettings;
         }
 
         public Task Publish(UnexpandedArticle article)
@@ -25,7 +28,7 @@ namespace article.infrastructure.Services.Messaging.Cards
             {
                 Id = article.Id,
                 Title = article.Title,
-                Url = article.Url
+                Url = new Uri(new Uri(_appSettings.Value.WikiaDomainUrl), article.Url).AbsoluteUri
             };
 
             var messageBodyBytes = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(messageToBeSent));
