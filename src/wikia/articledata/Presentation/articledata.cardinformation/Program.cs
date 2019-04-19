@@ -1,16 +1,13 @@
-﻿using System.Configuration;
-using articledata.application;
-using articledata.cardinformation.QuartzConfiguration;
+﻿using articledata.application;
+using articledata.application.Configuration;
 using articledata.cardinformation.Services;
+using articledata.infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Quartz;
 using System.IO;
 using System.Threading.Tasks;
-using articledata.application.Configuration;
-using articledata.infrastructure;
 
 namespace articledata.cardinformation
 {
@@ -47,8 +44,6 @@ namespace articledata.cardinformation
                 {
                     services.AddLogging();
 
-                    services.AddScoped<IJob, CardInformationJob>();
-
                     //configuration settings
                     services.Configure<AppSettings>(hostContext.Configuration.GetSection(nameof(AppSettings)));
                     services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
@@ -68,7 +63,7 @@ namespace articledata.cardinformation
                 await host.StartAsync();
 
                 // Wait for the host to shutdown
-                await host.WaitForShutdownAsync();
+                //await host.WaitForShutdownAsync();
             }
 
         }

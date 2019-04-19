@@ -1,14 +1,13 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using articledata.application.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Quartz;
-using Quartz.Impl;
+using Microsoft.Extensions.Options;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using System;
-using System.Collections.Specialized;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using articledata.application.Configuration;
-using articledata.cardinformation.QuartzConfiguration;
-using Microsoft.Extensions.Options;
 
 namespace articledata.cardinformation.Services
 {
@@ -17,24 +16,49 @@ namespace articledata.cardinformation.Services
         public IServiceProvider Services { get; }
 
         private readonly ILogger<CardInformationHostedService> _logger;
-        private readonly IOptions<AppSettings> _options;
+        private readonly IOptions<RabbitMqSettings> _options;
+        private readonly IHost _host;
 
         public CardInformationHostedService
         (
             IServiceProvider services, 
             ILogger<CardInformationHostedService> logger, 
-            IOptions<AppSettings> options
+            IOptions<RabbitMqSettings> options,
+            IHost host
         )
         {
             Services = services;
             _logger = logger;
             _options = options;
+            _host = host;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Hosted Service is starting.");
-            await ConfigureQuartz(cancellationToken);
+            await StartConsumer();
+        }
+
+        private async Task StartConsumer()
+        {
+            var factory = new ConnectionFactory() {HostName = _options.Value.Host};
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
+            {
+                var consumer = new EventingBasicConsumer(channel);
+
+                consumer.Received += (model, ea) =>
+                {
+                    var body = ea.Body;
+                    var message = Encoding.UTF8.GetString(body);
+                    Console.WriteLine(" [x] Received {0}", message);
+                };
+
+                channel.BasicConsume(queue: "card-article",
+                    autoAck: true,
+                    consumer: consumer);
+
+                await _host.WaitForShutdownAsync();
+            }
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
@@ -43,47 +67,5 @@ namespace articledata.cardinformation.Services
 
             return Task.CompletedTask;
         }
-
-        #region private helpers
-
-        private async Task ConfigureQuartz(CancellationToken cancellationToken)
-        {
-            // construct a scheduler factory
-            var props = new NameValueCollection
-            {
-                {"quartz.serializer.type", "binary"}
-            };
-            var factory = new StdSchedulerFactory(props);
-
-            // get a scheduler
-            var scheduler = await factory.GetScheduler(cancellationToken);
-            scheduler.JobFactory = new CardInformationJobFactory(Services);
-            await scheduler.Start(cancellationToken);
-
-            // define the job
-            var job = JobBuilder.Create<CardInformationJob>()
-                .WithIdentity("cardInformationJob", "jobGroup")
-                .Build();
-
-            // Trigger the job to run
-            var trigger = TriggerBuilder.Create()
-                .WithIdentity("cardInformationTrigger", "triggerGroup")
-#if DEBUG
-                .StartNow()
-                //.WithSimpleSchedule(x => x
-                //    .WithIntervalInSeconds(5)
-                //    .RepeatForever())
-#else
-                .StartNow()
-                .WithCronSchedule(_options.Value.CronSchedule)
-#endif
-                .Build();
-
-            await scheduler.ScheduleJob(job, trigger, cancellationToken);
-
-            await Task.CompletedTask;
-        }
-
-        #endregion
     }
 }
