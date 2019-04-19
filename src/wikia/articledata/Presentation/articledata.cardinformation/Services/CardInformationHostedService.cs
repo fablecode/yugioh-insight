@@ -1,6 +1,6 @@
 ﻿using articledata.application.Configuration;
+using MediatR;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -8,6 +8,7 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using articledata.application.ScheduledTasks.CardInformation;
 
 namespace articledata.cardinformation.Services
 {
@@ -15,21 +16,21 @@ namespace articledata.cardinformation.Services
     {
         public IServiceProvider Services { get; }
 
-        private readonly ILogger<CardInformationHostedService> _logger;
         private readonly IOptions<RabbitMqSettings> _options;
+        private readonly IMediator _mediator;
         private readonly IHost _host;
 
         public CardInformationHostedService
         (
             IServiceProvider services, 
-            ILogger<CardInformationHostedService> logger, 
             IOptions<RabbitMqSettings> options,
+            IMediator mediator,
             IHost host
         )
         {
             Services = services;
-            _logger = logger;
             _options = options;
+            _mediator = mediator;
             _host = host;
         }
 
@@ -46,11 +47,11 @@ namespace articledata.cardinformation.Services
             {
                 var consumer = new EventingBasicConsumer(channel);
 
-                consumer.Received += (model, ea) =>
+                consumer.Received += async (model, ea) =>
                 {
                     var body = ea.Body;
                     var message = Encoding.UTF8.GetString(body);
-                    Console.WriteLine(" [x] Received {0}", message);
+                    await _mediator.Send(new CardInformationTask { Message = message });
                 };
 
                 channel.BasicConsume(queue: "card-article",
@@ -63,7 +64,7 @@ namespace articledata.cardinformation.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Hosted Service is stopping.");
+            Console.WriteLine("Hosted Service is stopping.");
 
             return Task.CompletedTask;
         }

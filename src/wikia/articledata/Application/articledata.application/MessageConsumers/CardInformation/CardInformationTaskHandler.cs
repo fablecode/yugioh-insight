@@ -24,9 +24,9 @@ namespace articledata.application.ScheduledTasks.CardInformation
 
             if (validationResults.IsValid)
             {
-                var results = await _articleCategoryProcessor.Process(request.Categories, request.PageSize);
+                //var results = await _articleCategoryProcessor.Process(request.Categories, request.PageSize);
 
-                cardInformationTaskResult.ArticleTaskResults = results;
+                //cardInformationTaskResult.ArticleTaskResults = results;
             }
 
             return cardInformationTaskResult;

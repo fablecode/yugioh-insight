@@ -36,8 +36,6 @@ namespace articledata.domain.ArticleList.Processor
                 }
                 catch (Exception ex)
                 {
-                    //_logger.Error("{1} | ' {0} '", article.Title, category);
-                    //_logger.Error(ex);
                     response.Failed.Add(new ArticleException { Article = article, Exception = ex });
                 }
             }

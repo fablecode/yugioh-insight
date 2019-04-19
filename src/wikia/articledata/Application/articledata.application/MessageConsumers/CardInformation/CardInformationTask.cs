@@ -5,8 +5,8 @@ namespace articledata.application.ScheduledTasks.CardInformation
 {
     public class CardInformationTask : IRequest<CardInformationTaskResult>
     {
-        public List<string> Categories { get; set; }
+        public Dictionary<string, object> Headers { get; set; }
 
-        public int PageSize { get; set; }
+        public string Message { get; set; }
     }
 }

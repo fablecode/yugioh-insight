@@ -8,13 +8,13 @@ namespace articledata.application.ScheduledTasks.CardInformation
 
         public CardInformationTaskValidator()
         {
-            RuleFor(ci => ci.Categories)
-                .NotNull()
-                .NotEmpty();
+            //RuleFor(ci => ci.Categories)
+            //    .NotNull()
+            //    .NotEmpty();
 
-            RuleFor(ci => ci.PageSize)
-                .GreaterThan(0)
-                .LessThanOrEqualTo(MaxPageSize);
+            //RuleFor(ci => ci.PageSize)
+            //    .GreaterThan(0)
+            //    .LessThanOrEqualTo(MaxPageSize);
         }
     }
 }
