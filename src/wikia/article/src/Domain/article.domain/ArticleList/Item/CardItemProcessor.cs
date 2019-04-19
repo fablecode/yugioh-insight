@@ -19,6 +19,9 @@ namespace article.domain.ArticleList.Item
         }
         public async Task<ArticleTaskResult> ProcessItem(UnexpandedArticle item)
         {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+
             var articleTaskResult = new ArticleTaskResult { Article = item };
 
             try
