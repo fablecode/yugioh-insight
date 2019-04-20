@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using System.Threading;
+using carddata.core.Helpers;
 using carddata.domain.WebPages.Cards;
 using HtmlAgilityPack;
 
