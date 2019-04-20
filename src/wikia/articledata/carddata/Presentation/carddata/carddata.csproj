@@ -27,6 +27,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Application\carddata.application\carddata.application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\carddata.infrastructure\carddata.infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 

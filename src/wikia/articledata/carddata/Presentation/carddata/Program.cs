@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using articledata.cardinformation.Services;
 using carddata.application;
 using carddata.application.Configuration;
+using carddata.infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,24 +35,22 @@ namespace carddata
                     config.AddJsonFile("appsettings.json", false, true);
                     config.AddCommandLine(args);
 
-                    if (hostContext.HostingEnvironment.IsDevelopment())
-                    {
+                    #if DEBUG
                         config.AddUserSecrets<Program>();
-                    }
+                    #endif
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddLogging();
 
                     //configuration settings
-                    services.Configure<AppSettings>(hostContext.Configuration.GetSection(nameof(AppSettings)));
                     services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
 
                     // hosted service
                     services.AddHostedService<CardDataHostedService>();
 
                     services.AddApplicationServices();
-                    //services.AddInfrastructureServices();
+                    services.AddInfrastructureServices();
                 })
                 .UseConsoleLifetime()
                 .Build();

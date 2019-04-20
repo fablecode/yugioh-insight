@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\carddata.application\carddata.application.csproj" />
     <ProjectReference Include="..\..\Domain\carddata.domain\carddata.domain.csproj" />
   </ItemGroup>
 

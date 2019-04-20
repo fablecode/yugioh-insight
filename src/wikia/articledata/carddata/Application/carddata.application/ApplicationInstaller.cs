@@ -1,13 +1,10 @@
-﻿using System.Reflection;
-using carddata.application.Configuration;
-using carddata.application.MessageConsumers.CardInformation;
+﻿using carddata.application.MessageConsumers.CardInformation;
 using carddata.core.Processor;
 using carddata.domain.Processor;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using wikia.Api;
+using System.Reflection;
 
 namespace carddata.application
 {
@@ -32,11 +29,8 @@ namespace carddata.application
 
         private static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
-            services.AddSingleton<IArticleProcessor, ArticleProcessor>();
-
-            var appSettings = services.BuildServiceProvider().GetService<IOptions<AppSettings>>();
-
-            services.AddSingleton<IWikiArticleList>(new WikiArticleList(appSettings.Value.WikiaDomainUrl));
+            services.AddTransient<IArticleProcessor, ArticleProcessor>();
+            services.AddSingleton<IArticleDataFlow, ArticleDataFlow>();
 
             return services;
         }
