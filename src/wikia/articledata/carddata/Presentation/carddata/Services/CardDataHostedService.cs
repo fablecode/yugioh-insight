@@ -45,6 +45,8 @@ namespace articledata.cardinformation.Services
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
+                channel.BasicQos(0, 1, false);
+
                 var consumer = new EventingBasicConsumer(channel);
 
                 consumer.Received += async (model, ea) =>
@@ -52,11 +54,14 @@ namespace articledata.cardinformation.Services
                     var body = ea.Body;
                     var message = Encoding.UTF8.GetString(body);
 
-                    await _mediator.Send(new CardInformationConsumer { Message = message });
+                    var result = await _mediator.Send(new CardInformationConsumer { Message = message });
+
+                    if(result.ArticleConsumerResult.IsSuccessfullyProcessed)
+                        channel.BasicAck(ea.DeliveryTag, false);
                 };
 
                 channel.BasicConsume(queue: "card-article",
-                    autoAck: true,
+                    autoAck: false,
                     consumer: consumer);
 
                 await _host.WaitForShutdownAsync();

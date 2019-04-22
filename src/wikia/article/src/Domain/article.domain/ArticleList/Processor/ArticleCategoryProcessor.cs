@@ -36,7 +36,7 @@ namespace article.domain.ArticleList.Processor
         {
             var response = new ArticleBatchTaskResult { Category = category };
 
-            var processorCount = 2;
+            const int processorCount = 2;
 
             // Pipeline members
             var articleBatchBufferBlock = new BufferBlock<UnexpandedArticle[]>();

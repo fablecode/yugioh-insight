@@ -5,6 +5,6 @@ namespace carddata.domain.Services.Messaging
 {
     public interface IYugiohCardQueue
     {
-        Task Publish(YugiohCard yugiohCard);
+        Task<YugiohCardCompletion> Publish(ArticleProcessed articleProcessed);
     }
 }

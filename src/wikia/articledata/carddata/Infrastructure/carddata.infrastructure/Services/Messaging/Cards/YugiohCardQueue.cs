@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using carddata.application.Configuration;
+﻿using carddata.application.Configuration;
+using carddata.core.Exceptions;
 using carddata.core.Models;
 using carddata.domain.Services.Messaging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace carddata.infrastructure.Services.Messaging.Cards
 {
@@ -18,30 +18,44 @@ namespace carddata.infrastructure.Services.Messaging.Cards
         {
             _rabbitMqConfig = rabbitMqConfig;
         }
-        public Task Publish(YugiohCard yugiohCard)
+
+        public Task<YugiohCardCompletion> Publish(ArticleProcessed articleProcessed)
         {
-            var messageBodyBytes = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(yugiohCard));
+            var yugiohCardCompletion = new YugiohCardCompletion();
+            yugiohCardCompletion.Card = articleProcessed.Card;
+            yugiohCardCompletion.Article = articleProcessed.Article;
 
-            var factory = new ConnectionFactory() { HostName = _rabbitMqConfig.Value.Host };
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
+            try
             {
-                var props = channel.CreateBasicProperties();
-                props.ContentType = _rabbitMqConfig.Value.ContentType;
-                props.DeliveryMode = _rabbitMqConfig.Value.Exchanges[RabbitMqExchangeConstants.YugiohHeadersData].PersistentMode; ;
+                var messageBodyBytes = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(articleProcessed.Card));
 
-                props.Headers = _rabbitMqConfig.Value.Exchanges[RabbitMqExchangeConstants.YugiohHeadersData].Headers.ToDictionary(k => k.Key, k => (object)k.Value);
+                var factory = new ConnectionFactory() { HostName = _rabbitMqConfig.Value.Host };
+                using (var connection = factory.CreateConnection())
+                using (var channel = connection.CreateModel())
+                {
+                    var props = channel.CreateBasicProperties();
+                    props.ContentType = _rabbitMqConfig.Value.ContentType;
+                    props.DeliveryMode = _rabbitMqConfig.Value.Exchanges[RabbitMqExchangeConstants.YugiohHeadersData].PersistentMode;
 
-                channel.BasicPublish
-                (
-                    RabbitMqExchangeConstants.YugiohHeadersData,
-                    "", 
-                    props,
-                    messageBodyBytes
-                );
+                    props.Headers = _rabbitMqConfig.Value.Exchanges[RabbitMqExchangeConstants.YugiohHeadersData].Headers.ToDictionary(k => k.Key, k => (object)k.Value);
+
+                    channel.BasicPublish
+                    (
+                        RabbitMqExchangeConstants.YugiohHeadersData,
+                        "",
+                        props,
+                        messageBodyBytes
+                    );
+                }
+
+                yugiohCardCompletion.IsSuccessful = true;
+            }
+            catch (System.Exception ex)
+            {
+                yugiohCardCompletion.Exception = new YugiohCardException { Card = articleProcessed.Card, Exception = ex };
             }
 
-            return Task.CompletedTask;
+            return Task.FromResult(yugiohCardCompletion);
         }
     }
 }

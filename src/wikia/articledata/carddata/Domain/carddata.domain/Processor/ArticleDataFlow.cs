@@ -1,12 +1,12 @@
-﻿using System;
+﻿using carddata.core.Models;
+using carddata.core.Processor;
+using carddata.domain.Services.Messaging;
+using carddata.domain.WebPages.Cards;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
-using carddata.core.Models;
-using carddata.core.Processor;
-using carddata.domain.Services.Messaging;
-using carddata.domain.WebPages.Cards;
 
 namespace carddata.domain.Processor
 {
@@ -15,8 +15,9 @@ namespace carddata.domain.Processor
         private readonly ICardWebPage _cardWebPage;
         private readonly IYugiohCardQueue _yugiohCardQueue;
         private readonly BufferBlock<Article> _articleBufferBlock;
-        private readonly TransformBlock<Article, YugiohCard> _yugiohDataTransformBlock;
-        private ActionBlock<YugiohCard> _publishToQueueActionBlock;
+        private readonly TransformBlock<Article, ArticleProcessed> _yugiohDataTransformBlock;
+        private readonly TransformBlock<ArticleProcessed, YugiohCardCompletion> _yugiohCardPublishTransformBlock;
+        private readonly ActionBlock<YugiohCardCompletion> _publishToQueueActionBlock;
         private readonly ConcurrentDictionary<long, TaskCompletionSource<ArticleCompletion>> _jobs;
 
         public ArticleDataFlow(ICardWebPage cardWebPage, IYugiohCardQueue yugiohCardQueue)
@@ -26,34 +27,22 @@ namespace carddata.domain.Processor
 
             _jobs = new ConcurrentDictionary<long, TaskCompletionSource<ArticleCompletion>>();
 
-            // Dataflow options
+            // Data flow options
             var nonGreedy = new ExecutionDataflowBlockOptions { BoundedCapacity = Environment.ProcessorCount, MaxDegreeOfParallelism = Environment.ProcessorCount };
             var flowComplete = new DataflowLinkOptions { PropagateCompletion = true };
 
             // Pipeline members
-            var processorCount = Environment.ProcessorCount;
-
             _articleBufferBlock = new BufferBlock<Article>();
-            _yugiohDataTransformBlock = new TransformBlock<Article, YugiohCard>(article => _cardWebPage.GetYugiohCard(new Uri(article.Url)), nonGreedy);
-            _publishToQueueActionBlock = new ActionBlock<YugiohCard>(async yugiohCard =>
-                {
-                    await _yugiohCardQueue.Publish(yugiohCard);
-                },
-                // Specify a maximum degree of parallelism.
-                new ExecutionDataflowBlockOptions
-                {
-                    MaxDegreeOfParallelism = processorCount
-                });
+            _yugiohDataTransformBlock = new TransformBlock<Article, ArticleProcessed>(article => _cardWebPage.GetYugiohCard(article), nonGreedy);
+            _yugiohCardPublishTransformBlock = new TransformBlock<ArticleProcessed, YugiohCardCompletion>(articleProcessed => _yugiohCardQueue.Publish(articleProcessed), nonGreedy);
+            _publishToQueueActionBlock = new ActionBlock<YugiohCardCompletion>(FinishedProcessing);
 
             // Form the pipeline
             _articleBufferBlock.LinkTo(_yugiohDataTransformBlock, flowComplete);
-            _yugiohDataTransformBlock.LinkTo(_publishToQueueActionBlock, flowComplete);
-
-            // Mark the head of the pipeline as complete. The continuation tasks  
-            // propagate completion through the pipeline as each part of the  
-            // pipeline finishes.
-            _publishToQueueActionBlock.Completion.Wait();
+            _yugiohDataTransformBlock.LinkTo(_yugiohCardPublishTransformBlock, flowComplete);
+            _yugiohCardPublishTransformBlock.LinkTo(_publishToQueueActionBlock, flowComplete);
         }
+
 
         public async Task<ArticleCompletion> ProcessDataFlow(Article article)
         {
@@ -84,6 +73,22 @@ namespace carddata.domain.Processor
             var jobCompletionSource = new TaskCompletionSource<ArticleCompletion>();
             return new KeyValuePair<long, TaskCompletionSource<ArticleCompletion>>(id, jobCompletionSource);
         }
+
+        private void FinishedProcessing(YugiohCardCompletion yugiohCardCompletion)
+        {
+            _jobs.TryRemove(yugiohCardCompletion.Article.Id, out var job);
+
+            if (yugiohCardCompletion.IsSuccessful)
+            {
+                job.SetResult(new ArticleCompletion { IsSuccessful = true, Message = yugiohCardCompletion.Article });
+            }
+            else
+            {
+                var exceptionMessage = $"Card Article with id '{yugiohCardCompletion.Article.Id}' not processed.";
+                job.SetException(new Exception(exceptionMessage));
+            }
+        }
+
 
         #endregion
     }

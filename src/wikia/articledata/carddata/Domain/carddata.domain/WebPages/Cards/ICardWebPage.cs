@@ -8,6 +8,7 @@ namespace carddata.domain.WebPages.Cards
     {
         YugiohCard GetYugiohCard(string url);
         YugiohCard GetYugiohCard(Uri url);
+        ArticleProcessed GetYugiohCard(Article article);
         YugiohCard GetYugiohCard(HtmlDocument htmlDocument);
     }
 }

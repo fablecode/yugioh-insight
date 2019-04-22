@@ -17,6 +17,13 @@ namespace carddata.infrastructure.WebPages.Cards
             _htmlWebPage = htmlWebPage;
         }
 
+        public ArticleProcessed GetYugiohCard(Article article)
+        {
+            var card = GetYugiohCard(new Uri(article.Url));
+
+            return new ArticleProcessed {Article = article, Card = card};
+        }
+
         public YugiohCard GetYugiohCard(string url)
         {
             return GetYugiohCard(new Uri(url));
