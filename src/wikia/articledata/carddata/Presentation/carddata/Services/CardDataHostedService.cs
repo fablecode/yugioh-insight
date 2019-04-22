@@ -57,7 +57,13 @@ namespace articledata.cardinformation.Services
                     var result = await _mediator.Send(new CardInformationConsumer { Message = message });
 
                     if(result.ArticleConsumerResult.IsSuccessfullyProcessed)
+                    {
                         channel.BasicAck(ea.DeliveryTag, false);
+                    }
+                    else
+                    {
+                        channel.BasicNack(ea.DeliveryTag, false, false);
+                    }
                 };
 
                 channel.BasicConsume(queue: "card-article",
