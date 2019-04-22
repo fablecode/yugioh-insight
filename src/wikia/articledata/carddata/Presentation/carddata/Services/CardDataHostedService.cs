@@ -45,7 +45,7 @@ namespace articledata.cardinformation.Services
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.BasicQos(0, 1, false);
+                channel.BasicQos(0, 20, false);
 
                 var consumer = new EventingBasicConsumer(channel);
 
