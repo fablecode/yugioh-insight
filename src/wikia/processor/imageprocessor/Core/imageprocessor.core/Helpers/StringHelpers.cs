@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace cardprocessor.domain.Helpers
+namespace imageprocessor.core.Helpers
 {
     public static class StringHelpers
     {

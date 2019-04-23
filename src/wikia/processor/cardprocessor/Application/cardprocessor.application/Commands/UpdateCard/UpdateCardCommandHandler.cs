@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using cardprocessor.application.Commands.DownloadImage;
 using cardprocessor.application.Configuration;
 using cardprocessor.application.Models.Cards.Input;
 using cardprocessor.core.Models;
 using cardprocessor.core.Services;
-using cardprocessor.domain.Helpers;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace cardprocessor.application.Commands.UpdateCard
 {
@@ -58,7 +57,7 @@ namespace cardprocessor.application.Commands.UpdateCard
                         var downloadImageCommand = new DownloadImageCommand
                         {
                             RemoteImageUrl = request.Card.ImageUrl,
-                            ImageFileName = request.Card.Name.SanitizeFileName(),
+                            ImageFileName = request.Card.Name,
                             ImageFolderPath = _settings.Value.CardImageFolderPath
                         };
 

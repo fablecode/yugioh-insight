@@ -8,7 +8,6 @@ using cardprocessor.application.Configuration;
 using cardprocessor.application.Models.Cards.Input;
 using cardprocessor.core.Models;
 using cardprocessor.core.Services;
-using cardprocessor.domain.Helpers;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Options;
@@ -60,7 +59,7 @@ namespace cardprocessor.application.Commands.AddCard
                             var downloadImageCommand = new DownloadImageCommand
                             {
                                 RemoteImageUrl = request.Card.ImageUrl,
-                                ImageFileName = request.Card.Name.SanitizeFileName(),
+                                ImageFileName = request.Card.Name,
                                 ImageFolderPath = _settings.Value.CardImageFolderPath
                             };
 
