@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Core", "1. Core", "{6A80BE07-682A-45B6-8BD9-D6DABE468DBA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domain", "2. Domain", "{FEB03D9F-78B6-4C5F-997D-9A3AEE3C3F64}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Application", "3. Application", "{817B47E1-9AD3-4899-B208-7BB53E7F9001}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Infrastructure", "4. Infrastructure", "{44EB4934-EAB3-41CA-9628-5BB2BAB9E814}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Presentation", "5. Presentation", "{FB619D35-ACA0-4ACD-86B7-0B667DA238AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Tests", "6. Tests", "{0A3668AC-9013-48AF-96D2-F6C6EE49B82C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardprocessor.domain", "Domain\cardprocessor.domain\cardprocessor.domain.csproj", "{3AD7F17E-4A6A-42B5-BB12-040A668F161A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardprocessor.core", "Core\cardprocessor.core\cardprocessor.core.csproj", "{9F2331D5-2EDB-4884-8259-29B886561523}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardprocessor.application", "Application\cardprocessor.application\cardprocessor.application.csproj", "{932D5D1A-CE99-47E6-BDB7-45ACF1965ABE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardprocessor.infrastructure", "Infrastructure\cardprocessor.infrastructure\cardprocessor.infrastructure.csproj", "{B543E724-6A24-4F3E-8C62-AD567B39C9DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardprocessor", "Presentation\cardprocessor\cardprocessor.csproj", "{062DE426-E08D-4E4F-A1B1-1C4F1CC31001}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{E4314902-06AC-4EAB-BE11-105DC7EE3A91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardprocessor.application.unit.tests", "Tests\Unit\cardprocessor.application.unit.tests\cardprocessor.application.unit.tests.csproj", "{F7A940E5-7BB0-429A-8D7E-1A6ABB87F2F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardprocessor.tests.core", "Tests\cardprocessor.tests.core\cardprocessor.tests.core.csproj", "{88803496-71BC-4DF2-8816-AC3E4CBB6995}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3AD7F17E-4A6A-42B5-BB12-040A668F161A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AD7F17E-4A6A-42B5-BB12-040A668F161A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AD7F17E-4A6A-42B5-BB12-040A668F161A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AD7F17E-4A6A-42B5-BB12-040A668F161A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F2331D5-2EDB-4884-8259-29B886561523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F2331D5-2EDB-4884-8259-29B886561523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F2331D5-2EDB-4884-8259-29B886561523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F2331D5-2EDB-4884-8259-29B886561523}.Release|Any CPU.Build.0 = Release|Any CPU
+		{932D5D1A-CE99-47E6-BDB7-45ACF1965ABE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{932D5D1A-CE99-47E6-BDB7-45ACF1965ABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{932D5D1A-CE99-47E6-BDB7-45ACF1965ABE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{932D5D1A-CE99-47E6-BDB7-45ACF1965ABE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B543E724-6A24-4F3E-8C62-AD567B39C9DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B543E724-6A24-4F3E-8C62-AD567B39C9DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B543E724-6A24-4F3E-8C62-AD567B39C9DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B543E724-6A24-4F3E-8C62-AD567B39C9DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{062DE426-E08D-4E4F-A1B1-1C4F1CC31001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{062DE426-E08D-4E4F-A1B1-1C4F1CC31001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{062DE426-E08D-4E4F-A1B1-1C4F1CC31001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{062DE426-E08D-4E4F-A1B1-1C4F1CC31001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7A940E5-7BB0-429A-8D7E-1A6ABB87F2F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A940E5-7BB0-429A-8D7E-1A6ABB87F2F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A940E5-7BB0-429A-8D7E-1A6ABB87F2F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A940E5-7BB0-429A-8D7E-1A6ABB87F2F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88803496-71BC-4DF2-8816-AC3E4CBB6995}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88803496-71BC-4DF2-8816-AC3E4CBB6995}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88803496-71BC-4DF2-8816-AC3E4CBB6995}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88803496-71BC-4DF2-8816-AC3E4CBB6995}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3AD7F17E-4A6A-42B5-BB12-040A668F161A} = {FEB03D9F-78B6-4C5F-997D-9A3AEE3C3F64}
+		{9F2331D5-2EDB-4884-8259-29B886561523} = {6A80BE07-682A-45B6-8BD9-D6DABE468DBA}
+		{932D5D1A-CE99-47E6-BDB7-45ACF1965ABE} = {817B47E1-9AD3-4899-B208-7BB53E7F9001}
+		{B543E724-6A24-4F3E-8C62-AD567B39C9DE} = {44EB4934-EAB3-41CA-9628-5BB2BAB9E814}
+		{062DE426-E08D-4E4F-A1B1-1C4F1CC31001} = {FB619D35-ACA0-4ACD-86B7-0B667DA238AE}
+		{E4314902-06AC-4EAB-BE11-105DC7EE3A91} = {0A3668AC-9013-48AF-96D2-F6C6EE49B82C}
+		{F7A940E5-7BB0-429A-8D7E-1A6ABB87F2F9} = {E4314902-06AC-4EAB-BE11-105DC7EE3A91}
+		{88803496-71BC-4DF2-8816-AC3E4CBB6995} = {0A3668AC-9013-48AF-96D2-F6C6EE49B82C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B97028B4-8D50-4392-88E9-7441116C2394}
+	EndGlobalSection
+EndGlobal
