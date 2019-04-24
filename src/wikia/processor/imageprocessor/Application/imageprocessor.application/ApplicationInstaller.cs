@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 using FluentValidation;
 using imageprocessor.application.Commands.DownloadImage;
+using imageprocessor.core.Services;
+using imageprocessor.domain.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,7 +14,8 @@ namespace imageprocessor.application
         {
             services
                 .AddCqrs()
-                .AddValidation();
+                .AddValidation()
+                .AddDomainServices();
 
             return services;
         }
@@ -27,6 +30,12 @@ namespace imageprocessor.application
         private static IServiceCollection AddValidation(this IServiceCollection services)
         {
             services.AddTransient<IValidator<DownloadImageCommand>, DownloadImageCommandValidator>();
+
+            return services;
+        }
+        private static IServiceCollection AddDomainServices(this IServiceCollection services)
+        {
+            services.AddTransient<IFileSystemService, FileSystemService>();
 
             return services;
         }

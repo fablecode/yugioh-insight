@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\imageprocessor.core\imageprocessor.core.csproj" />
+    <ProjectReference Include="..\..\Domain\imageprocessor.domain\imageprocessor.domain.csproj" />
   </ItemGroup>
 
 
