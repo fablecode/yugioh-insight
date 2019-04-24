@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
+using imageprocessor.core.Helpers;
 using imageprocessor.core.Services;
 using MediatR;
 using MimeTypes;
@@ -28,6 +29,8 @@ namespace imageprocessor.application.Commands.DownloadImage
 
             if (validationResult.IsValid)
             {
+                request.ImageFileName = request.ImageFileName.SanitizeFileName();
+
                 var imageFileFullPathWithoutExtension = Path.Combine(request.ImageFolderPath, Path.GetFileNameWithoutExtension(request.ImageFileName));
 
                 var downloadedFileResult = await _fileSystemService.Download(request.RemoteImageUrl, imageFileFullPathWithoutExtension);
