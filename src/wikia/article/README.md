@@ -9,3 +9,4 @@ Queries the [Wikia Api](https://yugioh.fandom.com/api/v1/#!/Articles) for [Yu-Gi
 * [Onion Architecture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/) and [CQRS](https://martinfowler.com/bliki/CQRS.html).
 * [RabbitMq](https://www.rabbitmq.com/)
 * [Visual Studio Team Services](https://www.visualstudio.com/team-services/release-management/) for CI and deployment.
+* [Dataflow Blocks (Task Parallel Library)](https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/dataflow-task-parallel-library)
