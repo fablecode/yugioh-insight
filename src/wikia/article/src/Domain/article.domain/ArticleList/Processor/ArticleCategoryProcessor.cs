@@ -1,10 +1,9 @@
-﻿using System;
+﻿using article.core.ArticleList.DataSource;
+using article.core.ArticleList.Processor;
+using article.core.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
-using article.core.ArticleList.Processor;
-using article.core.Models;
-using article.domain.ArticleList.DataSource;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.ArticleList.Processor

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using article.core.ArticleList.DataSource;
 using article.domain.ArticleList.DataSource;
 using article.tests.core;
 using AutoFixture;

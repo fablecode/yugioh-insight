@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System.Reflection;
+using article.core.ArticleList.DataSource;
 using wikia.Api;
 
 namespace article.application

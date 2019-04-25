@@ -2,7 +2,7 @@
 using System.Threading.Tasks.Dataflow;
 using wikia.Models.Article.AlphabeticalList;
 
-namespace article.domain.ArticleList.DataSource
+namespace article.core.ArticleList.DataSource
 {
     public interface IArticleCategoryDataSource
     {

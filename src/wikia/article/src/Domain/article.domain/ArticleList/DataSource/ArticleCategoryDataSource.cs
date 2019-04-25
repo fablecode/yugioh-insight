@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using article.core.ArticleList.DataSource;
 using wikia.Api;
 using wikia.Models.Article;
 using wikia.Models.Article.AlphabeticalList;
