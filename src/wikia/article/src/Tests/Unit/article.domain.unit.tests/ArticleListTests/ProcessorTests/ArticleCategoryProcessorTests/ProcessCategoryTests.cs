@@ -35,15 +35,11 @@ namespace article.domain.unit.tests.ArticleListTests.ProcessorTests.ArticleCateg
             const string category = "category";
             const int pageSize = 10;
 
-            _articleBatchProcessor
-                .Process(Arg.Any<string>(), Arg.Any<UnexpandedArticle[]>())
-                .Returns(new ArticleBatchTaskResult());
-
             // Act
             await _sut.Process(category, pageSize);
 
             // Assert
-            await _articleCategoryDataSource.Received(expected).Producer(Arg.Is(category), Arg.Is(pageSize), Arg.Any<ITargetBlock<UnexpandedArticle[]>>());
+            await _articleCategoryDataSource.Received(expected).Producer(Arg.Any<string>(), Arg.Any<int>(), Arg.Any<BufferBlock<UnexpandedArticle[]>>());
         }
     }
 }
