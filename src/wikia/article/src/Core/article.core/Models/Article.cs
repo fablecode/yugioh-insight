@@ -1,4 +1,7 @@
-﻿namespace article.core.Models
+﻿using System;
+using wikia.Models.Article.AlphabeticalList;
+
+namespace article.core.Models
 {
     public class Article
     {

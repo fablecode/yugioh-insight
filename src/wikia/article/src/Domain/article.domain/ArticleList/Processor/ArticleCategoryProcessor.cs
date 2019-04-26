@@ -1,6 +1,7 @@
 ﻿using article.core.ArticleList.DataSource;
 using article.core.ArticleList.Processor;
 using article.core.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
@@ -31,58 +32,43 @@ namespace article.domain.ArticleList.Processor
             return results;
         }
 
-        public Task<ArticleBatchTaskResult> Process(string category, int pageSize)
+        public async Task<ArticleBatchTaskResult> Process(string category, int pageSize)
         {
             var response = new ArticleBatchTaskResult { Category = category };
 
-            const int processorCount = 2;
+            // Data flow options
+            var processorCount = Environment.ProcessorCount / 2;
+
+            var nonGreedy = new ExecutionDataflowBlockOptions { BoundedCapacity = processorCount, MaxDegreeOfParallelism = processorCount };
+            var flowComplete = new DataflowLinkOptions { PropagateCompletion = true };
 
             // Pipeline members
             var articleBatchBufferBlock = new BufferBlock<UnexpandedArticle[]>();
-            var articleTransformBlock = new TransformBlock<UnexpandedArticle[], ArticleBatchTaskResult>(articles => _articleBatchProcessor.Process(category, articles));
-            var articleActionBlock = new ActionBlock<ArticleBatchTaskResult>(delegate (ArticleBatchTaskResult result)
-                {
-                    response.Processed += result.Processed;
-                    response.Failed.AddRange(result.Failed);
-                },
-                // Specify a maximum degree of parallelism.
-                new ExecutionDataflowBlockOptions
-                {
-                    MaxDegreeOfParallelism = processorCount
-                });
+            var articleTransformBlock = new TransformBlock<UnexpandedArticle[], ArticleBatchTaskResult>(articles => _articleBatchProcessor.Process(category, articles), nonGreedy);
+            var articleActionBlock = new ActionBlock<ArticleBatchTaskResult>(articleBatchTaskResult => FinishedProcessing(response, articleBatchTaskResult));
 
             // Form the pipeline
-            articleBatchBufferBlock.LinkTo(articleTransformBlock);
-            articleTransformBlock.LinkTo(articleActionBlock);
-
-            //  Create the completion tasks:
-            articleBatchBufferBlock.Completion
-                .ContinueWith(t =>
-                {
-                    if (t.IsFaulted)
-                        ((IDataflowBlock)articleTransformBlock).Fault(t.Exception);
-                    else
-                        articleTransformBlock.Complete();
-                });
-
-            articleTransformBlock.Completion
-                .ContinueWith(t =>
-                {
-                    if (t.IsFaulted)
-                        ((IDataflowBlock)articleActionBlock).Fault(t.Exception);
-                    else
-                        articleActionBlock.Complete();
-                });
+            articleBatchBufferBlock.LinkTo(articleTransformBlock, flowComplete);
+            articleTransformBlock.LinkTo(articleActionBlock, flowComplete);
 
             // Process "Category" and generate article batch data
-            _articleCategoryDataSource.Producer(category, pageSize, articleBatchBufferBlock);
+           await _articleCategoryDataSource.Producer(category, pageSize, articleBatchBufferBlock);
+
+            // Producer completed producing data. Signals to the "DataflowBlock" that it should not accept nor produce any more messages nor consume any more postponed messages.
+            articleBatchBufferBlock.Complete();
 
             // Mark the head of the pipeline as complete. The continuation tasks  
             // propagate completion through the pipeline as each part of the  
             // pipeline finishes.
-            articleActionBlock.Completion.Wait();
+            await articleActionBlock.Completion;
 
-            return Task.FromResult(response);
+            return response;
+        }
+
+        private static void FinishedProcessing(ArticleBatchTaskResult response, ArticleBatchTaskResult articleBatchTaskResult)
+        {
+            response.Processed += articleBatchTaskResult.Processed;
+            response.Failed.AddRange(articleBatchTaskResult.Failed);
         }
     }
 }

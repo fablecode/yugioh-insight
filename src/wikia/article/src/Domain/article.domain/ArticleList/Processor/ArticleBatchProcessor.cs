@@ -1,8 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using article.core.ArticleList.Processor;
+﻿using article.core.ArticleList.Processor;
 using article.core.Exceptions;
 using article.core.Models;
+using System;
+using System.Threading.Tasks;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.ArticleList.Processor

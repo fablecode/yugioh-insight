@@ -45,8 +45,6 @@ namespace article.domain.ArticleList.DataSource
                     });
                 }
             } while (isNextBatchAvailable);
-
-            targetBlock.Complete();
         }
     }
 }
