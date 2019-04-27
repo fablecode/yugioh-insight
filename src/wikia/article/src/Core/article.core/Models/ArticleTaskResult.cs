@@ -10,7 +10,5 @@ namespace article.core.Models
         public UnexpandedArticle Article { get; set; }
 
         public ArticleException Failed { get; set; }
-
-        public object Data { get; set; }
     }
 }
