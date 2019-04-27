@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using article.core.ArticleList.DataSource;
 using article.core.ArticleList.Processor;
@@ -28,22 +29,21 @@ namespace article.domain.unit.tests.ArticleListTests.ProcessorTests.ArticleCateg
         }
 
         [Test]
-        public async Task Given_A_CategoryList_And_PageSize_Should_Invoke_Producer_Method_Once()
+        public async Task Given_A_CategoryList_And_PageSize_Should_Invoke_Producer_Method()
         {
             // Arrange
-            const int expected = 2;
-            var categories = new [] {"category1", "category2"};
+            var categories = new List<string> {"category1", "category2", "category3"};
             const int pageSize = 10;
 
-            _articleBatchProcessor
-                .Process(Arg.Any<string>(), Arg.Any<UnexpandedArticle[]>())
-                .Returns(new ArticleBatchTaskResult());
+            //_articleCategoryDataSource
+            //    .Producer(Arg.Any<string>(), Arg.Any<int>(), Arg.Any<BufferBlock<UnexpandedArticle[]>>())
+            //    .Returns(Task.CompletedTask);
 
             // Act
             await _sut.Process(categories, pageSize);
 
             // Assert
-            await _articleCategoryDataSource.Received(expected).Producer(Arg.Any<string>(), Arg.Any<int>(), Arg.Any<BufferBlock<UnexpandedArticle[]>>());
+            await _articleCategoryDataSource.Received().Producer(Arg.Any<string>(), Arg.Any<int>(), Arg.Any<BufferBlock<UnexpandedArticle[]>>());
         }
 
     }

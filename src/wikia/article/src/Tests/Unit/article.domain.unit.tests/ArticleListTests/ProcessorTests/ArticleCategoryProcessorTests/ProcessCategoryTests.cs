@@ -31,7 +31,6 @@ namespace article.domain.unit.tests.ArticleListTests.ProcessorTests.ArticleCateg
         public async Task Given_A_Category_And_PageSize_Should_Invoke_Producer_Method_Once()
         {
             // Arrange
-            const int expected = 1;
             const string category = "category";
             const int pageSize = 10;
 
@@ -39,7 +38,7 @@ namespace article.domain.unit.tests.ArticleListTests.ProcessorTests.ArticleCateg
             await _sut.Process(category, pageSize);
 
             // Assert
-            await _articleCategoryDataSource.Received(expected).Producer(Arg.Any<string>(), Arg.Any<int>(), Arg.Any<BufferBlock<UnexpandedArticle[]>>());
+            await _articleCategoryDataSource.Received().Producer(Arg.Any<string>(), Arg.Any<int>(), Arg.Any<BufferBlock<UnexpandedArticle[]>>());
         }
     }
 }
