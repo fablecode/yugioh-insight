@@ -23,9 +23,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "carddata.application", "App
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "carddata.core", "Core\carddata.core\carddata.core.csproj", "{823A76CF-DD95-4B7A-B0AE-5FD92D9EE263}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "carddata.domain", "Domain\carddata.domain\carddata.domain.csproj", "{817CC9A6-B2CB-4BB6-B287-7B8997FAAF42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "carddata.domain", "Domain\carddata.domain\carddata.domain.csproj", "{817CC9A6-B2CB-4BB6-B287-7B8997FAAF42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "carddata.infrastructure", "Infrastructure\carddata.infrastructure\carddata.infrastructure.csproj", "{A05C6905-72C9-420E-972C-E189CF3F54F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "carddata.infrastructure", "Infrastructure\carddata.infrastructure\carddata.infrastructure.csproj", "{A05C6905-72C9-420E-972C-E189CF3F54F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "carddata.domain.unit.tests", "Tests\Unit\carddata.domain.unit.tests\carddata.domain.unit.tests.csproj", "{99AA39A4-EC54-44FD-8DFF-696760BFE22A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "carddata.tests.core", "Tests\carddata.tests.core\carddata.tests.core.csproj", "{5BAA0743-335B-4BB7-93D7-D4DE5303CD26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +57,14 @@ Global
 		{A05C6905-72C9-420E-972C-E189CF3F54F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A05C6905-72C9-420E-972C-E189CF3F54F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A05C6905-72C9-420E-972C-E189CF3F54F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99AA39A4-EC54-44FD-8DFF-696760BFE22A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99AA39A4-EC54-44FD-8DFF-696760BFE22A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99AA39A4-EC54-44FD-8DFF-696760BFE22A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99AA39A4-EC54-44FD-8DFF-696760BFE22A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BAA0743-335B-4BB7-93D7-D4DE5303CD26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BAA0743-335B-4BB7-93D7-D4DE5303CD26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BAA0743-335B-4BB7-93D7-D4DE5303CD26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BAA0743-335B-4BB7-93D7-D4DE5303CD26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +76,8 @@ Global
 		{823A76CF-DD95-4B7A-B0AE-5FD92D9EE263} = {634B007E-FA16-4025-900C-DA6CF1BCACFC}
 		{817CC9A6-B2CB-4BB6-B287-7B8997FAAF42} = {7064AD10-1102-494E-B1BB-B9E9BB8A828F}
 		{A05C6905-72C9-420E-972C-E189CF3F54F7} = {7D76A487-A770-430D-A8FE-66209AB4106A}
+		{99AA39A4-EC54-44FD-8DFF-696760BFE22A} = {7A89D49B-A731-420F-BE4D-D4193E9FF429}
+		{5BAA0743-335B-4BB7-93D7-D4DE5303CD26} = {B3968768-7DAE-410E-AFC7-3BE7A8D0B3C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {921EAE45-31D6-4815-A415-33F4EBF7C57B}

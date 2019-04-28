@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using carddata.core.Exceptions;
 using carddata.core.Models;
 using carddata.core.Processor;
@@ -31,7 +32,7 @@ namespace carddata.domain.Processor
                     response.IsSuccessfullyProcessed = true;
                 }
             }
-            catch (System.Exception ex )
+            catch (Exception ex )
             {
                response.Failed = new ArticleException { Article = articleJson, Exception = ex };
             }
