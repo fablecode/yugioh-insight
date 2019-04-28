@@ -12,35 +12,28 @@ namespace carddata.domain.Processor
 {
     public class ArticleDataFlow : IArticleDataFlow
     {
-        private readonly ICardWebPage _cardWebPage;
-        private readonly IYugiohCardQueue _yugiohCardQueue;
         private readonly BufferBlock<Article> _articleBufferBlock;
-        private readonly TransformBlock<Article, ArticleProcessed> _yugiohDataTransformBlock;
-        private readonly TransformBlock<ArticleProcessed, YugiohCardCompletion> _yugiohCardPublishTransformBlock;
-        private readonly ActionBlock<YugiohCardCompletion> _publishToQueueActionBlock;
         private readonly ConcurrentDictionary<long, TaskCompletionSource<ArticleCompletion>> _jobs;
 
         public ArticleDataFlow(ICardWebPage cardWebPage, IYugiohCardQueue yugiohCardQueue)
         {
-            _cardWebPage = cardWebPage;
-            _yugiohCardQueue = yugiohCardQueue;
-
             _jobs = new ConcurrentDictionary<long, TaskCompletionSource<ArticleCompletion>>();
 
             // Data flow options
-            var nonGreedy = new ExecutionDataflowBlockOptions { BoundedCapacity = Environment.ProcessorCount, MaxDegreeOfParallelism = Environment.ProcessorCount };
+            var maxDegreeOfParallelism = Environment.ProcessorCount / 2;
+            var nonGreedy = new ExecutionDataflowBlockOptions { BoundedCapacity = maxDegreeOfParallelism, MaxDegreeOfParallelism = maxDegreeOfParallelism };
             var flowComplete = new DataflowLinkOptions { PropagateCompletion = true };
 
             // Pipeline members
             _articleBufferBlock = new BufferBlock<Article>();
-            _yugiohDataTransformBlock = new TransformBlock<Article, ArticleProcessed>(article => _cardWebPage.GetYugiohCard(article), nonGreedy);
-            _yugiohCardPublishTransformBlock = new TransformBlock<ArticleProcessed, YugiohCardCompletion>(articleProcessed => _yugiohCardQueue.Publish(articleProcessed), nonGreedy);
-            _publishToQueueActionBlock = new ActionBlock<YugiohCardCompletion>(FinishedProcessing);
+            var yugiohDataTransformBlock = new TransformBlock<Article, ArticleProcessed>(article => cardWebPage.GetYugiohCard(article), nonGreedy);
+            var yugiohCardPublishTransformBlock = new TransformBlock<ArticleProcessed, YugiohCardCompletion>(articleProcessed => yugiohCardQueue.Publish(articleProcessed), nonGreedy);
+            var publishToQueueActionBlock = new ActionBlock<YugiohCardCompletion>(yugiohCardCompletion => FinishedProcessing(yugiohCardCompletion));
 
             // Form the pipeline
-            _articleBufferBlock.LinkTo(_yugiohDataTransformBlock, flowComplete);
-            _yugiohDataTransformBlock.LinkTo(_yugiohCardPublishTransformBlock, flowComplete);
-            _yugiohCardPublishTransformBlock.LinkTo(_publishToQueueActionBlock, flowComplete);
+            _articleBufferBlock.LinkTo(yugiohDataTransformBlock, flowComplete);
+            yugiohDataTransformBlock.LinkTo(yugiohCardPublishTransformBlock, flowComplete);
+            yugiohCardPublishTransformBlock.LinkTo(publishToQueueActionBlock, flowComplete);
         }
 
 
