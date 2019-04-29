@@ -27,9 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "carddata.domain", "Domain\c
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "carddata.infrastructure", "Infrastructure\carddata.infrastructure\carddata.infrastructure.csproj", "{A05C6905-72C9-420E-972C-E189CF3F54F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "carddata.domain.unit.tests", "Tests\Unit\carddata.domain.unit.tests\carddata.domain.unit.tests.csproj", "{99AA39A4-EC54-44FD-8DFF-696760BFE22A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "carddata.domain.unit.tests", "Tests\Unit\carddata.domain.unit.tests\carddata.domain.unit.tests.csproj", "{99AA39A4-EC54-44FD-8DFF-696760BFE22A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "carddata.tests.core", "Tests\carddata.tests.core\carddata.tests.core.csproj", "{5BAA0743-335B-4BB7-93D7-D4DE5303CD26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "carddata.tests.core", "Tests\carddata.tests.core\carddata.tests.core.csproj", "{5BAA0743-335B-4BB7-93D7-D4DE5303CD26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "carddata.application.unit.tests", "Tests\Unit\carddata.application.unit.tests\carddata.application.unit.tests.csproj", "{33205BA1-C47E-4300-89A8-334B01291437}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{5BAA0743-335B-4BB7-93D7-D4DE5303CD26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BAA0743-335B-4BB7-93D7-D4DE5303CD26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BAA0743-335B-4BB7-93D7-D4DE5303CD26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33205BA1-C47E-4300-89A8-334B01291437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33205BA1-C47E-4300-89A8-334B01291437}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33205BA1-C47E-4300-89A8-334B01291437}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33205BA1-C47E-4300-89A8-334B01291437}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +84,7 @@ Global
 		{A05C6905-72C9-420E-972C-E189CF3F54F7} = {7D76A487-A770-430D-A8FE-66209AB4106A}
 		{99AA39A4-EC54-44FD-8DFF-696760BFE22A} = {7A89D49B-A731-420F-BE4D-D4193E9FF429}
 		{5BAA0743-335B-4BB7-93D7-D4DE5303CD26} = {B3968768-7DAE-410E-AFC7-3BE7A8D0B3C4}
+		{33205BA1-C47E-4300-89A8-334B01291437} = {7A89D49B-A731-420F-BE4D-D4193E9FF429}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {921EAE45-31D6-4815-A415-33F4EBF7C57B}
