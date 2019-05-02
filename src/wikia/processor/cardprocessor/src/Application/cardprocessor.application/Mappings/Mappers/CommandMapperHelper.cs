@@ -6,7 +6,7 @@ using cardprocessor.application.Dto;
 using cardprocessor.application.Enums;
 using cardprocessor.core.Models.Db;
 
-namespace cardprocessor.application.Commands
+namespace cardprocessor.application.Mappings.Mappers
 {
     public static class CommandMapperHelper
     {

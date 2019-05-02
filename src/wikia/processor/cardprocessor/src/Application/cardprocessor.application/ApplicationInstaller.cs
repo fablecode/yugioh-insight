@@ -2,6 +2,7 @@
 using AutoMapper;
 using cardprocessor.application.Commands;
 using cardprocessor.application.Commands.DownloadImage;
+using cardprocessor.application.Mappings.Mappers;
 using cardprocessor.application.Models.Cards.Input;
 using cardprocessor.application.Validations.Cards;
 using cardprocessor.core.Services;
