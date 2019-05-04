@@ -1,5 +1,6 @@
 ﻿using cardprocessor.application.Mappings.Mappers;
 using cardprocessor.core.Models;
+using cardprocessor.core.Models.Db;
 using cardprocessor.core.Services;
 using cardprocessor.tests.core;
 using FluentAssertions;
@@ -10,7 +11,7 @@ namespace cardprocessor.application.unit.tests.MappingsTests.MapperTests.CardCom
 {
     [TestFixture]
     [Category(TestType.Unit)]
-    public class MapToAddCommandTests
+    public class MapToUpdateCommandTests
     {
         private ICategoryService _categoryService;
         private ISubCategoryService _subCategoryService;
@@ -58,9 +59,10 @@ namespace cardprocessor.application.unit.tests.MappingsTests.MapperTests.CardCom
                 CardType = "Spell",
                 ImageUrl = "https://vignette.wikia.nocookie.net/yugioh/images/8/82/BlackIllusionRitual-LED2-EN-C-1E.png/revision/latest/scale-to-width-down/300?cb=20180223153750"
             };
+            var cardToUpdate = new Card{ Id = 23424};
 
             // Act
-            var result = _sut.MapToAddCommand(yugiohCard);
+            var result = _sut.MapToUpdateCommand(yugiohCard, cardToUpdate);
 
             // Assert
             result.Should().NotBeNull();
@@ -79,9 +81,10 @@ namespace cardprocessor.application.unit.tests.MappingsTests.MapperTests.CardCom
                 CardType = "Trap",
                 ImageUrl = "https://vignette.wikia.nocookie.net/yugioh/images/4/47/CalloftheHaunted-YS18-EN-C-1E.png/revision/latest/scale-to-width-down/300?cb=20180712163539"
             };
+            var cardToUpdate = new Card { Id = 23424 };
 
             // Act
-            var result = _sut.MapToAddCommand(yugiohCard);
+            var result = _sut.MapToUpdateCommand(yugiohCard, cardToUpdate);
 
             // Assert
             result.Should().NotBeNull();
@@ -103,9 +106,10 @@ namespace cardprocessor.application.unit.tests.MappingsTests.MapperTests.CardCom
                 AtkLink = "2300 / 3",
                 ImageUrl = "https://vignette.wikia.nocookie.net/yugioh/images/b/b4/BlueEyesWhiteDragon-LED3-EN-C-1E.png/revision/latest/scale-to-width-down/300?cb=20180928161125"
             };
+            var cardToUpdate = new Card { Id = 23424 };
 
             // Act
-            var result = _sut.MapToAddCommand(yugiohCard);
+            var result = _sut.MapToUpdateCommand(yugiohCard, cardToUpdate);
 
             // Assert
             result.Should().NotBeNull();

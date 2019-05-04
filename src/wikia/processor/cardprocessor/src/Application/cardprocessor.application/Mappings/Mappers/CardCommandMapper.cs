@@ -48,31 +48,8 @@ namespace cardprocessor.application.Mappings.Mappers
 
             var command = new AddCardCommand
             {
-                Card = new CardInputModel()
+                Card = await MapToCardInputModel(yugiohCard, new CardInputModel(), categories, subCategories)
             };
-
-            CardHelper.MapBasicCardInformation(yugiohCard, command.Card);
-            CardHelper.MapCardImageUrl(yugiohCard, command.Card);
-
-            if (command.Card.CardType.Equals(YgoCardType.Spell))
-            {
-                SpellCardHelper.MapSubCategoryIds(yugiohCard, command.Card, categories, subCategories);
-            }
-            else if (command.Card.CardType.Equals(YgoCardType.Trap))
-            {
-                TrapCardHelper.MapSubCategoryIds(yugiohCard, command.Card, categories, subCategories);
-            }
-            else
-            {
-                ICollection<Type> types = await _typeService.AllTypes();
-                ICollection<Attribute> attributes = await _attributeService.AllAttributes();
-                ICollection<LinkArrow> linkArrows = await _linkArrowService.AllLinkArrows();
-
-                var monsterCategory = categories.Single(c => c.Name.Equals(YgoCardType.Monster.ToString(), StringComparison.OrdinalIgnoreCase));
-                var monsterSubCategories = subCategories.Select(sc => sc).Where(sc => sc.CategoryId == monsterCategory.Id);
-
-                MonsterCardHelper.MapMonsterCard(yugiohCard, command.Card, attributes, monsterSubCategories, types, linkArrows);
-            }
 
             return command;
         }
@@ -85,31 +62,32 @@ namespace cardprocessor.application.Mappings.Mappers
 
             var command = new UpdateCardCommand
             {
-                Card = new CardInputModel()
+                Card = await MapToCardInputModel(yugiohCard, new CardInputModel(), categories, subCategories, cardToUpdate)
             };
 
-            command.Card.Id = cardToUpdate.Id;
-            command.Card.CardType = (YgoCardType?)(Enum.TryParse(typeof(YgoCardType), yugiohCard.CardType, true, out var cardType) ? cardType : null);
-            command.Card.CardNumber = long.TryParse(yugiohCard.CardNumber, out var cardNumber) ? cardNumber : (long?)null;
-            command.Card.Name = yugiohCard.Name;
-            command.Card.Description = yugiohCard.Description;
+            return command;
+        }
 
-            if (yugiohCard.ImageUrl != null)
-                command.Card.ImageUrl = new Uri(yugiohCard.ImageUrl);
+        #region private helpers
 
-            if (command.Card.CardType.Equals(YgoCardType.Spell))
+        private async Task<CardInputModel> MapToCardInputModel(YugiohCard yugiohCard, CardInputModel cardInputModel, ICollection<Category> categories, ICollection<SubCategory> subCategories, Card cardToUpdate)
+        {
+            cardInputModel.Id = cardToUpdate.Id;
+            return await MapToCardInputModel(yugiohCard, cardInputModel, categories, subCategories);
+        }
+
+        private async Task<CardInputModel> MapToCardInputModel(YugiohCard yugiohCard, CardInputModel cardInputModel, ICollection<Category> categories, ICollection<SubCategory> subCategories)
+        {
+            CardHelper.MapBasicCardInformation(yugiohCard, cardInputModel);
+            CardHelper.MapCardImageUrl(yugiohCard, cardInputModel);
+
+            if (cardInputModel.CardType.Equals(YgoCardType.Spell))
             {
-                command.Card.SubCategoryIds = new List<int>
-                {
-                    SubCategoryMapper.SubCategoryId(categories, subCategories, YgoCardType.Spell, yugiohCard.Property)
-                };
+                SpellCardHelper.MapSubCategoryIds(yugiohCard, cardInputModel, categories, subCategories);
             }
-            else if (command.Card.CardType.Equals(YgoCardType.Trap))
+            else if (cardInputModel.CardType.Equals(YgoCardType.Trap))
             {
-                command.Card.SubCategoryIds = new List<int>
-                {
-                    SubCategoryMapper.SubCategoryId(categories, subCategories, YgoCardType.Trap, yugiohCard.Property)
-                };
+                TrapCardHelper.MapSubCategoryIds(yugiohCard, cardInputModel, categories, subCategories);
             }
             else
             {
@@ -120,46 +98,12 @@ namespace cardprocessor.application.Mappings.Mappers
                 var monsterCategory = categories.Single(c => c.Name.Equals(YgoCardType.Monster.ToString(), StringComparison.OrdinalIgnoreCase));
                 var monsterSubCategories = subCategories.Select(sc => sc).Where(sc => sc.CategoryId == monsterCategory.Id);
 
-                command.Card.AttributeId = MonsterCardHelper.MonsterAttributeId(yugiohCard, attributes);
-
-                command.Card.SubCategoryIds = MonsterCardHelper.MonsterSubCategoryIds(yugiohCard, monsterSubCategories);
-
-                command.Card.TypeIds = MonsterCardHelper.MonsterTypeIds(yugiohCard, types);
-
-                if (yugiohCard.LinkArrows != null)
-                {
-                    command.Card.LinkArrowIds = MonsterCardHelper.MonsterLinkArrowIds(yugiohCard, linkArrows);
-                }
-
-                if (yugiohCard.Level.HasValue)
-                    command.Card.CardLevel = yugiohCard.Level;
-
-                if(yugiohCard.Rank.HasValue)
-                    command.Card.CardRank = yugiohCard.Rank;
-
-                if (!string.IsNullOrWhiteSpace(yugiohCard.AtkDef))
-                {
-                    var atk = MonsterCardHelper.Atk(yugiohCard);
-                    var def = MonsterCardHelper.DefOrLink(yugiohCard);
-
-                    int.TryParse(atk, out var cardAtk);
-                    int.TryParse(def, out var cardDef);
-
-                    command.Card.Atk = cardAtk;
-                    command.Card.Def = cardDef;
-                }
-
-                if (!string.IsNullOrWhiteSpace(yugiohCard.AtkLink))
-                {
-                    var atk = MonsterCardHelper.AtkLink(yugiohCard);
-
-                    int.TryParse(atk, out var cardAtk);
-
-                    command.Card.Atk = cardAtk;
-                }
+                MonsterCardHelper.MapMonsterCard(yugiohCard, cardInputModel, attributes, monsterSubCategories, types, linkArrows);
             }
 
-            return command;
+            return cardInputModel;
         }
+
+        #endregion
     }
 }
