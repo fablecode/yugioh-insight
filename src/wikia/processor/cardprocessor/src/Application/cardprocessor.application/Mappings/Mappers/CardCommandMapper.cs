@@ -113,7 +113,7 @@ namespace cardprocessor.application.Mappings.Mappers
 
                 if (!string.IsNullOrWhiteSpace(yugiohCard.AtkLink))
                 {
-                    var atk = MonsterCardCommandMapper.Atk(yugiohCard);
+                    var atk = MonsterCardCommandMapper.AtkLink(yugiohCard);
 
                     int.TryParse(atk, out var cardAtk);
 
@@ -197,7 +197,7 @@ namespace cardprocessor.application.Mappings.Mappers
 
                 if (!string.IsNullOrWhiteSpace(yugiohCard.AtkLink))
                 {
-                    var atk = MonsterCardCommandMapper.Atk(yugiohCard);
+                    var atk = MonsterCardCommandMapper.AtkLink(yugiohCard);
 
                     int.TryParse(atk, out var cardAtk);
 

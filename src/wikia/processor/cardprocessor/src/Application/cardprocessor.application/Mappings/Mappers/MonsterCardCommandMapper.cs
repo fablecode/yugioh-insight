@@ -50,6 +50,10 @@ namespace cardprocessor.application.Mappings.Mappers
         {
             return yugiohCard.AtkDef?.Split('/').First();
         }
+        public static string AtkLink(YugiohCard yugiohCard)
+        {
+            return yugiohCard.AtkLink?.Split('/').First();
+        }
 
         public static string DefOrLink(YugiohCard yugiohCard)
         {
