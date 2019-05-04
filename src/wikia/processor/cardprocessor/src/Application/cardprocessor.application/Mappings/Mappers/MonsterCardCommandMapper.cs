@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using cardprocessor.application.Commands.AddCard;
 using cardprocessor.core.Models;
 using cardprocessor.core.Models.Db;
 using Attribute = cardprocessor.core.Models.Db.Attribute;
@@ -59,5 +60,47 @@ namespace cardprocessor.application.Mappings.Mappers
         {
             return yugiohCard.AtkDef?.Split('/').Last();
         }
+
+        public static void MapMonsterCard(YugiohCard yugiohCard, AddCardCommand command, ICollection<Attribute> attributes, IEnumerable<SubCategory> monsterSubCategories, ICollection<Type> types, ICollection<LinkArrow> linkArrows)
+        {
+            command.Card.AttributeId = MonsterAttributeId(yugiohCard, attributes);
+
+            command.Card.SubCategoryIds = MonsterSubCategoryIds(yugiohCard, monsterSubCategories);
+            command.Card.TypeIds = MonsterTypeIds(yugiohCard, types);
+
+            if (yugiohCard.LinkArrows != null)
+            {
+                command.Card.LinkArrowIds = MonsterLinkArrowIds(yugiohCard, linkArrows);
+            }
+
+
+            if (yugiohCard.Level.HasValue)
+                command.Card.CardLevel = yugiohCard.Level;
+
+            if (yugiohCard.Rank.HasValue)
+                command.Card.CardRank = yugiohCard.Rank;
+
+            if (!string.IsNullOrWhiteSpace(yugiohCard.AtkDef))
+            {
+                var atk = Atk(yugiohCard);
+                var def = DefOrLink(yugiohCard);
+
+                int.TryParse(atk, out var cardAtk);
+                int.TryParse(def, out var cardDef);
+
+                command.Card.Atk = cardAtk;
+                command.Card.Def = cardDef;
+            }
+
+            if (!string.IsNullOrWhiteSpace(yugiohCard.AtkLink))
+            {
+                var atk = AtkLink(yugiohCard);
+
+                int.TryParse(atk, out var cardAtk);
+
+                command.Card.Atk = cardAtk;
+            }
+        }
+
     }
 }
