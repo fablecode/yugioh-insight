@@ -1,11 +1,10 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using cardprocessor.application.Commands;
-using cardprocessor.application.Commands.AddCard;
+﻿using cardprocessor.application.Commands;
 using cardprocessor.core.Models;
 using cardprocessor.core.Services;
 using MediatR;
 using Newtonsoft.Json;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace cardprocessor.application.MessageConsumers.CardData
 {

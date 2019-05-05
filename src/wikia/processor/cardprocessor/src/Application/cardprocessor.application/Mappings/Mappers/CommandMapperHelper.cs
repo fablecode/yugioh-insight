@@ -1,71 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using cardprocessor.application.Dto;
 using cardprocessor.application.Enums;
 using cardprocessor.core.Models.Db;
+using System;
 
 namespace cardprocessor.application.Mappings.Mappers
 {
     public static class CommandMapperHelper
     {
-        public static CardDto MapToCardDto(IMapper mapper, Card card)
-        {
-            if (card == null)
-                return null;
-
-            var response = new CardDto();
-
-            response.Id = card.Id;
-            response.CardNumber = card.CardNumber;
-            if (card.Name != null)
-            {
-                response.ImageUrl =
-                    $"/api/images/cards/{string.Concat(card.Name.Split(Path.GetInvalidFileNameChars()))}";
-                response.Name = card.Name;
-            }
-            response.Description = card.Description;
-            response.CardLevel = card.CardLevel;
-            response.CardRank = card.CardRank;
-            response.Atk = card.Atk;
-            response.Def = card.Def;
-
-            if (card.CardAttribute != null && card.CardAttribute.Any())
-                response.Attribute = mapper.Map<AttributeDto>(card.CardAttribute.First().Attribute);
-
-            if (card.CardLinkArrow != null && card.CardLinkArrow.Any())
-                response.Link = card.CardLinkArrow.Count();
-
-            if (card.CardLinkArrow != null && card.CardLinkArrow.Any())
-            {
-                foreach (var cardLinkArrow in card.CardLinkArrow)
-                {
-                    response.LinkArrows.Add(new LinkArrowDto { Id = cardLinkArrow.LinkArrowId, Name = cardLinkArrow.LinkArrow.Name });
-                }
-            }
-
-
-            if (card.CardSubCategory != null && card.CardSubCategory.Any())
-            {
-                foreach (var cardSubCategory in card.CardSubCategory)
-                {
-                    response.SubCategories.Add(new SubCategoryDto { Id = cardSubCategory.SubCategoryId, Name = cardSubCategory.SubCategory.Name, CategoryId = cardSubCategory.SubCategory.CategoryId});
-                }
-            }
-
-            if (card.CardType != null && card.CardType.Any())
-            {
-                foreach (var cardType in card.CardType)
-                {
-                    response.Types.Add(new TypeDto { Id = cardType.TypeId, Name = cardType.Type.Name });
-                }
-            }
-
-
-            return response;
-        }
-
         public static object MapCardByCardType(IMapper mapper, YgoCardType cardCardType, Card cardUpdated)
         {
             switch (cardCardType)
