@@ -6,7 +6,7 @@ using cardprocessor.tests.core;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace cardprocessor.application.unit.tests.MappingsTests.MapperTests.CardMapperTests
+namespace cardprocessor.application.unit.tests.HelperTests.CardTests
 {
     [TestFixture]
     [Category(TestType.Unit)]

@@ -19,17 +19,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardprocessor.domain", "Dom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardprocessor.core", "Core\cardprocessor.core\cardprocessor.core.csproj", "{9F2331D5-2EDB-4884-8259-29B886561523}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardprocessor.application", "Application\cardprocessor.application\cardprocessor.application.csproj", "{932D5D1A-CE99-47E6-BDB7-45ACF1965ABE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardprocessor.application", "Application\cardprocessor.application\cardprocessor.application.csproj", "{932D5D1A-CE99-47E6-BDB7-45ACF1965ABE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardprocessor.infrastructure", "Infrastructure\cardprocessor.infrastructure\cardprocessor.infrastructure.csproj", "{B543E724-6A24-4F3E-8C62-AD567B39C9DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardprocessor.infrastructure", "Infrastructure\cardprocessor.infrastructure\cardprocessor.infrastructure.csproj", "{B543E724-6A24-4F3E-8C62-AD567B39C9DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardprocessor", "Presentation\cardprocessor\cardprocessor.csproj", "{062DE426-E08D-4E4F-A1B1-1C4F1CC31001}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardprocessor", "Presentation\cardprocessor\cardprocessor.csproj", "{062DE426-E08D-4E4F-A1B1-1C4F1CC31001}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{E4314902-06AC-4EAB-BE11-105DC7EE3A91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardprocessor.application.unit.tests", "Tests\Unit\cardprocessor.application.unit.tests\cardprocessor.application.unit.tests.csproj", "{F7A940E5-7BB0-429A-8D7E-1A6ABB87F2F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardprocessor.application.unit.tests", "Tests\Unit\cardprocessor.application.unit.tests\cardprocessor.application.unit.tests.csproj", "{F7A940E5-7BB0-429A-8D7E-1A6ABB87F2F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardprocessor.tests.core", "Tests\cardprocessor.tests.core\cardprocessor.tests.core.csproj", "{88803496-71BC-4DF2-8816-AC3E4CBB6995}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardprocessor.tests.core", "Tests\cardprocessor.tests.core\cardprocessor.tests.core.csproj", "{88803496-71BC-4DF2-8816-AC3E4CBB6995}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardprocessor.domain.unit.tests", "Tests\Unit\cardprocessor.domain.unit.tests\cardprocessor.domain.unit.tests.csproj", "{7A7824FD-EA13-4688-8E87-6628C5AFA1D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{88803496-71BC-4DF2-8816-AC3E4CBB6995}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88803496-71BC-4DF2-8816-AC3E4CBB6995}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88803496-71BC-4DF2-8816-AC3E4CBB6995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A7824FD-EA13-4688-8E87-6628C5AFA1D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A7824FD-EA13-4688-8E87-6628C5AFA1D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A7824FD-EA13-4688-8E87-6628C5AFA1D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A7824FD-EA13-4688-8E87-6628C5AFA1D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +84,7 @@ Global
 		{E4314902-06AC-4EAB-BE11-105DC7EE3A91} = {0A3668AC-9013-48AF-96D2-F6C6EE49B82C}
 		{F7A940E5-7BB0-429A-8D7E-1A6ABB87F2F9} = {E4314902-06AC-4EAB-BE11-105DC7EE3A91}
 		{88803496-71BC-4DF2-8816-AC3E4CBB6995} = {0A3668AC-9013-48AF-96D2-F6C6EE49B82C}
+		{7A7824FD-EA13-4688-8E87-6628C5AFA1D3} = {E4314902-06AC-4EAB-BE11-105DC7EE3A91}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B97028B4-8D50-4392-88E9-7441116C2394}
