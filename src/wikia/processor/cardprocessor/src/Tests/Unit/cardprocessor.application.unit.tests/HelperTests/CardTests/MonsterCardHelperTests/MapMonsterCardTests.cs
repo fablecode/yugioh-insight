@@ -19,8 +19,6 @@ namespace cardprocessor.application.unit.tests.HelperTests.CardTests.MonsterCard
         public void Given_A_Valid_A_Monster_YugiohCard_Should_Map_To_CardInputModel()
         {
             // Arrange
-            const string expected = "2300";
-
             var yugiohCard = new YugiohCard
             {
                 Name = "Decode Talker",
