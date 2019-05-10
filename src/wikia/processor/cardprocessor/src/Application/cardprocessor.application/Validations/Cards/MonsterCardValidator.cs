@@ -40,7 +40,8 @@ namespace cardprocessor.application.Validations.Cards
 
                 RuleFor(c => c.Def)
                     .GreaterThanOrEqualTo(0)
-                    .LessThanOrEqualTo(MaxDef).When(c => c.Def.HasValue);
+                    .LessThanOrEqualTo(MaxDef)
+                    .When(c => c.Def.HasValue);
 
                 RuleFor(c => c.AttributeId)
                     .GreaterThan(0);
