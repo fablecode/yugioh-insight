@@ -9,7 +9,8 @@ namespace cardprocessor.application.Configuration
         public string Password { get; set; }
         public string ContentType { get; set; }
 
-        public Dictionary<string, ExchangeSetting> Exchanges { get; set; }
+        public Dictionary<string, QueueSetting> Queues { get; set; }
 
+        public Dictionary<string, ExchangeSetting> Exchanges { get; set; }
     }
 }

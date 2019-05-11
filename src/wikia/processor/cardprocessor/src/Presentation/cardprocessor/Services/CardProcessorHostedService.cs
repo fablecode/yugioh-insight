@@ -14,6 +14,7 @@ namespace articledata.cardinformation.Services
 {
     public class CardProcessorHostedService : IHostedService
     {
+        private const string CardDataQueue = "card-data";
         public IServiceProvider Services { get; }
 
         private readonly IOptions<RabbitMqSettings> _options;
@@ -66,9 +67,12 @@ namespace articledata.cardinformation.Services
                     }
                 };
 
-                channel.BasicConsume(queue: "card-data",
-                    autoAck: false,
-                    consumer: consumer);
+                channel.BasicConsume
+                (
+                    queue: _options.Value.Queues[CardDataQueue].Name,
+                    autoAck: _options.Value.Queues[CardDataQueue].AutoAck,
+                    consumer: consumer
+                );
 
                 await _host.WaitForShutdownAsync();
             }
