@@ -1,6 +1,6 @@
-﻿using cardprocessor.tests.core;
-using FluentAssertions;
+﻿using FluentAssertions;
 using imageprocessor.core.Helpers;
+using imageprocessor.tests.core;
 using NUnit.Framework;
 
 namespace imageprocessor.core.unit.tests.HelpersTests

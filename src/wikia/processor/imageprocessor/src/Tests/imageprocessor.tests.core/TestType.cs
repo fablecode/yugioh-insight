@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace cardprocessor.tests.core
+﻿namespace imageprocessor.tests.core
 {
     public static class TestType
     {

@@ -1,15 +1,15 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using articledata.cardinformation.Services;
 using imageprocessor.application;
 using imageprocessor.application.Configuration;
 using imageprocessor.infrastructure;
+using imageprocessor.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace carddata
+namespace imageprocessor
 {
     internal class Program
     {

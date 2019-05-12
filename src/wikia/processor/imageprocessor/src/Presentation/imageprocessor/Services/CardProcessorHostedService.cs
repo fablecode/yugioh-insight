@@ -1,16 +1,16 @@
-﻿using imageprocessor.application.Configuration;
+﻿using System;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using imageprocessor.application.Configuration;
+using imageprocessor.application.MessageConsumers.CardImage;
 using MediatR;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using imageprocessor.application.MessageConsumers.CardImage;
 
-namespace articledata.cardinformation.Services
+namespace imageprocessor.Services
 {
     public class ImageProcessorHostedService : IHostedService
     {

@@ -1,6 +1,6 @@
-﻿using cardprocessor.tests.core;
-using imageprocessor.domain.Services;
+﻿using imageprocessor.domain.Services;
 using imageprocessor.domain.SystemIO;
+using imageprocessor.tests.core;
 using NSubstitute;
 using NUnit.Framework;
 
