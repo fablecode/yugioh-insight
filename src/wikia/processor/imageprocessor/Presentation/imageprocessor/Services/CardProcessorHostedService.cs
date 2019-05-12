@@ -14,6 +14,8 @@ namespace articledata.cardinformation.Services
 {
     public class ImageProcessorHostedService : IHostedService
     {
+        private const string CardImageQueue = "card-image";
+
         public IServiceProvider Services { get; }
 
         private readonly IOptions<RabbitMqSettings> _options;
@@ -45,11 +47,11 @@ namespace articledata.cardinformation.Services
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.BasicQos(0, 1, false);
+                channel.BasicQos(0, 20, false);
 
-                var consumer = new EventingBasicConsumer(channel);
+                var cardImageConsumer = new EventingBasicConsumer(channel);
 
-                consumer.Received += async (model, ea) =>
+                cardImageConsumer.Received += async (model, ea) =>
                 {
                     var body = ea.Body;
                     var message = Encoding.UTF8.GetString(body);
@@ -66,9 +68,12 @@ namespace articledata.cardinformation.Services
                     }
                 };
 
-                channel.BasicConsume(queue: "card-image",
-                    autoAck: false,
-                    consumer: consumer);
+                channel.BasicConsume
+                (
+                    queue: _options.Value.Queues[CardImageQueue].Name,
+                    autoAck: _options.Value.Queues[CardImageQueue].AutoAck,
+                    consumer: cardImageConsumer
+                );
 
                 await _host.WaitForShutdownAsync();
             }
