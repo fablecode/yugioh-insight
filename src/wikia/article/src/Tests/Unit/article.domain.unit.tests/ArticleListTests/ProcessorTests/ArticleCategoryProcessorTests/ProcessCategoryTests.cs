@@ -38,7 +38,7 @@ namespace article.domain.unit.tests.ArticleListTests.ProcessorTests.ArticleCateg
             await _sut.Process(category, pageSize);
 
             // Assert
-            await _articleCategoryDataSource.Received().Producer(Arg.Any<string>(), Arg.Any<int>(), Arg.Any<BufferBlock<UnexpandedArticle[]>>());
+            await _articleCategoryDataSource.Received().Producer(Arg.Any<string>(), Arg.Any<int>(), Arg.Any<ITargetBlock<UnexpandedArticle[]>>());
         }
     }
 }
