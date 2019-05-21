@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using article.application;
+﻿using article.application;
 using article.application.Configuration;
 using article.cardinformation.QuartzConfiguration;
 using article.cardinformation.Services;
@@ -10,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Quartz;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace article.cardinformation
 {
@@ -52,13 +52,14 @@ namespace article.cardinformation
                     services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
 
                     // hosted service
-                    services.AddHostedService<CardInformationHostedService>();
+                    services.AddHostedService<CardInformationWorkerService>();
 
                     services.AddApplicationServices();
                     services.AddInfrastructureServices();
                 })
                 .UseConsoleLifetime()
                 .Build();
+
 
             using (host)
             {

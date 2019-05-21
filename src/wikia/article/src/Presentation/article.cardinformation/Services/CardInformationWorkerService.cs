@@ -12,18 +12,18 @@ using Microsoft.Extensions.Options;
 
 namespace article.cardinformation.Services
 {
-    public class CardInformationHostedService : IHostedService
+    public class CardInformationWorkerService : BackgroundService
     {
         public IServiceProvider Services { get; }
 
         private readonly IOptions<AppSettings> _options;
-        private readonly ILogger<CardInformationHostedService> _logger;
+        private readonly ILogger<CardInformationWorkerService> _logger;
 
-        public CardInformationHostedService
+        public CardInformationWorkerService
         (
             IServiceProvider services,
             IOptions<AppSettings> options,
-            ILogger<CardInformationHostedService> logger
+            ILogger<CardInformationWorkerService> logger
         )
         {
             Services = services;
@@ -31,18 +31,31 @@ namespace article.cardinformation.Services
             _logger = logger;
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public override Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Hosted Service is starting.");
-            await ConfigureQuartz(cancellationToken);
+            return base.StartAsync(cancellationToken);
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            await ConfigureQuartz(stoppingToken);
+        }
+
+        public override Task StopAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Hosted Service is stopping.");
 
-            return Task.CompletedTask;
+            return base.StopAsync(cancellationToken);
         }
+
+        public override void Dispose()
+        {
+            _logger.LogInformation($"CardInformationWorkerService disposed at: {DateTime.Now}");
+
+            base.Dispose();
+        }
+
 
         #region private helpers
 
