@@ -4,5 +4,6 @@
     {
         public string CronSchedule { get; set; }
         public string WikiaDomainUrl { get; set; }
+        public string LogFolder { get; set; }
     }
 }
