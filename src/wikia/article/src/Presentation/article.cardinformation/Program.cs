@@ -1,7 +1,6 @@
-﻿using System;
-using System.Configuration;
-using article.application;
+﻿using article.application;
 using article.application.Configuration;
+using article.cardinformation.Extensions.WindowsService;
 using article.cardinformation.QuartzConfiguration;
 using article.cardinformation.Services;
 using article.infrastructure;
@@ -9,13 +8,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Quartz;
-using System.IO;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using Quartz;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace article.cardinformation
 {
@@ -23,8 +25,22 @@ namespace article.cardinformation
     {
         static async Task Main(string[] args)
         {
+            var host = await CreateHostBuilder(args);
 
-            var host = new HostBuilder()
+            using (host)
+            {
+                // Start the host
+                await host.StartAsync();
+
+                // Wait for the host to shutdown
+                await host.WaitForShutdownAsync();
+            }
+
+        }
+
+        private static async Task<IHost> CreateHostBuilder(string[] args)
+        {
+            var hostBuilder = new HostBuilder()
                 .ConfigureLogging((hostContext, config) =>
                 {
                     config.AddConsole();
@@ -32,11 +48,11 @@ namespace article.cardinformation
                 })
                 .ConfigureHostConfiguration(config =>
                 {
-                    #if DEBUG
-                        config.AddEnvironmentVariables(prefix: "ASPNETCORE_");
-                    #else
+#if DEBUG
+                    config.AddEnvironmentVariables(prefix: "ASPNETCORE_");
+#else
                         config.AddEnvironmentVariables();
-                    #endif
+#endif
                 })
                 .ConfigureAppConfiguration((hostContext, config) =>
                 {
@@ -44,9 +60,9 @@ namespace article.cardinformation
                     config.AddJsonFile("appsettings.json", false, true);
                     config.AddCommandLine(args);
 
-                    #if DEBUG
-                        config.AddUserSecrets<Program>();
-                    #endif
+#if DEBUG
+                    config.AddUserSecrets<Program>();
+#endif
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
@@ -56,7 +72,8 @@ namespace article.cardinformation
 
                     //configuration settings
                     services.Configure<AppSettings>(hostContext.Configuration.GetSection(nameof(AppSettings)));
-                    services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
+                    services.Configure<RabbitMqSettings>(
+                        hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
 
                     var appSettings = services.BuildServiceProvider().GetService<IOptions<AppSettings>>();
 
@@ -66,7 +83,10 @@ namespace article.cardinformation
                         .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                         .Enrich.FromLogContext()
                         .WriteTo.Console()
-                        .WriteTo.File(new JsonFormatter(renderMessage: true), (appSettings.Value.LogFolder + $@"/cardinformation.{Environment.MachineName}.txt"), fileSizeLimitBytes: 100000000, rollOnFileSizeLimit: true, rollingInterval: RollingInterval.Day)
+                        .WriteTo.File(new JsonFormatter(renderMessage: true),
+                            (appSettings.Value.LogFolder + $@"/cardinformation.{Environment.MachineName}.txt"),
+                            fileSizeLimitBytes: 100000000, rollOnFileSizeLimit: true,
+                            rollingInterval: RollingInterval.Day)
                         .CreateLogger();
 
                     AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
@@ -78,18 +98,23 @@ namespace article.cardinformation
                     services.AddInfrastructureServices();
                 })
                 .UseConsoleLifetime()
-                .UseSerilog()
-                .Build();
+                .UseSerilog();
 
-            using (host)
+            var isService = !(Debugger.IsAttached || args.Contains("--console"));
+
+            if (isService)
             {
-                // Start the host
-                await host.StartAsync();
-
-                // Wait for the host to shutdown
-                await host.WaitForShutdownAsync();
+                var pathToExe = Process.GetCurrentProcess().MainModule?.FileName;
+                var pathToContentRoot = Path.GetDirectoryName(pathToExe);
+                Directory.SetCurrentDirectory(pathToContentRoot);
             }
 
+            if (isService)
+                await hostBuilder.RunAsServiceAsync();
+            else
+                await hostBuilder.RunConsoleAsync();
+
+            return hostBuilder.Build();
         }
 
         private static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
