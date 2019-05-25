@@ -68,10 +68,6 @@ namespace article.cardinformation.Services
             };
             var factory = new StdSchedulerFactory(props);
 
-            // get a scheduler
-            var scheduler = await factory.GetScheduler(cancellationToken);
-            scheduler.JobFactory = new CardInformationJobFactory(Services);
-            await scheduler.Start(cancellationToken);
 
             // define the job
             var job = JobBuilder.Create<CardInformationJob>()
@@ -89,9 +85,12 @@ namespace article.cardinformation.Services
 #endif
                 .Build();
 
+            // get a scheduler
+            var scheduler = await factory.GetScheduler(cancellationToken);
+            scheduler.JobFactory = new CardInformationJobFactory(Services);
             await scheduler.ScheduleJob(job, trigger, cancellationToken);
 
-            await Task.CompletedTask;
+            await scheduler.Start(cancellationToken);
         }
 
         #endregion

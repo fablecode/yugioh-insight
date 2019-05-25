@@ -23,13 +23,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "article.application", "Appl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "article.infrastructure", "Infrastructure\article.infrastructure\article.infrastructure.csproj", "{EC926AFF-0CA3-4B25-9DDA-A9C162D58CE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "article.cardinformation", "Presentation\article.cardinformation\article.cardinformation.csproj", "{9C1AAA45-A82C-4832-9F41-C83F045FFF5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "article.cardinformation", "Presentation\article.cardinformation\article.cardinformation.csproj", "{9C1AAA45-A82C-4832-9F41-C83F045FFF5D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{4C0B14A1-6C0B-4759-A814-38CD511DB940}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "article.domain.unit.tests", "Tests\Unit\article.domain.unit.tests\article.domain.unit.tests.csproj", "{FC59DE67-D175-471A-AF8F-5523E3D4D5E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "article.tests.core", "Tests\article.tests.core\article.tests.core.csproj", "{F6DEAF1D-F178-469D-A4DD-AB84D58BF3E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "article.tests.core", "Tests\article.tests.core\article.tests.core.csproj", "{F6DEAF1D-F178-469D-A4DD-AB84D58BF3E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
