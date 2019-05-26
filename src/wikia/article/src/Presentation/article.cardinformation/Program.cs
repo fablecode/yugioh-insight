@@ -38,6 +38,8 @@ namespace article.cardinformation
 
         }
 
+        #region private helpers
+
         private static async Task<IHost> CreateHostBuilder(string[] args)
         {
             var hostBuilder = new HostBuilder()
@@ -72,8 +74,7 @@ namespace article.cardinformation
 
                     //configuration settings
                     services.Configure<AppSettings>(hostContext.Configuration.GetSection(nameof(AppSettings)));
-                    services.Configure<RabbitMqSettings>(
-                        hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
+                    services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
 
                     var appSettings = services.BuildServiceProvider().GetService<IOptions<AppSettings>>();
 
@@ -120,6 +121,8 @@ namespace article.cardinformation
         private static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
         {
             Log.Logger.Error("Unhandled exception occurred. Exception: {@Exception}", e);
-        }
+        } 
+
+        #endregion
     }
 }

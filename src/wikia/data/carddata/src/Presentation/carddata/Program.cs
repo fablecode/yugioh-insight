@@ -1,13 +1,21 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using articledata.cardinformation.Services;
 using carddata.application;
 using carddata.application.Configuration;
+using carddata.Extensions.WindowsService;
 using carddata.infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Json;
 
 namespace carddata
 {
@@ -15,7 +23,22 @@ namespace carddata
     {
         static async Task Main(string[] args)
         {
-            var host = new HostBuilder()
+            var host = await CreateHostBuilder(args);
+
+            using (host)
+            {
+                // Start the host
+                await host.StartAsync();
+
+                // Wait for the host to shutdown
+                //await host.WaitForShutdownAsync();
+            }
+
+        }
+
+        private static async Task<IHost> CreateHostBuilder(string[] args)
+        {
+            var hostBuilder = new HostBuilder()
                 .ConfigureLogging((hostContext, config) =>
                 {
                     config.AddConsole();
@@ -35,16 +58,33 @@ namespace carddata
                     config.AddJsonFile("appsettings.json", false, true);
                     config.AddCommandLine(args);
 
-                    #if DEBUG
-                        config.AddUserSecrets<Program>();
-                    #endif
+#if DEBUG
+                    config.AddUserSecrets<Program>();
+#endif
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddLogging();
 
                     //configuration settings
+                    services.Configure<AppSettings>(hostContext.Configuration.GetSection(nameof(AppSettings)));
                     services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
+
+                    var appSettings = services.BuildServiceProvider().GetService<IOptions<AppSettings>>();
+
+                    // Create the logger
+                    Log.Logger = new LoggerConfiguration()
+                        .MinimumLevel.Information()
+                        .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                        .Enrich.FromLogContext()
+                        .WriteTo.Console()
+                        .WriteTo.File(new JsonFormatter(renderMessage: true),
+                            (appSettings.Value.LogFolder + $@"/carddata.{Environment.MachineName}.txt"),
+                            fileSizeLimitBytes: 100000000, rollOnFileSizeLimit: true,
+                            rollingInterval: RollingInterval.Day)
+                        .CreateLogger();
+
+                    AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
                     // hosted service
                     services.AddHostedService<CardDataHostedService>();
@@ -53,17 +93,30 @@ namespace carddata
                     services.AddInfrastructureServices();
                 })
                 .UseConsoleLifetime()
-                .Build();
+                .UseSerilog();
 
-            using (host)
+            var isService = !(Debugger.IsAttached || args.Contains("--console"));
+
+            if (isService)
             {
-                // Start the host
-                await host.StartAsync();
-
-                // Wait for the host to shutdown
-                //await host.WaitForShutdownAsync();
+                var pathToExe = Process.GetCurrentProcess().MainModule?.FileName;
+                var pathToContentRoot = Path.GetDirectoryName(pathToExe);
+                Directory.SetCurrentDirectory(pathToContentRoot);
             }
 
+            if (isService)
+                await hostBuilder.RunAsServiceAsync();
+            else
+                await hostBuilder.RunConsoleAsync();
+
+            return hostBuilder.Build();
+
         }
+
+        private static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
+        {
+            Log.Logger.Error("Unhandled exception occurred. Exception: {@Exception}", e);
+        }
+
     }
 }
