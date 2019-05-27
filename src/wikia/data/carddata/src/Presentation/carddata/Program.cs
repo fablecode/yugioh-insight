@@ -23,20 +23,10 @@ namespace carddata
     {
         static async Task Main(string[] args)
         {
-            var host = await CreateHostBuilder(args);
-
-            using (host)
-            {
-                // Start the host
-                await host.StartAsync();
-
-                // Wait for the host to shutdown
-                //await host.WaitForShutdownAsync();
-            }
-
+            await CreateHostBuilder(args);
         }
 
-        private static async Task<IHost> CreateHostBuilder(string[] args)
+        private static async Task<IHostBuilder> CreateHostBuilder(string[] args)
         {
             var hostBuilder = new HostBuilder()
                 .ConfigureLogging((hostContext, config) =>
@@ -109,8 +99,7 @@ namespace carddata
             else
                 await hostBuilder.RunConsoleAsync();
 
-            return hostBuilder.Build();
-
+            return hostBuilder;
         }
 
         private static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
