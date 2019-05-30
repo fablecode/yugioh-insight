@@ -1,37 +1,45 @@
 ﻿using carddata.application.Configuration;
+using carddata.application.MessageConsumers.CardInformation;
 using MediatR;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Json;
 using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using carddata.application.MessageConsumers.CardInformation;
 
-namespace articledata.cardinformation.Services
+namespace carddata.Services
 {
     public class CardDataHostedService : IHostedService
     {
         public IServiceProvider Services { get; }
 
-        private readonly IOptions<RabbitMqSettings> _options;
+        private readonly IOptions<RabbitMqSettings> _rabbitMqOptions;
+        private readonly IOptions<AppSettings> _appSettingsOptions;
         private readonly IMediator _mediator;
         private readonly IHost _host;
 
         public CardDataHostedService
         (
             IServiceProvider services, 
-            IOptions<RabbitMqSettings> options,
+            IOptions<RabbitMqSettings> rabbitMqOptions,
+            IOptions<AppSettings> appSettingsOptions,
             IMediator mediator,
             IHost host
         )
         {
             Services = services;
-            _options = options;
+            _rabbitMqOptions = rabbitMqOptions;
+            _appSettingsOptions = appSettingsOptions;
             _mediator = mediator;
             _host = host;
+
+            ConfigureSerilog();
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -41,7 +49,7 @@ namespace articledata.cardinformation.Services
 
         private async Task StartConsumer()
         {
-            var factory = new ConnectionFactory() {HostName = _options.Value.Host};
+            var factory = new ConnectionFactory() {HostName = _rabbitMqOptions.Value.Host};
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
@@ -79,6 +87,21 @@ namespace articledata.cardinformation.Services
             Console.WriteLine("Hosted Service is stopping.");
 
             return Task.CompletedTask;
+        }
+
+        private void ConfigureSerilog()
+        {
+            // Create the logger
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.File(new JsonFormatter(renderMessage: true),
+                    (_appSettingsOptions.Value.LogFolder + $@"/carddata.{Environment.MachineName}.txt"),
+                    fileSizeLimitBytes: 100000000, rollOnFileSizeLimit: true,
+                    rollingInterval: RollingInterval.Day)
+                .CreateLogger();
         }
     }
 }

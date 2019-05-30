@@ -3,11 +3,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using articledata.cardinformation.Services;
 using carddata.application;
 using carddata.application.Configuration;
 using carddata.Extensions.WindowsService;
 using carddata.infrastructure;
+using carddata.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -60,22 +60,6 @@ namespace carddata
                     services.Configure<AppSettings>(hostContext.Configuration.GetSection(nameof(AppSettings)));
                     services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
 
-                    var appSettings = services.BuildServiceProvider().GetService<IOptions<AppSettings>>();
-
-                    // Create the logger
-                    Log.Logger = new LoggerConfiguration()
-                        .MinimumLevel.Information()
-                        .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                        .Enrich.FromLogContext()
-                        .WriteTo.Console()
-                        .WriteTo.File(new JsonFormatter(renderMessage: true),
-                            (appSettings.Value.LogFolder + $@"/carddata.{Environment.MachineName}.txt"),
-                            fileSizeLimitBytes: 100000000, rollOnFileSizeLimit: true,
-                            rollingInterval: RollingInterval.Day)
-                        .CreateLogger();
-
-                    AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
-
                     // hosted service
                     services.AddHostedService<CardDataHostedService>();
 
@@ -84,6 +68,9 @@ namespace carddata
                 })
                 .UseConsoleLifetime()
                 .UseSerilog();
+
+
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
             var isService = !(Debugger.IsAttached || args.Contains("--console"));
 

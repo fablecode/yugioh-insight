@@ -8,7 +8,7 @@ namespace carddata.Extensions.WindowsService
 {
     public class ServiceBaseLifetime : ServiceBase, IHostLifetime
     {
-        private TaskCompletionSource<object> _delayStart = new TaskCompletionSource<object>();
+        private readonly TaskCompletionSource<object> _delayStart = new TaskCompletionSource<object>();
 
         public ServiceBaseLifetime(IApplicationLifetime applicationLifetime)
         {
