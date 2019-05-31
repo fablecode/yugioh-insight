@@ -47,9 +47,17 @@ namespace carddata.Services
             await StartConsumer();
         }
 
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            Console.WriteLine("Hosted Service is stopping.");
+
+            return Task.CompletedTask;
+        }
+
+        #region private helper 
         private async Task StartConsumer()
         {
-            var factory = new ConnectionFactory() {HostName = _rabbitMqOptions.Value.Host};
+            var factory = new ConnectionFactory() { HostName = _rabbitMqOptions.Value.Host };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
@@ -64,7 +72,7 @@ namespace carddata.Services
 
                     var result = await _mediator.Send(new CardInformationConsumer { Message = message });
 
-                    if(result.ArticleConsumerResult.IsSuccessfullyProcessed)
+                    if (result.ArticleConsumerResult.IsSuccessfullyProcessed)
                     {
                         channel.BasicAck(ea.DeliveryTag, false);
                     }
@@ -82,13 +90,6 @@ namespace carddata.Services
             }
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            Console.WriteLine("Hosted Service is stopping.");
-
-            return Task.CompletedTask;
-        }
-
         private void ConfigureSerilog()
         {
             // Create the logger
@@ -103,5 +104,6 @@ namespace carddata.Services
                     rollingInterval: RollingInterval.Day)
                 .CreateLogger();
         }
+        #endregion
     }
 }

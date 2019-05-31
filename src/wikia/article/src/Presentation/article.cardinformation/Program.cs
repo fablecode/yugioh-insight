@@ -25,22 +25,28 @@ namespace article.cardinformation
     {
         static async Task Main(string[] args)
         {
-            var host = await CreateHostBuilder(args);
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
-            using (host)
+            var hostBuilder = await CreateHostBuilder(args);
+
+            var isService = !(Debugger.IsAttached || args.Contains("--console"));
+
+            if (isService)
             {
-                // Start the host
-                await host.StartAsync();
-
-                // Wait for the host to shutdown
-                await host.WaitForShutdownAsync();
+                var pathToExe = Process.GetCurrentProcess().MainModule?.FileName;
+                var pathToContentRoot = Path.GetDirectoryName(pathToExe);
+                Directory.SetCurrentDirectory(pathToContentRoot);
             }
 
+            if (isService)
+                await hostBuilder.RunAsServiceAsync();
+            else
+                await hostBuilder.RunConsoleAsync();
         }
 
         #region private helpers
 
-        private static async Task<IHost> CreateHostBuilder(string[] args)
+        private static async Task<IHostBuilder> CreateHostBuilder(string[] args)
         {
             var hostBuilder = new HostBuilder()
                 .ConfigureLogging((hostContext, config) =>
@@ -76,22 +82,6 @@ namespace article.cardinformation
                     services.Configure<AppSettings>(hostContext.Configuration.GetSection(nameof(AppSettings)));
                     services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
 
-                    var appSettings = services.BuildServiceProvider().GetService<IOptions<AppSettings>>();
-
-                    // Create the logger
-                    Log.Logger = new LoggerConfiguration()
-                        .MinimumLevel.Information()
-                        .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                        .Enrich.FromLogContext()
-                        .WriteTo.Console()
-                        .WriteTo.File(new JsonFormatter(renderMessage: true),
-                            (appSettings.Value.LogFolder + $@"/cardinformation.{Environment.MachineName}.txt"),
-                            fileSizeLimitBytes: 100000000, rollOnFileSizeLimit: true,
-                            rollingInterval: RollingInterval.Day)
-                        .CreateLogger();
-
-                    AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
-
                     // hosted service
                     services.AddHostedService<CardInformationWorkerService>();
 
@@ -101,26 +91,12 @@ namespace article.cardinformation
                 .UseConsoleLifetime()
                 .UseSerilog();
 
-            var isService = !(Debugger.IsAttached || args.Contains("--console"));
-
-            if (isService)
-            {
-                var pathToExe = Process.GetCurrentProcess().MainModule?.FileName;
-                var pathToContentRoot = Path.GetDirectoryName(pathToExe);
-                Directory.SetCurrentDirectory(pathToContentRoot);
-            }
-
-            if (isService)
-                await hostBuilder.RunAsServiceAsync();
-            else
-                await hostBuilder.RunConsoleAsync();
-
-            return hostBuilder.Build();
+            return hostBuilder;
         }
 
-        private static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
+        private static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs ex)
         {
-            Log.Logger.Error("Unhandled exception occurred. Exception: {@Exception}", e);
+            Log.Logger.Error("Unhandled exception occurred. Exception: {@Exception}", ex);
         } 
 
         #endregion

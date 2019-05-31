@@ -23,7 +23,23 @@ namespace carddata
     {
         static async Task Main(string[] args)
         {
-            await CreateHostBuilder(args);
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
+
+            var hostBuilder = await CreateHostBuilder(args);
+
+            var isService = !(Debugger.IsAttached || args.Contains("--console"));
+
+            if (isService)
+            {
+                var pathToExe = Process.GetCurrentProcess().MainModule?.FileName;
+                var pathToContentRoot = Path.GetDirectoryName(pathToExe);
+                Directory.SetCurrentDirectory(pathToContentRoot);
+            }
+
+            if (isService)
+                await hostBuilder.RunAsServiceAsync();
+            else
+                await hostBuilder.RunConsoleAsync();
         }
 
         private static async Task<IHostBuilder> CreateHostBuilder(string[] args)
@@ -69,29 +85,12 @@ namespace carddata
                 .UseConsoleLifetime()
                 .UseSerilog();
 
-
-            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
-
-            var isService = !(Debugger.IsAttached || args.Contains("--console"));
-
-            if (isService)
-            {
-                var pathToExe = Process.GetCurrentProcess().MainModule?.FileName;
-                var pathToContentRoot = Path.GetDirectoryName(pathToExe);
-                Directory.SetCurrentDirectory(pathToContentRoot);
-            }
-
-            if (isService)
-                await hostBuilder.RunAsServiceAsync();
-            else
-                await hostBuilder.RunConsoleAsync();
-
             return hostBuilder;
         }
 
-        private static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
+        private static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs ex)
         {
-            Log.Logger.Error("Unhandled exception occurred. Exception: {@Exception}", e);
+            Log.Logger.Error("Unhandled exception occurred. Exception: {@Exception}", ex);
         }
 
     }
