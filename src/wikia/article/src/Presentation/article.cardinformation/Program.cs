@@ -24,7 +24,7 @@ namespace article.cardinformation
         {
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
-            var hostBuilder = await CreateHostBuilder(args);
+            var hostBuilder = CreateHostBuilder(args);
 
             var isService = !(Debugger.IsAttached || args.Contains("--console"));
 
@@ -43,7 +43,7 @@ namespace article.cardinformation
 
         #region private helpers
 
-        private static async Task<IHostBuilder> CreateHostBuilder(string[] args)
+        private static IHostBuilder CreateHostBuilder(string[] args)
         {
             var hostBuilder = new HostBuilder()
                 .ConfigureLogging((hostContext, config) =>

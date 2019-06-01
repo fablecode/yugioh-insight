@@ -15,79 +15,78 @@ using System.Threading.Tasks;
 
 namespace carddata.Services
 {
-    public class CardDataHostedService : IHostedService
+    public class CardDataHostedService : BackgroundService
     {
         public IServiceProvider Services { get; }
 
         private readonly IOptions<RabbitMqSettings> _rabbitMqOptions;
         private readonly IOptions<AppSettings> _appSettingsOptions;
         private readonly IMediator _mediator;
-        private readonly IHost _host;
+        private ConnectionFactory _factory;
+        private IConnection _connection;
+        private IModel _channel;
 
         public CardDataHostedService
         (
             IServiceProvider services, 
             IOptions<RabbitMqSettings> rabbitMqOptions,
             IOptions<AppSettings> appSettingsOptions,
-            IMediator mediator,
-            IHost host
+            IMediator mediator
         )
         {
             Services = services;
             _rabbitMqOptions = rabbitMqOptions;
             _appSettingsOptions = appSettingsOptions;
             _mediator = mediator;
-            _host = host;
 
             ConfigureSerilog();
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await StartConsumer();
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
+        #region private helper 
+        private Task StartConsumer()
         {
-            Console.WriteLine("Hosted Service is stopping.");
+            _factory = new ConnectionFactory() { HostName = _rabbitMqOptions.Value.Host };
+            _connection = _factory.CreateConnection();
+            _channel = _connection.CreateModel();
+
+            _channel.BasicQos(0, 20, false);
+
+            var consumer = new EventingBasicConsumer(_channel);
+
+            consumer.Received += async (model, ea) =>
+            {
+                var body = ea.Body;
+                var message = Encoding.UTF8.GetString(body);
+
+                var result = await _mediator.Send(new CardInformationConsumer { Message = message });
+
+                if (result.ArticleConsumerResult.IsSuccessfullyProcessed)
+                {
+                    _channel.BasicAck(ea.DeliveryTag, false);
+                }
+                else
+                {
+                    _channel.BasicNack(ea.DeliveryTag, false, false);
+                }
+            };
+
+            _channel.BasicConsume(queue: "card-article",
+                autoAck: false,
+                consumer: consumer);
 
             return Task.CompletedTask;
         }
 
-        #region private helper 
-        private async Task StartConsumer()
+        public override void Dispose()
         {
-            var factory = new ConnectionFactory() { HostName = _rabbitMqOptions.Value.Host };
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                channel.BasicQos(0, 20, false);
-
-                var consumer = new EventingBasicConsumer(channel);
-
-                consumer.Received += async (model, ea) =>
-                {
-                    var body = ea.Body;
-                    var message = Encoding.UTF8.GetString(body);
-
-                    var result = await _mediator.Send(new CardInformationConsumer { Message = message });
-
-                    if (result.ArticleConsumerResult.IsSuccessfullyProcessed)
-                    {
-                        channel.BasicAck(ea.DeliveryTag, false);
-                    }
-                    else
-                    {
-                        channel.BasicNack(ea.DeliveryTag, false, false);
-                    }
-                };
-
-                channel.BasicConsume(queue: "card-article",
-                    autoAck: false,
-                    consumer: consumer);
-
-                await _host.WaitForShutdownAsync();
-            }
+            _connection.Close();
+            _channel.Close();
+            base.Dispose();
         }
 
         private void ConfigureSerilog()

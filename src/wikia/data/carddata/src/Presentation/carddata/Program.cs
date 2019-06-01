@@ -1,9 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using carddata.application;
+﻿using carddata.application;
 using carddata.application.Configuration;
 using carddata.Extensions.WindowsService;
 using carddata.infrastructure;
@@ -12,10 +7,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Serilog;
-using Serilog.Events;
-using Serilog.Formatting.Json;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace carddata
 {
@@ -25,7 +22,7 @@ namespace carddata
         {
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
-            var hostBuilder = await CreateHostBuilder(args);
+            var hostBuilder = CreateHostBuilder(args);
 
             var isService = !(Debugger.IsAttached || args.Contains("--console"));
 
@@ -42,7 +39,7 @@ namespace carddata
                 await hostBuilder.RunConsoleAsync();
         }
 
-        private static async Task<IHostBuilder> CreateHostBuilder(string[] args)
+        private static IHostBuilder CreateHostBuilder(string[] args)
         {
             var hostBuilder = new HostBuilder()
                 .ConfigureLogging((hostContext, config) =>
