@@ -27,6 +27,7 @@ namespace carddata.Services
         private ConnectionFactory _factory;
         private IConnection _connection;
         private IModel _channel;
+        private EventingBasicConsumer _cardArticleConsumer;
 
         public CardDataHostedService
         (
@@ -60,9 +61,9 @@ namespace carddata.Services
 
             _channel.BasicQos(0, 20, false);
 
-            var consumer = new EventingBasicConsumer(_channel);
+            _cardArticleConsumer = new EventingBasicConsumer(_channel);
 
-            consumer.Received += async (model, ea) =>
+            _cardArticleConsumer.Received += async (model, ea) =>
             {
                 try
                 {
@@ -88,7 +89,7 @@ namespace carddata.Services
 
             _channel.BasicConsume(queue: "card-article",
                 autoAck: false,
-                consumer: consumer);
+                consumer: _cardArticleConsumer);
 
             return Task.CompletedTask;
         }
