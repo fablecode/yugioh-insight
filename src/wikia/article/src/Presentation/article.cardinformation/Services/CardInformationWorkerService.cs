@@ -22,6 +22,7 @@ namespace article.cardinformation.Services
         private readonly IOptions<AppSettings> _options;
         private readonly ILogger<CardInformationWorkerService> _logger;
         private readonly IHost _host;
+        private IScheduler _scheduler;
 
         public CardInformationWorkerService
         (
@@ -44,11 +45,11 @@ namespace article.cardinformation.Services
             await ConfigureQuartz(cancellationToken);
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
+        public async Task StopAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Hosted Service is stopping.");
 
-            return Task.CompletedTask;
+            await _scheduler.Shutdown(cancellationToken);
         }
 
 
@@ -65,12 +66,29 @@ namespace article.cardinformation.Services
 
 
             // define the job
-            var job = JobBuilder.Create<CardInformationJob>()
-                .WithIdentity("cardInformationJob", "jobGroup")
-                .Build();
+            var job = CreateJob();
 
             // Trigger the job to run
-            var trigger = TriggerBuilder.Create()
+            var trigger = CreateTrigger();
+
+            // get a scheduler
+            _scheduler = await CreateScheduler(cancellationToken, factory, Services);
+
+            await _scheduler.ScheduleJob(job, trigger, cancellationToken);
+            await _scheduler.Start(cancellationToken);
+        }
+
+        private static async Task<IScheduler> CreateScheduler(CancellationToken cancellationToken, StdSchedulerFactory factory, IServiceProvider services)
+        {
+            var scheduler = await factory.GetScheduler(cancellationToken);
+            scheduler.JobFactory = new CardInformationJobFactory(services);
+
+            return scheduler;
+        }
+
+        private static ITrigger CreateTrigger()
+        {
+            return TriggerBuilder.Create()
                 .WithIdentity("cardInformationTrigger", "triggerGroup")
 #if DEBUG
                 .StartNow()
@@ -79,15 +97,13 @@ namespace article.cardinformation.Services
                 .WithCronSchedule(_options.Value.CronSchedule)
 #endif
                 .Build();
+        }
 
-            // get a scheduler
-            var scheduler = await factory.GetScheduler(cancellationToken);
-            scheduler.JobFactory = new CardInformationJobFactory(Services);
-            await scheduler.ScheduleJob(job, trigger, cancellationToken);
-
-            await scheduler.Start(cancellationToken);
-
-            await _host.WaitForShutdownAsync(cancellationToken);
+        private static IJobDetail CreateJob()
+        {
+            return JobBuilder.Create<CardInformationJob>()
+                .WithIdentity("cardInformationJob", "jobGroup")
+                .Build();
         }
 
         private void ConfigureSerilog()

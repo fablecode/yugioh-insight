@@ -19,10 +19,6 @@ namespace article.cardinformation.QuartzConfiguration
             return _serviceProvider.GetRequiredService<IJob>();
         }
 
-        public void ReturnJob(IJob job)
-        {
-            var disposable = job as IDisposable;
-            disposable?.Dispose();
-        }
+        public void ReturnJob(IJob job) { }
     }
 }
