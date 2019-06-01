@@ -60,7 +60,7 @@ namespace carddata.Services
             _connection = _factory.CreateConnection();
             _channel = _connection.CreateModel();
 
-            _channel.BasicQos(0, 20, false);
+            _channel.BasicQos(1, 20, false);
 
             _cardArticleConsumer = new EventingBasicConsumer(_channel);
 
