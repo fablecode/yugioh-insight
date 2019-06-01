@@ -69,7 +69,7 @@ namespace article.cardinformation.Services
             var job = CreateJob();
 
             // Trigger the job to run
-            var trigger = CreateTrigger();
+            var trigger = CreateTrigger(_options.Value.CronSchedule);
 
             // get a scheduler
             _scheduler = await CreateScheduler(cancellationToken, factory, Services);
@@ -86,7 +86,7 @@ namespace article.cardinformation.Services
             return scheduler;
         }
 
-        private static ITrigger CreateTrigger()
+        private static ITrigger CreateTrigger(string cronSchedule)
         {
             return TriggerBuilder.Create()
                 .WithIdentity("cardInformationTrigger", "triggerGroup")
@@ -94,7 +94,7 @@ namespace article.cardinformation.Services
                 .StartNow()
 #else
                 .StartNow()
-                .WithCronSchedule(_options.Value.CronSchedule)
+                .WithCronSchedule(cronSchedule)
 #endif
                 .Build();
         }
