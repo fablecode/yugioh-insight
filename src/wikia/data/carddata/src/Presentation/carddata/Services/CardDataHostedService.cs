@@ -12,8 +12,6 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using ILogger = Serilog.ILogger;
 
 namespace carddata.Services
 {
@@ -24,7 +22,6 @@ namespace carddata.Services
         private readonly IOptions<RabbitMqSettings> _rabbitMqOptions;
         private readonly IOptions<AppSettings> _appSettingsOptions;
         private readonly IMediator _mediator;
-        private readonly IHost _host;
         private ConnectionFactory _factory;
         private IConnection _connection;
         private IModel _channel;
@@ -35,15 +32,13 @@ namespace carddata.Services
             IServiceProvider services, 
             IOptions<RabbitMqSettings> rabbitMqOptions,
             IOptions<AppSettings> appSettingsOptions,
-            IMediator mediator,
-            IHost host
+            IMediator mediator
         )
         {
             Services = services;
             _rabbitMqOptions = rabbitMqOptions;
             _appSettingsOptions = appSettingsOptions;
             _mediator = mediator;
-            _host = host;
 
             ConfigureSerilog();
         }
@@ -60,7 +55,7 @@ namespace carddata.Services
             _connection = _factory.CreateConnection();
             _channel = _connection.CreateModel();
 
-            _channel.BasicQos(1, 20, false);
+            _channel.BasicQos(0, 20, false);
 
             _cardArticleConsumer = new EventingBasicConsumer(_channel);
 
@@ -96,8 +91,6 @@ namespace carddata.Services
             _channel.BasicConsume(queue: "card-article",
                 autoAck: false,
                 consumer: _cardArticleConsumer);
-
-            await _host.WaitForShutdownAsync();
         }
 
         public override void Dispose()
