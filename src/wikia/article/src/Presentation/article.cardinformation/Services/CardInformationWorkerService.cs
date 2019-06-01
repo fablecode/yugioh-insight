@@ -21,21 +21,18 @@ namespace article.cardinformation.Services
 
         private readonly IOptions<AppSettings> _options;
         private readonly ILogger<CardInformationWorkerService> _logger;
-        private readonly IHost _host;
         private IScheduler _scheduler;
 
         public CardInformationWorkerService
         (
             IServiceProvider services,
             IOptions<AppSettings> options,
-            ILogger<CardInformationWorkerService> logger,
-            IHost host
+            ILogger<CardInformationWorkerService> logger
         )
         {
             Services = services;
             _options = options;
             _logger = logger;
-            _host = host;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -78,7 +75,7 @@ namespace article.cardinformation.Services
             await _scheduler.Start(cancellationToken);
         }
 
-        private static async Task<IScheduler> CreateScheduler(CancellationToken cancellationToken, StdSchedulerFactory factory, IServiceProvider services)
+        private static async Task<IScheduler> CreateScheduler(CancellationToken cancellationToken, ISchedulerFactory factory, IServiceProvider services)
         {
             var scheduler = await factory.GetScheduler(cancellationToken);
             scheduler.JobFactory = new CardInformationJobFactory(services);
