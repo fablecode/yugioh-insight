@@ -49,7 +49,7 @@ namespace carddata.Services
         }
 
         #region private helper 
-        private async Task StartConsumer()
+        private Task StartConsumer()
         {
             _factory = new ConnectionFactory() { HostName = _rabbitMqOptions.Value.Host };
             _connection = _factory.CreateConnection();
@@ -66,14 +66,23 @@ namespace carddata.Services
                     var body = ea.Body;
                     var message = Encoding.UTF8.GetString(body);
 
+                    Log.Logger.Information("Message received: {@Message}", message);
+                    Log.Logger.Information("Message processing......");
+
                     var result = await _mediator.Send(new CardInformationConsumer { Message = message });
+
+                    Log.Logger.Information("Message processing complete");
+
 
                     if (result.ArticleConsumerResult.IsSuccessfullyProcessed)
                     {
+                        Log.Logger.Information("Message processing successfully");
+
                         _channel.BasicAck(ea.DeliveryTag, false);
                     }
                     else
                     {
+                        Log.Logger.Information("Message processing failed.");
                         _channel.BasicNack(ea.DeliveryTag, false, false);
                     }
                 }
@@ -91,6 +100,8 @@ namespace carddata.Services
             _channel.BasicConsume(queue: "card-article",
                 autoAck: false,
                 consumer: _cardArticleConsumer);
+
+            return Task.CompletedTask;
         }
 
         public override void Dispose()
