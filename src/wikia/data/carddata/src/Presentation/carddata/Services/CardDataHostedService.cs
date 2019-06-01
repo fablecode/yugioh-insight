@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using ILogger = Serilog.ILogger;
 
 namespace carddata.Services
 {
@@ -23,7 +24,7 @@ namespace carddata.Services
         private readonly IOptions<RabbitMqSettings> _rabbitMqOptions;
         private readonly IOptions<AppSettings> _appSettingsOptions;
         private readonly IMediator _mediator;
-        private readonly ILogger<CardDataHostedService> _logger;
+        private readonly IHost _host;
         private ConnectionFactory _factory;
         private IConnection _connection;
         private IModel _channel;
@@ -35,14 +36,14 @@ namespace carddata.Services
             IOptions<RabbitMqSettings> rabbitMqOptions,
             IOptions<AppSettings> appSettingsOptions,
             IMediator mediator,
-            ILogger<CardDataHostedService> logger
+            IHost host
         )
         {
             Services = services;
             _rabbitMqOptions = rabbitMqOptions;
             _appSettingsOptions = appSettingsOptions;
             _mediator = mediator;
-            _logger = logger;
+            _host = host;
 
             ConfigureSerilog();
         }
@@ -53,7 +54,7 @@ namespace carddata.Services
         }
 
         #region private helper 
-        private Task StartConsumer()
+        private async Task StartConsumer()
         {
             _factory = new ConnectionFactory() { HostName = _rabbitMqOptions.Value.Host };
             _connection = _factory.CreateConnection();
@@ -83,15 +84,20 @@ namespace carddata.Services
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError("RabbitMq Consumer: card-article exception. Exception: {@Exception}", ex);
+                    Log.Logger.Error("RabbitMq Consumer: card-article exception. Exception: {@Exception}", ex);
                 }
             };
+
+            _cardArticleConsumer.Shutdown += OnConsumerShutdown;
+            _cardArticleConsumer.Registered += OnConsumerRegistered;
+            _cardArticleConsumer.Unregistered += OnConsumerUnregistered;
+            _cardArticleConsumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
             _channel.BasicConsume(queue: "card-article",
                 autoAck: false,
                 consumer: _cardArticleConsumer);
 
-            return Task.CompletedTask;
+            await _host.WaitForShutdownAsync();
         }
 
         public override void Dispose()
@@ -99,6 +105,24 @@ namespace carddata.Services
             _connection.Close();
             _channel.Close();
             base.Dispose();
+        }
+
+        private void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e)
+        {
+            Log.Logger.Information("Consumer 'card-article' Cancelled");
+        }
+
+        private void OnConsumerUnregistered(object sender, ConsumerEventArgs e)
+        {
+            Log.Logger.Information("Consumer 'card-article' Unregistered");}
+
+        private void OnConsumerRegistered(object sender, ConsumerEventArgs e)
+        {
+            Log.Logger.Information("Consumer 'card-article' Registered");
+        }
+        private void OnConsumerShutdown(object sender, ShutdownEventArgs e)
+        {
+            Log.Logger.Information("Consumer 'card-article' Shutdown");
         }
 
         private void ConfigureSerilog()
