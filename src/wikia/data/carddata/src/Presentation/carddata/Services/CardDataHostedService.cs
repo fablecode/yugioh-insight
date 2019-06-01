@@ -12,6 +12,7 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace carddata.Services
 {
@@ -22,6 +23,7 @@ namespace carddata.Services
         private readonly IOptions<RabbitMqSettings> _rabbitMqOptions;
         private readonly IOptions<AppSettings> _appSettingsOptions;
         private readonly IMediator _mediator;
+        private readonly ILogger<CardDataHostedService> _logger;
         private ConnectionFactory _factory;
         private IConnection _connection;
         private IModel _channel;
@@ -31,13 +33,15 @@ namespace carddata.Services
             IServiceProvider services, 
             IOptions<RabbitMqSettings> rabbitMqOptions,
             IOptions<AppSettings> appSettingsOptions,
-            IMediator mediator
+            IMediator mediator,
+            ILogger<CardDataHostedService> logger
         )
         {
             Services = services;
             _rabbitMqOptions = rabbitMqOptions;
             _appSettingsOptions = appSettingsOptions;
             _mediator = mediator;
+            _logger = logger;
 
             ConfigureSerilog();
         }
@@ -60,18 +64,25 @@ namespace carddata.Services
 
             consumer.Received += async (model, ea) =>
             {
-                var body = ea.Body;
-                var message = Encoding.UTF8.GetString(body);
-
-                var result = await _mediator.Send(new CardInformationConsumer { Message = message });
-
-                if (result.ArticleConsumerResult.IsSuccessfullyProcessed)
+                try
                 {
-                    _channel.BasicAck(ea.DeliveryTag, false);
+                    var body = ea.Body;
+                    var message = Encoding.UTF8.GetString(body);
+
+                    var result = await _mediator.Send(new CardInformationConsumer { Message = message });
+
+                    if (result.ArticleConsumerResult.IsSuccessfullyProcessed)
+                    {
+                        _channel.BasicAck(ea.DeliveryTag, false);
+                    }
+                    else
+                    {
+                        _channel.BasicNack(ea.DeliveryTag, false, false);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    _channel.BasicNack(ea.DeliveryTag, false, false);
+                    _logger.LogError("RabbitMq Consumer: card-article exception. Exception: {@Exception}", ex);
                 }
             };
 
