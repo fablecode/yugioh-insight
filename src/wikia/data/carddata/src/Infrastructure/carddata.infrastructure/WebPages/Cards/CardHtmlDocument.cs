@@ -76,13 +76,13 @@ namespace carddata.infrastructure.WebPages.Cards
         public int? Level(HtmlDocument htmlDocument)
         {
             var level = ExtractHtmlCardTableValue(CardHtmlTable.Level, htmlDocument);
-            return string.IsNullOrWhiteSpace(level) ? null : (int?)int.Parse(level);
+            return int.TryParse(level, out var cardLevel) ? cardLevel : (int?)null;
         }
 
         public int? Rank(HtmlDocument htmlDocument)
         {
             var rank = ExtractHtmlCardTableValue(CardHtmlTable.Rank, htmlDocument);
-            return string.IsNullOrWhiteSpace(rank) ? null : (int?)int.Parse(rank);
+            return int.TryParse(rank, out var cardRank) ? cardRank : (int?)null;
         }
 
         public string AtkDef(HtmlDocument htmlDocument)
@@ -118,8 +118,8 @@ namespace carddata.infrastructure.WebPages.Cards
         public long? PendulumScale(HtmlDocument htmlDocument)
         {
             var scale = ExtractHtmlCardTableValue(CardHtmlTable.PendulumScale, htmlDocument);
+            return long.TryParse(scale, out var cardScale) ? cardScale : (long?)null;
 
-            return string.IsNullOrWhiteSpace(scale) ? null : (long?)long.Parse(scale);
         }
 
         #region private helpers

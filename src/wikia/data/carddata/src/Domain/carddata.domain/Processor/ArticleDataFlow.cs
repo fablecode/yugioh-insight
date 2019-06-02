@@ -14,9 +14,6 @@ namespace carddata.domain.Processor
     {
         private readonly BufferBlock<Article> _articleBufferBlock;
         private readonly ConcurrentDictionary<long, TaskCompletionSource<ArticleCompletion>> _jobs;
-        private readonly TransformBlock<Article, ArticleProcessed> _yugiohDataTransformBlock;
-        private readonly TransformBlock<ArticleProcessed, YugiohCardCompletion> _yugiohCardPublishTransformBlock;
-        private readonly ActionBlock<YugiohCardCompletion> _publishToQueueActionBlock;
 
         public ArticleDataFlow(ICardWebPage cardWebPage, IYugiohCardQueue yugiohCardQueue)
         {
@@ -28,14 +25,14 @@ namespace carddata.domain.Processor
 
             // Pipeline members
             _articleBufferBlock = new BufferBlock<Article>();
-            _yugiohDataTransformBlock = new TransformBlock<Article, ArticleProcessed>(article => cardWebPage.GetYugiohCard(article), nonGreedy);
-            _yugiohCardPublishTransformBlock = new TransformBlock<ArticleProcessed, YugiohCardCompletion>(articleProcessed => yugiohCardQueue.Publish(articleProcessed), nonGreedy);
-            _publishToQueueActionBlock = new ActionBlock<YugiohCardCompletion>(yugiohCardCompletion => FinishedProcessing(yugiohCardCompletion));
+            var yugiohDataTransformBlock = new TransformBlock<Article, ArticleProcessed>(article => cardWebPage.GetYugiohCard(article), nonGreedy);
+            var yugiohCardPublishTransformBlock = new TransformBlock<ArticleProcessed, YugiohCardCompletion>(articleProcessed => yugiohCardQueue.Publish(articleProcessed), nonGreedy);
+            var publishToQueueActionBlock = new ActionBlock<YugiohCardCompletion>(yugiohCardCompletion => FinishedProcessing(yugiohCardCompletion));
 
             // Form the pipeline
-            _articleBufferBlock.LinkTo(_yugiohDataTransformBlock);
-            _yugiohDataTransformBlock.LinkTo(_yugiohCardPublishTransformBlock);
-            _yugiohCardPublishTransformBlock.LinkTo(_publishToQueueActionBlock);
+            _articleBufferBlock.LinkTo(yugiohDataTransformBlock);
+            yugiohDataTransformBlock.LinkTo(yugiohCardPublishTransformBlock);
+            yugiohCardPublishTransformBlock.LinkTo(publishToQueueActionBlock);
         }
 
 
