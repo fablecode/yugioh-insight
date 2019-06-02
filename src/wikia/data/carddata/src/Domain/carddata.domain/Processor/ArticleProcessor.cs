@@ -43,6 +43,7 @@ namespace carddata.domain.Processor
             }
             catch (Exception ex )
             {
+                _logger.LogError(article.Title + "error. Exception: {@Exception}", ex);
                response.Failed = new ArticleException { Article = articleJson, Exception = ex };
             }
 
