@@ -25,7 +25,6 @@ namespace carddata.domain.Processor
             // Data flow options
             var maxDegreeOfParallelism = Environment.ProcessorCount;
             var nonGreedy = new ExecutionDataflowBlockOptions { BoundedCapacity = maxDegreeOfParallelism, MaxDegreeOfParallelism = maxDegreeOfParallelism };
-            var flowComplete = new DataflowLinkOptions { PropagateCompletion = true };
 
             // Pipeline members
             _articleBufferBlock = new BufferBlock<Article>();
@@ -34,9 +33,9 @@ namespace carddata.domain.Processor
             _publishToQueueActionBlock = new ActionBlock<YugiohCardCompletion>(yugiohCardCompletion => FinishedProcessing(yugiohCardCompletion));
 
             // Form the pipeline
-            _articleBufferBlock.LinkTo(_yugiohDataTransformBlock, flowComplete);
-            _yugiohDataTransformBlock.LinkTo(_yugiohCardPublishTransformBlock, flowComplete);
-            _yugiohCardPublishTransformBlock.LinkTo(_publishToQueueActionBlock, flowComplete);
+            _articleBufferBlock.LinkTo(_yugiohDataTransformBlock);
+            _yugiohDataTransformBlock.LinkTo(_yugiohCardPublishTransformBlock);
+            _yugiohCardPublishTransformBlock.LinkTo(_publishToQueueActionBlock);
         }
 
 
