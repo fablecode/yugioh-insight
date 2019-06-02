@@ -5,6 +5,7 @@ using carddata.core.Processor;
 using carddata.domain.Processor;
 using carddata.tests.core;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
@@ -22,7 +23,7 @@ namespace carddata.domain.unit.tests
         public void SetUp()
         {
             _articleDataFlow = Substitute.For<IArticleDataFlow>();
-            _sut = new ArticleProcessor(_articleDataFlow);
+            _sut = new ArticleProcessor(_articleDataFlow, Substitute.For<ILogger<ArticleProcessed>>());
         }
 
         [Test]

@@ -9,6 +9,7 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
 using System;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -66,23 +67,15 @@ namespace carddata.Services
                     var body = ea.Body;
                     var message = Encoding.UTF8.GetString(body);
 
-                    Log.Logger.Information("Message received: {@Message}", message);
-                    Log.Logger.Information("Message processing......");
-
                     var result = await _mediator.Send(new CardInformationConsumer { Message = message });
-
-                    Log.Logger.Information("Message processing complete");
 
 
                     if (result.ArticleConsumerResult.IsSuccessfullyProcessed)
                     {
-                        Log.Logger.Information("Message processing successfully");
-
                         _channel.BasicAck(ea.DeliveryTag, false);
                     }
                     else
                     {
-                        Log.Logger.Information("Message processing failed.");
                         _channel.BasicNack(ea.DeliveryTag, false, false);
                     }
                 }
