@@ -23,7 +23,7 @@ namespace carddata.domain.Processor
             _jobs = new ConcurrentDictionary<long, TaskCompletionSource<ArticleCompletion>>();
 
             // Data flow options
-            var maxDegreeOfParallelism = Environment.ProcessorCount / 2;
+            var maxDegreeOfParallelism = Environment.ProcessorCount;
             var nonGreedy = new ExecutionDataflowBlockOptions { BoundedCapacity = maxDegreeOfParallelism, MaxDegreeOfParallelism = maxDegreeOfParallelism };
             var flowComplete = new DataflowLinkOptions { PropagateCompletion = true };
 
