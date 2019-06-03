@@ -1,14 +1,19 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using articledata.cardinformation.Services;
 using cardprocessor;
 using cardprocessor.application;
 using cardprocessor.application.Configuration;
+using cardprocessor.Extensions.WindowsService;
 using cardprocessor.infrastructure;
+using cardprocessor.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace carddata
 {
@@ -16,7 +21,33 @@ namespace carddata
     {
         static async Task Main(string[] args)
         {
-            var host = new HostBuilder()
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
+
+            var hostBuilder = CreateHostBuilder(args);
+
+            var isService = !(Debugger.IsAttached || args.Contains("--console"));
+
+            if (isService)
+            {
+                var pathToExe = Process.GetCurrentProcess().MainModule?.FileName;
+                var pathToContentRoot = Path.GetDirectoryName(pathToExe);
+                Directory.SetCurrentDirectory(pathToContentRoot);
+            }
+
+            if (isService)
+                await hostBuilder.RunAsServiceAsync();
+            else
+                await hostBuilder.RunConsoleAsync();
+        }
+
+        private static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs ex)
+        {
+            Log.Logger.Error("Unhandled exception occurred. Exception: {@Exception}", ex);
+        }
+
+        private static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return new HostBuilder()
                 .ConfigureLogging((hostContext, config) =>
                 {
                     config.AddConsole();
@@ -36,9 +67,9 @@ namespace carddata
                     config.AddJsonFile("appsettings.json", false, true);
                     config.AddCommandLine(args);
 
-                    #if DEBUG
-                        config.AddUserSecrets<Program>();
-                    #endif
+#if DEBUG
+                    config.AddUserSecrets<Program>();
+#endif
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
@@ -55,14 +86,7 @@ namespace carddata
                     services.AddInfrastructureServices(hostContext.Configuration.GetConnectionString(DbConstants.YgoDatabase));
                 })
                 .UseConsoleLifetime()
-                .Build();
-
-            using (host)
-            {
-                // Start the host
-                await host.StartAsync();
-            }
-
+                .UseSerilog();
         }
     }
 }
