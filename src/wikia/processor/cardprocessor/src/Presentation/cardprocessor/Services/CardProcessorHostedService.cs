@@ -63,7 +63,7 @@ namespace cardprocessor.Services
             _factory = new ConnectionFactory() {HostName = _rabbitMqOptions.Value.Host};
             _connection = _factory.CreateConnection();
             _channel = _connection.CreateModel();
-            _channel.BasicQos(0, 1, false);
+            _channel.BasicQos(0, 20, false);
 
             _cardDataConsumer = new EventingBasicConsumer(_channel);
 

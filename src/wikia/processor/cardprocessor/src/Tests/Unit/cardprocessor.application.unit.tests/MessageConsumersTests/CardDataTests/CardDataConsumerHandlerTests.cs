@@ -11,6 +11,7 @@ using cardprocessor.core.Services;
 using cardprocessor.tests.core;
 using FluentAssertions;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
@@ -36,7 +37,8 @@ namespace cardprocessor.application.unit.tests.MessageConsumersTests.CardDataTes
             (
                 _cardService,
                 _mediator,
-                _cardCommandMapper
+                _cardCommandMapper,
+                Substitute.For<ILogger<CardDataConsumerHandler>>()
             );
         }
 

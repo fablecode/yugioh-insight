@@ -28,22 +28,22 @@ namespace carddata.domain.Processor
 
             try
             {
-                _logger.LogInformation($"{article.Title} Processing... ");
+                _logger.LogInformation($"{article.Title} processing... ");
                 var result = await _articleDataFlow.ProcessDataFlow(article);
 
                 if (result.IsSuccessful)
                 {
-                    _logger.LogInformation($"{article.Title} Processed successfully. ");
+                    _logger.LogInformation($"{article.Title} processed successfully. ");
                     response.IsSuccessfullyProcessed = true;
                 }
                 else
                 {
-                    _logger.LogInformation($"{article.Title} Processing failed. ");
+                    _logger.LogInformation($"{article.Title} processing failed. ");
                 }
             }
             catch (Exception ex )
             {
-                _logger.LogError(article.Title + "error. Exception: {@Exception}", ex);
+                _logger.LogError(article.Title + " error. Exception: {@Exception}", ex);
                response.Failed = new ArticleException { Article = articleJson, Exception = ex };
             }
 
