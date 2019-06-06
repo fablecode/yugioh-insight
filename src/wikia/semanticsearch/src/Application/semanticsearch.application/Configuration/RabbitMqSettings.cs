@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace article.application.Configuration
+namespace semanticsearch.application.Configuration
 {
     public class RabbitMqSettings
     {
@@ -9,6 +8,9 @@ namespace article.application.Configuration
         public string Username { get; set; }
         public string Password { get; set; }
         public string ContentType { get; set; }
+
+        public Dictionary<string, QueueSetting> Queues { get; set; }
+
         public Dictionary<string, ExchangeSetting> Exchanges { get; set; }
     }
 }

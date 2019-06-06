@@ -38,8 +38,17 @@ namespace cardprocessor.application.MessageConsumers.CardData
                     ? await _mediator.Send(await _cardCommandMapper.MapToAddCommand(yugiohCard), cancellationToken)
                     : await _mediator.Send(await _cardCommandMapper.MapToUpdateCommand(yugiohCard, existingCard), cancellationToken);
 
-                cardDataConsumerResult.IsSuccessful = result.IsSuccessful;
-                _logger.LogInformation($"{yugiohCard.Name} processed successfully.");
+
+                if (result.IsSuccessful)
+                {
+                    _logger.LogInformation($"{yugiohCard.Name} processed successfully.");
+
+                    cardDataConsumerResult.IsSuccessful = result.IsSuccessful;
+                }
+                else
+                {
+                    _logger.LogError(yugiohCard.Name + " error. Validation errors: {@ValidationErrors}", result.Errors);
+                }
 
             }
             catch (System.Exception ex)

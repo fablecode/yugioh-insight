@@ -1,0 +1,71 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Core", "1. Core", "{52C9A9A6-CCF4-4578-9C65-CE1B75E072A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domain", "2. Domain", "{CBCEF629-EB9A-40C1-8C19-D49C28E86F1A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Application", "3. Application", "{D3D152C2-5F2C-4033-8789-0C8CADCC323D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Infrastructure", "4. Infrastructure", "{8F523588-8396-4C9C-805A-8DD13F5BD7A4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Presentation", "5. Presentation", "{5B829416-A55A-4DB5-82A0-EC82CAC799A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Tests", "6. Tests", "{699626CF-EAD2-4533-A499-7666B65FBAEE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{5B8DED4E-3D5B-4F3C-8279-9FFABCD48D7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semanticsearch.domain", "src\Domain\semanticsearch.domain\semanticsearch.domain.csproj", "{010D95C8-3021-4C35-9657-E9C47337174F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semanticsearch.card", "src\Presentation\semanticsearch.card\semanticsearch.card.csproj", "{A5E57128-A31F-451C-8F52-39782DA2E7D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semanticsearch.application", "src\Application\semanticsearch.application\semanticsearch.application.csproj", "{66726648-1D7F-49DD-A6A0-15A8049A8013}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semanticsearch.infrastructure", "src\Infrastructure\semanticsearch.infrastructure\semanticsearch.infrastructure.csproj", "{8C229300-FA13-4E87-84CF-0EE8E309D298}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semanticsearch.core", "src\Core\semanticsearch.core\semanticsearch.core.csproj", "{4E8A599E-2E5F-4AAD-969A-3686571F64E2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{010D95C8-3021-4C35-9657-E9C47337174F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{010D95C8-3021-4C35-9657-E9C47337174F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{010D95C8-3021-4C35-9657-E9C47337174F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{010D95C8-3021-4C35-9657-E9C47337174F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5E57128-A31F-451C-8F52-39782DA2E7D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5E57128-A31F-451C-8F52-39782DA2E7D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5E57128-A31F-451C-8F52-39782DA2E7D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5E57128-A31F-451C-8F52-39782DA2E7D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66726648-1D7F-49DD-A6A0-15A8049A8013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66726648-1D7F-49DD-A6A0-15A8049A8013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66726648-1D7F-49DD-A6A0-15A8049A8013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66726648-1D7F-49DD-A6A0-15A8049A8013}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C229300-FA13-4E87-84CF-0EE8E309D298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C229300-FA13-4E87-84CF-0EE8E309D298}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C229300-FA13-4E87-84CF-0EE8E309D298}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C229300-FA13-4E87-84CF-0EE8E309D298}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E8A599E-2E5F-4AAD-969A-3686571F64E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E8A599E-2E5F-4AAD-969A-3686571F64E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E8A599E-2E5F-4AAD-969A-3686571F64E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E8A599E-2E5F-4AAD-969A-3686571F64E2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5B8DED4E-3D5B-4F3C-8279-9FFABCD48D7A} = {699626CF-EAD2-4533-A499-7666B65FBAEE}
+		{010D95C8-3021-4C35-9657-E9C47337174F} = {CBCEF629-EB9A-40C1-8C19-D49C28E86F1A}
+		{A5E57128-A31F-451C-8F52-39782DA2E7D2} = {5B829416-A55A-4DB5-82A0-EC82CAC799A3}
+		{66726648-1D7F-49DD-A6A0-15A8049A8013} = {D3D152C2-5F2C-4033-8789-0C8CADCC323D}
+		{8C229300-FA13-4E87-84CF-0EE8E309D298} = {8F523588-8396-4C9C-805A-8DD13F5BD7A4}
+		{4E8A599E-2E5F-4AAD-969A-3686571F64E2} = {52C9A9A6-CCF4-4578-9C65-CE1B75E072A5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14E97D5E-1613-4A78-A143-A153F534E62E}
+	EndGlobalSection
+EndGlobal
