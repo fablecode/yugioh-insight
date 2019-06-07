@@ -4,7 +4,7 @@ using semanticsearch.core.Search;
 
 namespace semanticsearch.core.Model
 {
-    public class SemanticSearchBatchTaskResult
+    public class SemanticSearchCardTaskResult
     {
         public bool IsSuccessful { get; set; }
 
@@ -12,6 +12,6 @@ namespace semanticsearch.core.Model
 
         public int Processed { get; set; }
 
-        public List<SemanticSearchException> Failed { get; set; } = new List<SemanticSearchException>();
+        public List<SemanticCardPublishException> Failed { get; set; } = new List<SemanticCardPublishException>();
     }
 }

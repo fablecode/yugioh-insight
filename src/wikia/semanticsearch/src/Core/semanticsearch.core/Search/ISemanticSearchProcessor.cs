@@ -5,6 +5,6 @@ namespace semanticsearch.core.Search
 {
     public interface ISemanticSearchProcessor
     {
-        Task<SemanticSearchBatchTaskResult> ProcessUrl(string category, string url);
+        Task<SemanticSearchCardTaskResult> ProcessUrl(string url);
     }
 }

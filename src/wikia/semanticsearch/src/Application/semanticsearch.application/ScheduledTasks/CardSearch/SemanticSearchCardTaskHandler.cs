@@ -34,7 +34,7 @@ namespace semanticsearch.application.ScheduledTasks.CardSearch
             {
                 try
                 {
-                    await _semanticSearchProcessor.ProcessUrl(category, url);
+                    await _semanticSearchProcessor.ProcessUrl(url);
                 }
                 catch (Exception ex)
                 {

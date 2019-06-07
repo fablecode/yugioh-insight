@@ -2,7 +2,7 @@
 
 namespace semanticsearch.core.Exceptions
 {
-    public class SemanticSearchException
+    public class SemanticCardPublishException
     {
         public string Url { get; set; }
 

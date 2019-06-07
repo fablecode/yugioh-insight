@@ -9,17 +9,17 @@ namespace semanticsearch.domain.Search
     public class SemanticSearchProcessor : ISemanticSearchProcessor
     {
         private readonly ISemanticSearchProducer _semanticSearchProducer;
-        private readonly ISemanticSearchPublish _semanticSearchPublish;
+        private readonly ISemanticSearchConsumer _semanticSearchConsumer;
 
-        public SemanticSearchProcessor(ISemanticSearchProducer semanticSearchProducer, ISemanticSearchPublish semanticSearchPublish)
+        public SemanticSearchProcessor(ISemanticSearchProducer semanticSearchProducer, ISemanticSearchConsumer semanticSearchConsumer)
         {
             _semanticSearchProducer = semanticSearchProducer;
-            _semanticSearchPublish = semanticSearchPublish;
+            _semanticSearchConsumer = semanticSearchConsumer;
         }
 
-        public async Task<SemanticSearchBatchTaskResult> ProcessUrl(string category, string url)
+        public async Task<SemanticSearchCardTaskResult> ProcessUrl(string url)
         {
-            var response = new SemanticSearchBatchTaskResult { Url = url };
+            var response = new SemanticSearchCardTaskResult { Url = url };
 
             // Data flow options
             var processorCount = Environment.ProcessorCount;
@@ -28,18 +28,22 @@ namespace semanticsearch.domain.Search
 
             // Pipeline members
             var cardBufferBlock = new BufferBlock<SemanticCard>();
-            var cardPublishTransformBlock = new TransformBlock<SemanticCard, SemanticSearchBatchTaskResult>(semanticCards => _semanticSearchPublish.Publish(category, semanticCards), nonGreedy);
-            var cardActionBlock = new ActionBlock<SemanticSearchBatchTaskResult>(delegate (SemanticSearchBatchTaskResult result)
+            var cardPublishTransformBlock = new TransformBlock<SemanticCard, SemanticCardPublishResult>(semanticCard => _semanticSearchConsumer.Consumer(semanticCard), nonGreedy);
+            var cardActionBlock = new ActionBlock<SemanticCardPublishResult>(delegate (SemanticCardPublishResult result)
             {
-                response.Processed += result.Processed;
-                response.Failed.AddRange(result.Failed);
+                if(result.IsSuccessful)
+                    response.Processed += 1;
+                else
+                {
+                    response.Failed.Add(result.Exception);
+                }
             });
 
             // Form the pipeline
             cardBufferBlock.LinkTo(cardPublishTransformBlock, flowComplete);
             cardPublishTransformBlock.LinkTo(cardActionBlock, flowComplete);
 
-            // Publish "Category" and generate article batch data
+            // Consumer "Category" and generate article batch data
             await _semanticSearchProducer.Producer(url, cardBufferBlock);
 
             // Mark the head of the pipeline as complete. The continuation tasks  
