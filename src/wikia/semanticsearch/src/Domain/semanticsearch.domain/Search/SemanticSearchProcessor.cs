@@ -28,7 +28,7 @@ namespace semanticsearch.domain.Search
 
             // Pipeline members
             var cardBufferBlock = new BufferBlock<SemanticCard>();
-            var cardPublishTransformBlock = new TransformBlock<SemanticCard, SemanticCardPublishResult>(semanticCard => _semanticSearchConsumer.Consumer(semanticCard), nonGreedy);
+            var cardPublishTransformBlock = new TransformBlock<SemanticCard, SemanticCardPublishResult>(semanticCard => _semanticSearchConsumer.Process(semanticCard), nonGreedy);
             var cardActionBlock = new ActionBlock<SemanticCardPublishResult>(delegate (SemanticCardPublishResult result)
             {
                 if(result.IsSuccessful)
@@ -43,7 +43,7 @@ namespace semanticsearch.domain.Search
             cardBufferBlock.LinkTo(cardPublishTransformBlock, flowComplete);
             cardPublishTransformBlock.LinkTo(cardActionBlock, flowComplete);
 
-            // Consumer "Category" and generate article batch data
+            // Process "Category" and generate article batch data
             await _semanticSearchProducer.Producer(url, cardBufferBlock);
 
             // Mark the head of the pipeline as complete. The continuation tasks  

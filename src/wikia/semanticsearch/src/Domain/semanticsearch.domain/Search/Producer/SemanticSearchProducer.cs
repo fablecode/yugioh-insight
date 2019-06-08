@@ -53,7 +53,7 @@ namespace semanticsearch.domain.Search.Producer
 
                 if (nextLink != null)
                 {
-                    var hrefLink = $"{uri.Host}{nextLink.Attributes["href"].Value}";
+                    var hrefLink = $"{uri.GetLeftPart(UriPartial.Authority)}{nextLink.Attributes["href"].Value}";
 
                     hrefLink = WebUtility.HtmlDecode(hrefLink);
 

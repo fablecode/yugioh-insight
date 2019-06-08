@@ -33,12 +33,12 @@ namespace semanticsearch.card.Services
             Services = services;
             _options = options;
             _logger = logger;
+            ConfigureSerilog();
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Hosted Service is starting.");
-            ConfigureSerilog();
             await ConfigureQuartz(cancellationToken);
         }
 

@@ -5,6 +5,6 @@ namespace semanticsearch.core.Search
 {
     public interface ISemanticSearchConsumer
     {
-        Task<SemanticCardPublishResult> Consumer(SemanticCard semanticCard);
+        Task<SemanticCardPublishResult> Process(SemanticCard semanticCard);
     }
 }
