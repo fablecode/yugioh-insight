@@ -17,15 +17,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Tests", "6. Tests", "{69
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{5B8DED4E-3D5B-4F3C-8279-9FFABCD48D7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semanticsearch.domain", "src\Domain\semanticsearch.domain\semanticsearch.domain.csproj", "{010D95C8-3021-4C35-9657-E9C47337174F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.domain", "src\Domain\semanticsearch.domain\semanticsearch.domain.csproj", "{010D95C8-3021-4C35-9657-E9C47337174F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semanticsearch.card", "src\Presentation\semanticsearch.card\semanticsearch.card.csproj", "{A5E57128-A31F-451C-8F52-39782DA2E7D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.card", "src\Presentation\semanticsearch.card\semanticsearch.card.csproj", "{A5E57128-A31F-451C-8F52-39782DA2E7D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semanticsearch.application", "src\Application\semanticsearch.application\semanticsearch.application.csproj", "{66726648-1D7F-49DD-A6A0-15A8049A8013}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.application", "src\Application\semanticsearch.application\semanticsearch.application.csproj", "{66726648-1D7F-49DD-A6A0-15A8049A8013}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semanticsearch.infrastructure", "src\Infrastructure\semanticsearch.infrastructure\semanticsearch.infrastructure.csproj", "{8C229300-FA13-4E87-84CF-0EE8E309D298}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.infrastructure", "src\Infrastructure\semanticsearch.infrastructure\semanticsearch.infrastructure.csproj", "{8C229300-FA13-4E87-84CF-0EE8E309D298}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semanticsearch.core", "src\Core\semanticsearch.core\semanticsearch.core.csproj", "{4E8A599E-2E5F-4AAD-969A-3686571F64E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.core", "src\Core\semanticsearch.core\semanticsearch.core.csproj", "{4E8A599E-2E5F-4AAD-969A-3686571F64E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semanticsearch.domain.unit.tests", "src\Tests\Unit\semanticsearch.domain.unit.tests\semanticsearch.domain.unit.tests.csproj", "{C1D01D21-C110-46E5-AA19-CE349F4E7202}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{4E8A599E-2E5F-4AAD-969A-3686571F64E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E8A599E-2E5F-4AAD-969A-3686571F64E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E8A599E-2E5F-4AAD-969A-3686571F64E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1D01D21-C110-46E5-AA19-CE349F4E7202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1D01D21-C110-46E5-AA19-CE349F4E7202}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1D01D21-C110-46E5-AA19-CE349F4E7202}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1D01D21-C110-46E5-AA19-CE349F4E7202}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{66726648-1D7F-49DD-A6A0-15A8049A8013} = {D3D152C2-5F2C-4033-8789-0C8CADCC323D}
 		{8C229300-FA13-4E87-84CF-0EE8E309D298} = {8F523588-8396-4C9C-805A-8DD13F5BD7A4}
 		{4E8A599E-2E5F-4AAD-969A-3686571F64E2} = {52C9A9A6-CCF4-4578-9C65-CE1B75E072A5}
+		{C1D01D21-C110-46E5-AA19-CE349F4E7202} = {5B8DED4E-3D5B-4F3C-8279-9FFABCD48D7A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {14E97D5E-1613-4A78-A143-A153F534E62E}

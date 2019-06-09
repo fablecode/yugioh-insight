@@ -1,9 +1,7 @@
-﻿using HtmlAgilityPack;
-using semanticsearch.core.Model;
+﻿using semanticsearch.core.Model;
 using semanticsearch.core.Search;
 using semanticsearch.domain.WebPage;
 using System;
-using System.Net;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 
@@ -11,11 +9,13 @@ namespace semanticsearch.domain.Search.Producer
 {
     public class SemanticSearchProducer : ISemanticSearchProducer
     {
-        private readonly IHtmlWebPage _htmlWebPage;
+        private readonly ISemanticSearchResultsWebPage _semanticSearchResults;
+        private readonly ISemanticCardSearchResultsWebPage _semanticCardSearchResults;
 
-        public SemanticSearchProducer(IHtmlWebPage htmlWebPage)
+        public SemanticSearchProducer(ISemanticSearchResultsWebPage semanticSearchResults, ISemanticCardSearchResultsWebPage semanticCardSearchResults)
         {
-            _htmlWebPage = htmlWebPage;
+            _semanticSearchResults = semanticSearchResults;
+            _semanticCardSearchResults = semanticCardSearchResults;
         }
 
         public async Task Producer(string url, ITargetBlock<SemanticCard> targetBlock)
@@ -26,44 +26,32 @@ namespace semanticsearch.domain.Search.Producer
             if (targetBlock == null)
                 throw new ArgumentException(nameof(targetBlock));
 
-            var uri = new Uri(url);
-
-            HtmlNode nextLink;
             var nextPageUrl = url;
 
             do
             {
-                var doc = _htmlWebPage.Load(nextPageUrl);
+                _semanticSearchResults.Load(nextPageUrl);
 
-                var tableRows = doc.DocumentNode.SelectNodes("//table[@class='sortable wikitable smwtable']/tbody/tr") ?? doc.DocumentNode.SelectNodes("//table[@class='sortable wikitable smwtable card-list']/tbody/tr");
-
-                foreach (var row in tableRows)
+                foreach (var row in _semanticSearchResults.TableRows)
                 {
                     var semanticCard = new SemanticCard
                     {
-                        Name = row.SelectSingleNode("td[position() = 1]")?.InnerText.Trim(),
-                        Url = row.SelectSingleNode("td[position() = 1]/a")?.Attributes["href"]?.Value,
+                        Name = _semanticCardSearchResults.Name(row),
+                        Url = _semanticCardSearchResults.Url(row, _semanticSearchResults.CurrentWebPageUri)
                     };
 
-                    if (!string.IsNullOrWhiteSpace(semanticCard.Name))
+                    if (!string.IsNullOrWhiteSpace(semanticCard.Name) && !string.IsNullOrWhiteSpace(semanticCard.Url))
                     {
-                        semanticCard.Url = $"{uri.GetLeftPart(UriPartial.Authority)}{semanticCard.Url}";
                         await targetBlock.SendAsync(semanticCard);
                     }
                 }
 
-                nextLink = doc.DocumentNode.SelectSingleNode("//a[contains(text(), 'Next')]");
-
-                if (nextLink != null)
+                if (_semanticSearchResults.HasNextPage)
                 {
-                    var hrefLink = $"{uri.GetLeftPart(UriPartial.Authority)}{nextLink.Attributes["href"].Value}";
-
-                    hrefLink = WebUtility.HtmlDecode(hrefLink);
-
-                    nextPageUrl = hrefLink;
+                    nextPageUrl = _semanticSearchResults.NextPageLink();
                 }
 
-            } while (nextLink != null);
+            } while (_semanticSearchResults.HasNextPage);
 
             // Signals no more messages to produced or accepted.
             targetBlock.Complete();
