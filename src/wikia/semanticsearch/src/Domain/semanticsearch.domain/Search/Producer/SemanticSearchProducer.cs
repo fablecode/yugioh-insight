@@ -46,7 +46,10 @@ namespace semanticsearch.domain.Search.Producer
                     };
 
                     if (!string.IsNullOrWhiteSpace(semanticCard.Name))
+                    {
+                        semanticCard.Url = $"{uri.GetLeftPart(UriPartial.Authority)}{semanticCard.Url}";
                         await targetBlock.SendAsync(semanticCard);
+                    }
                 }
 
                 nextLink = doc.DocumentNode.SelectSingleNode("//a[contains(text(), 'Next')]");
