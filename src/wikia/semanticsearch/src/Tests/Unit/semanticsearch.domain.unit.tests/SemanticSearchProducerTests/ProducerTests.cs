@@ -52,6 +52,7 @@ namespace semanticsearch.domain.unit.tests.SemanticSearchProducerTests
             // Assert
             act.Should().Throw<ArgumentException>();
         }
+
         [Test]
         public async Task Given_A_Url_With_Only_One_Page_Should_Not_Invoke_NextPageLink()
         {
@@ -138,5 +139,29 @@ namespace semanticsearch.domain.unit.tests.SemanticSearchProducerTests
             // Assert
             _semanticSearchResultsWebPage.Received(1).NextPageLink();
         }
+
+        [Test]
+        public async Task Given_A_Url_With_Only_One_Page_And_One_SemanticCard_BufferBlock_Count_Should_Be_1()
+        {
+            // Arrange
+            const int expected = 1;
+            var targetBlock = new BufferBlock<SemanticCard>();
+            var tableRows = new HtmlNodeCollection(new HtmlNode(HtmlNodeType.Document, new HtmlDocument(), 0))
+            {
+                new HtmlNode(HtmlNodeType.Element, new HtmlDocument(), 1)
+            };
+
+            _semanticSearchResultsWebPage.Load(Arg.Any<string>());
+            _semanticSearchResultsWebPage.TableRows.Returns(tableRows);
+            _semanticCardSearchResultsWebPage.Name(Arg.Any<HtmlNode>()).Returns("Card Name");
+            _semanticCardSearchResultsWebPage.Url(Arg.Any<HtmlNode>(), Arg.Any<Uri>()).Returns("https://www.youtube.com");
+
+            // Act
+            await _sut.Producer("https://www.youtube.com", targetBlock);
+
+            // Assert
+            targetBlock.Count.Should().Be(expected);
+        }
+
     }
 }

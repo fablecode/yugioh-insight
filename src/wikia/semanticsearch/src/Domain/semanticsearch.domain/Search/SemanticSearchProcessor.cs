@@ -10,6 +10,8 @@ namespace semanticsearch.domain.Search
     {
         private readonly ISemanticSearchProducer _semanticSearchProducer;
         private readonly ISemanticSearchConsumer _semanticSearchConsumer;
+        public BufferBlock<SemanticCard> CardBufferBlock { get; private set; }
+        public ActionBlock<SemanticCardPublishResult> CardActionBlock { get; private set; }
 
         public SemanticSearchProcessor(ISemanticSearchProducer semanticSearchProducer, ISemanticSearchConsumer semanticSearchConsumer)
         {
@@ -27,9 +29,9 @@ namespace semanticsearch.domain.Search
             var flowComplete = new DataflowLinkOptions { PropagateCompletion = true };
 
             // Pipeline members
-            var cardBufferBlock = new BufferBlock<SemanticCard>();
+            CardBufferBlock = new BufferBlock<SemanticCard>();
             var cardPublishTransformBlock = new TransformBlock<SemanticCard, SemanticCardPublishResult>(semanticCard => _semanticSearchConsumer.Process(semanticCard), nonGreedy);
-            var cardActionBlock = new ActionBlock<SemanticCardPublishResult>(delegate (SemanticCardPublishResult result)
+            CardActionBlock = new ActionBlock<SemanticCardPublishResult>(delegate (SemanticCardPublishResult result)
             {
                 if(result.IsSuccessful)
                     response.Processed += 1;
@@ -40,16 +42,18 @@ namespace semanticsearch.domain.Search
             });
 
             // Form the pipeline
-            cardBufferBlock.LinkTo(cardPublishTransformBlock, flowComplete);
-            cardPublishTransformBlock.LinkTo(cardActionBlock, flowComplete);
+            CardBufferBlock.LinkTo(cardPublishTransformBlock, flowComplete);
+            cardPublishTransformBlock.LinkTo(CardActionBlock, flowComplete);
 
             // Process "Category" and generate article batch data
-            await _semanticSearchProducer.Producer(url, cardBufferBlock);
+            await _semanticSearchProducer.Producer(url, CardBufferBlock);
 
             // Mark the head of the pipeline as complete. The continuation tasks  
             // propagate completion through the pipeline as each part of the  
             // pipeline finishes.
-            await cardActionBlock.Completion;
+            await CardActionBlock.Completion;
+
+            response.IsSuccessful = true;
 
             return response;
         }
