@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.infrastructu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.core", "src\Core\semanticsearch.core\semanticsearch.core.csproj", "{4E8A599E-2E5F-4AAD-969A-3686571F64E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semanticsearch.domain.unit.tests", "src\Tests\Unit\semanticsearch.domain.unit.tests\semanticsearch.domain.unit.tests.csproj", "{C1D01D21-C110-46E5-AA19-CE349F4E7202}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.domain.unit.tests", "src\Tests\Unit\semanticsearch.domain.unit.tests\semanticsearch.domain.unit.tests.csproj", "{C1D01D21-C110-46E5-AA19-CE349F4E7202}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semanticsearch.application.unit.tests", "src\Tests\Unit\semanticsearch.application.unit.tests\semanticsearch.application.unit.tests.csproj", "{9D1A35AD-646D-4C30-9333-95F08F04AA2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{C1D01D21-C110-46E5-AA19-CE349F4E7202}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1D01D21-C110-46E5-AA19-CE349F4E7202}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1D01D21-C110-46E5-AA19-CE349F4E7202}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D1A35AD-646D-4C30-9333-95F08F04AA2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D1A35AD-646D-4C30-9333-95F08F04AA2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D1A35AD-646D-4C30-9333-95F08F04AA2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D1A35AD-646D-4C30-9333-95F08F04AA2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +77,7 @@ Global
 		{8C229300-FA13-4E87-84CF-0EE8E309D298} = {8F523588-8396-4C9C-805A-8DD13F5BD7A4}
 		{4E8A599E-2E5F-4AAD-969A-3686571F64E2} = {52C9A9A6-CCF4-4578-9C65-CE1B75E072A5}
 		{C1D01D21-C110-46E5-AA19-CE349F4E7202} = {5B8DED4E-3D5B-4F3C-8279-9FFABCD48D7A}
+		{9D1A35AD-646D-4C30-9333-95F08F04AA2D} = {5B8DED4E-3D5B-4F3C-8279-9FFABCD48D7A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {14E97D5E-1613-4A78-A143-A153F534E62E}

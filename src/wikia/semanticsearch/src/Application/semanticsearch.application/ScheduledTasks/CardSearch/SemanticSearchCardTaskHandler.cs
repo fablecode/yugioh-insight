@@ -1,11 +1,9 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using Microsoft.Extensions.Logging;
+﻿using MediatR;
 using Microsoft.Extensions.Options;
 using semanticsearch.application.Configuration;
 using semanticsearch.core.Search;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace semanticsearch.application.ScheduledTasks.CardSearch
 {
@@ -13,34 +11,26 @@ namespace semanticsearch.application.ScheduledTasks.CardSearch
     {
         private readonly IOptions<AppSettings> _appSettingsOptions;
         private readonly ISemanticSearchProcessor _semanticSearchProcessor;
-        private readonly ILogger<SemanticSearchCardTaskHandler> _logger;
 
         public SemanticSearchCardTaskHandler
         (
             IOptions<AppSettings> appSettingsOptions, 
-            ISemanticSearchProcessor semanticSearchProcessor, 
-            ILogger<SemanticSearchCardTaskHandler> logger
+            ISemanticSearchProcessor semanticSearchProcessor
         )
         {
             _appSettingsOptions = appSettingsOptions;
             _semanticSearchProcessor = semanticSearchProcessor;
-            _logger = logger;
         }
         public async Task<SemanticSearchCardTaskResult> Handle(SemanticSearchCardTask request, CancellationToken cancellationToken)
         {
             var semanticSearchCardTaskResult = new SemanticSearchCardTaskResult();
 
-            foreach (var (category, url) in _appSettingsOptions.Value.CardSearchUrls)
+            foreach (var (_, url) in _appSettingsOptions.Value.CardSearchUrls)
             {
-                try
-                {
-                    await _semanticSearchProcessor.ProcessUrl(url);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError("Failed to process semantic url: @{SemanticUrl}. Exception: @{Exception}", url, ex);
-                }
+                await _semanticSearchProcessor.ProcessUrl(url);
             }
+
+            semanticSearchCardTaskResult.IsSuccessful = true;
 
             return semanticSearchCardTaskResult;
         }
