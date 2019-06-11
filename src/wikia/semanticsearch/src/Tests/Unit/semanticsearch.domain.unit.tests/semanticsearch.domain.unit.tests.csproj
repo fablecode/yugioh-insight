@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Domain\semanticsearch.domain\semanticsearch.domain.csproj" />
+    <ProjectReference Include="..\..\semanticsearch.tests.core\semanticsearch.tests.core.csproj" />
   </ItemGroup>
 
 </Project>

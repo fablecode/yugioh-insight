@@ -6,10 +6,12 @@ using NUnit.Framework;
 using semanticsearch.core.Model;
 using semanticsearch.core.Search;
 using semanticsearch.domain.Search;
+using semanticsearch.tests.core;
 
 namespace semanticsearch.domain.unit.tests
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class SemanticSearchProcessorTests
     {
         private ISemanticSearchProducer _semanticSearchProducer;

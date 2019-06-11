@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Application\semanticsearch.application\semanticsearch.application.csproj" />
+    <ProjectReference Include="..\..\semanticsearch.tests.core\semanticsearch.tests.core.csproj" />
   </ItemGroup>
 
 </Project>

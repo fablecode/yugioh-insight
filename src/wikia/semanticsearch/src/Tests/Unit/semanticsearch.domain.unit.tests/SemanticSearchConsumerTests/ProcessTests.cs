@@ -5,10 +5,12 @@ using NUnit.Framework;
 using semanticsearch.core.Model;
 using semanticsearch.domain.Messaging.Exchanges;
 using semanticsearch.domain.Search.Consumer;
+using semanticsearch.tests.core;
 
 namespace semanticsearch.domain.unit.tests.SemanticSearchConsumerTests
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class ProcessTests
     {
         private SemanticSearchConsumer _sut;

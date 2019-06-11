@@ -8,10 +8,12 @@ using System;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using HtmlAgilityPack;
+using semanticsearch.tests.core;
 
 namespace semanticsearch.domain.unit.tests.SemanticSearchProducerTests
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class ProducerTests
     {
         private SemanticSearchProducer _sut;

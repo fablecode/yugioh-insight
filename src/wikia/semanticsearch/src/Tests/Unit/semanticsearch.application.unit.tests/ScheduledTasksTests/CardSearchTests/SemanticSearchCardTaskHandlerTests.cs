@@ -8,10 +8,12 @@ using semanticsearch.core.Search;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using semanticsearch.tests.core;
 
 namespace semanticsearch.application.unit.tests.ScheduledTasksTests.CardSearchTests
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class SemanticSearchCardTaskHandlerTests
     {
         private IOptions<AppSettings> _appSettingsOptions;
