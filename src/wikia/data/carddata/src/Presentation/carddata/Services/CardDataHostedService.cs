@@ -23,9 +23,11 @@ namespace carddata.Services
         private readonly IOptions<RabbitMqSettings> _rabbitMqOptions;
         private readonly IOptions<AppSettings> _appSettingsOptions;
         private readonly IMediator _mediator;
+
         private ConnectionFactory _factory;
         private IConnection _connection;
-        private IModel _channel;
+        private IModel _cardArticleChannel;
+
         private EventingBasicConsumer _cardArticleConsumer;
 
         public CardDataHostedService
@@ -54,13 +56,20 @@ namespace carddata.Services
         {
             _factory = new ConnectionFactory() { HostName = _rabbitMqOptions.Value.Host };
             _connection = _factory.CreateConnection();
-            _channel = _connection.CreateModel();
 
-            _channel.BasicQos(0, 20, false);
+            _cardArticleConsumer = CreateCardArticleConsumer(_connection);
 
-            _cardArticleConsumer = new EventingBasicConsumer(_channel);
+            return Task.CompletedTask;
+        }
 
-            _cardArticleConsumer.Received += async (model, ea) =>
+        private EventingBasicConsumer CreateCardArticleConsumer(IConnection connection)
+        {
+            _cardArticleChannel = connection.CreateModel();
+            _cardArticleChannel.BasicQos(0, 20, false);
+
+            var consumer = new EventingBasicConsumer(_cardArticleChannel);
+
+            consumer.Received += async (model, ea) =>
             {
                 try
                 {
@@ -72,11 +81,11 @@ namespace carddata.Services
 
                     if (result.ArticleConsumerResult.IsSuccessfullyProcessed)
                     {
-                        _channel.BasicAck(ea.DeliveryTag, false);
+                        _cardArticleChannel.BasicAck(ea.DeliveryTag, false);
                     }
                     else
                     {
-                        _channel.BasicNack(ea.DeliveryTag, false, false);
+                        _cardArticleChannel.BasicNack(ea.DeliveryTag, false, false);
                     }
                 }
                 catch (Exception ex)
@@ -85,39 +94,39 @@ namespace carddata.Services
                 }
             };
 
-            _cardArticleConsumer.Shutdown += OnConsumerShutdown;
-            _cardArticleConsumer.Registered += OnConsumerRegistered;
-            _cardArticleConsumer.Unregistered += OnConsumerUnregistered;
-            _cardArticleConsumer.ConsumerCancelled += OnConsumerConsumerCancelled;
+            consumer.Shutdown += OnCardArticleConsumerShutdown;
+            consumer.Registered += OnCardArticleConsumerRegistered;
+            consumer.Unregistered += OnCardArticleConsumerUnregistered;
+            consumer.ConsumerCancelled += OnCardArticleConsumerCancelled;
 
-            _channel.BasicConsume(queue: "card-article",
+            _cardArticleChannel.BasicConsume(queue: "card-article",
                 autoAck: false,
-                consumer: _cardArticleConsumer);
+                consumer: consumer);
 
-            return Task.CompletedTask;
+            return consumer;
         }
 
         public override void Dispose()
         {
+            _cardArticleChannel.Close();
             _connection.Close();
-            _channel.Close();
             base.Dispose();
         }
 
-        private void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e)
+        private void OnCardArticleConsumerCancelled(object sender, ConsumerEventArgs e)
         {
             Log.Logger.Information("Consumer 'card-article' Cancelled");
         }
 
-        private void OnConsumerUnregistered(object sender, ConsumerEventArgs e)
+        private void OnCardArticleConsumerUnregistered(object sender, ConsumerEventArgs e)
         {
             Log.Logger.Information("Consumer 'card-article' Unregistered");}
 
-        private void OnConsumerRegistered(object sender, ConsumerEventArgs e)
+        private void OnCardArticleConsumerRegistered(object sender, ConsumerEventArgs e)
         {
             Log.Logger.Information("Consumer 'card-article' Registered");
         }
-        private void OnConsumerShutdown(object sender, ShutdownEventArgs e)
+        private void OnCardArticleConsumerShutdown(object sender, ShutdownEventArgs e)
         {
             Log.Logger.Information("Consumer 'card-article' Shutdown");
         }
