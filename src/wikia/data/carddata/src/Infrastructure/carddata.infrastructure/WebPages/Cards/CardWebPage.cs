@@ -19,7 +19,7 @@ namespace carddata.infrastructure.WebPages.Cards
 
         public ArticleProcessed GetYugiohCard(Article article)
         {
-            var card = GetYugiohCard(new Uri(article.Url));
+            var card = GetYugiohCard(article.Url);
 
             return new ArticleProcessed {Article = article, Card = card};
         }
