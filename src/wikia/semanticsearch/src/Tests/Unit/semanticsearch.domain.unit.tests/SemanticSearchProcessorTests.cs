@@ -48,8 +48,8 @@ namespace semanticsearch.domain.unit.tests
             // Act
             Task.Delay(2000).ContinueWith(async t =>
             {
-                await _sut.CardBufferBlock.SendAsync(new SemanticCard { Name = "Test semantic card"});
-                await _sut.CardBufferBlock.SendAsync(new SemanticCard { Name = "Test semantic card"});
+                await _sut.CardBufferBlock.SendAsync(new SemanticCard { Title = "Test semantic card"});
+                await _sut.CardBufferBlock.SendAsync(new SemanticCard { Title = "Test semantic card"});
                 await Task.Delay(1000);
                 _sut.CardActionBlock.Complete();
             });

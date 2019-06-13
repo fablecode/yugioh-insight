@@ -9,7 +9,6 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
 using System;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,6 +17,9 @@ namespace carddata.Services
 {
     public class CardDataHostedService : BackgroundService
     {
+        private const string CardArticleQueue = "card-article";
+        private const string SemanticCardQueue = "semantic-card";
+
         public IServiceProvider Services { get; }
 
         private readonly IOptions<RabbitMqSettings> _rabbitMqOptions;
@@ -90,7 +92,7 @@ namespace carddata.Services
                 }
                 catch (Exception ex)
                 {
-                    Log.Logger.Error("RabbitMq Consumer: card-article exception. Exception: {@Exception}", ex);
+                    Log.Logger.Error("RabbitMq Consumer: " + CardArticleQueue + " exception. Exception: {@Exception}", ex);
                 }
             };
 
@@ -99,7 +101,11 @@ namespace carddata.Services
             consumer.Unregistered += OnCardArticleConsumerUnregistered;
             consumer.ConsumerCancelled += OnCardArticleConsumerCancelled;
 
-            _cardArticleChannel.BasicConsume(queue: "card-article",
+            _cardArticleChannel.BasicConsume(queue: CardArticleQueue,
+                autoAck: false,
+                consumer: consumer);
+
+            _cardArticleChannel.BasicConsume(queue: SemanticCardQueue,
                 autoAck: false,
                 consumer: consumer);
 
@@ -113,22 +119,22 @@ namespace carddata.Services
             base.Dispose();
         }
 
-        private void OnCardArticleConsumerCancelled(object sender, ConsumerEventArgs e)
+        private static void OnCardArticleConsumerCancelled(object sender, ConsumerEventArgs e)
         {
-            Log.Logger.Information("Consumer 'card-article' Cancelled");
+            Log.Logger.Information($"Consumer '{CardArticleQueue}' Cancelled");
         }
 
-        private void OnCardArticleConsumerUnregistered(object sender, ConsumerEventArgs e)
+        private static void OnCardArticleConsumerUnregistered(object sender, ConsumerEventArgs e)
         {
-            Log.Logger.Information("Consumer 'card-article' Unregistered");}
+            Log.Logger.Information($"Consumer '{CardArticleQueue}' Unregistered");}
 
-        private void OnCardArticleConsumerRegistered(object sender, ConsumerEventArgs e)
+        private static void OnCardArticleConsumerRegistered(object sender, ConsumerEventArgs e)
         {
-            Log.Logger.Information("Consumer 'card-article' Registered");
+            Log.Logger.Information($"Consumer '{CardArticleQueue}' Registered");
         }
-        private void OnCardArticleConsumerShutdown(object sender, ShutdownEventArgs e)
+        private static void OnCardArticleConsumerShutdown(object sender, ShutdownEventArgs e)
         {
-            Log.Logger.Information("Consumer 'card-article' Shutdown");
+            Log.Logger.Information($"Consumer '{CardArticleQueue}' Shutdown");
         }
 
         private void ConfigureSerilog()

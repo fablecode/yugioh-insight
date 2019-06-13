@@ -13,11 +13,11 @@ namespace carddata.domain.Processor
     public class ArticleDataFlow : IArticleDataFlow
     {
         private readonly BufferBlock<Article> _articleBufferBlock;
-        private readonly ConcurrentDictionary<long, TaskCompletionSource<ArticleCompletion>> _jobs;
+        private readonly ConcurrentDictionary<Guid, TaskCompletionSource<ArticleCompletion>> _jobs;
 
         public ArticleDataFlow(ICardWebPage cardWebPage, IYugiohCardQueue yugiohCardQueue)
         {
-            _jobs = new ConcurrentDictionary<long, TaskCompletionSource<ArticleCompletion>>();
+            _jobs = new ConcurrentDictionary<Guid, TaskCompletionSource<ArticleCompletion>>();
 
             // Data flow options
             var maxDegreeOfParallelism = Environment.ProcessorCount;
@@ -54,21 +54,21 @@ namespace carddata.domain.Processor
 
         #region private helper
 
-        private static KeyValuePair<long, Article> TagInputData(Article data)
+        private static KeyValuePair<Guid, Article> TagInputData(Article data)
         {
-            return new KeyValuePair<long, Article>(data.Id, data);
+            return new KeyValuePair<Guid, Article>(data.CorrelationId, data);
         }
 
-        private static KeyValuePair<long, TaskCompletionSource<ArticleCompletion>> CreateJob(KeyValuePair<long, Article> taggedData)
+        private static KeyValuePair<Guid, TaskCompletionSource<ArticleCompletion>> CreateJob(KeyValuePair<Guid, Article> taggedData)
         {
             var id = taggedData.Key;
             var jobCompletionSource = new TaskCompletionSource<ArticleCompletion>();
-            return new KeyValuePair<long, TaskCompletionSource<ArticleCompletion>>(id, jobCompletionSource);
+            return new KeyValuePair<Guid, TaskCompletionSource<ArticleCompletion>>(id, jobCompletionSource);
         }
 
         private void FinishedProcessing(YugiohCardCompletion yugiohCardCompletion)
         {
-            _jobs.TryRemove(yugiohCardCompletion.Article.Id, out var job);
+            _jobs.TryRemove(yugiohCardCompletion.Article.CorrelationId, out var job);
 
             if (yugiohCardCompletion.IsSuccessful)
             {
@@ -76,7 +76,7 @@ namespace carddata.domain.Processor
             }
             else
             {
-                var exceptionMessage = $"Card Article with id '{yugiohCardCompletion.Article.Id}' not processed.";
+                var exceptionMessage = $"Card Article with id '{yugiohCardCompletion.Article.Id}' and correlation id {yugiohCardCompletion.Article.CorrelationId} not processed.";
                 job.SetException(new Exception(exceptionMessage));
             }
         }

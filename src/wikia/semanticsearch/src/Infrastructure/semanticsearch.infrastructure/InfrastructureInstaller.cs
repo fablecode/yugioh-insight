@@ -27,6 +27,8 @@ namespace semanticsearch.infrastructure
         public static IServiceCollection AddMessagingServices(this IServiceCollection services)
         {
             services.AddTransient<IArticleHeaderExchange, ArticleHeaderExchange>();
+            services.AddTransient<ISemanticSearchResultsWebPage, SemanticSearchResultsWebPage>();
+            services.AddTransient<ISemanticCardSearchResultsWebPage, SemanticCardSearchResultsWebPage>();
 
             return services;
         }

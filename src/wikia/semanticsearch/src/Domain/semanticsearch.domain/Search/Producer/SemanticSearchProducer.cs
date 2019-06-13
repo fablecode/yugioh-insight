@@ -36,11 +36,12 @@ namespace semanticsearch.domain.Search.Producer
                 {
                     var semanticCard = new SemanticCard
                     {
-                        Name = _semanticCardSearchResults.Name(row),
+                        Title = _semanticCardSearchResults.Name(row),
+                        CorrelationId = Guid.NewGuid(),
                         Url = _semanticCardSearchResults.Url(row, _semanticSearchResults.CurrentWebPageUri)
                     };
 
-                    if (!string.IsNullOrWhiteSpace(semanticCard.Name) && !string.IsNullOrWhiteSpace(semanticCard.Url))
+                    if (!string.IsNullOrWhiteSpace(semanticCard.Title) && !string.IsNullOrWhiteSpace(semanticCard.Url))
                     {
                         await targetBlock.SendAsync(semanticCard);
                     }
