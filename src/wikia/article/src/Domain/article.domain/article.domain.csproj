@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="wikia.core" Version="1.0.4" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.2" />
   </ItemGroup>
 
   <ItemGroup>
