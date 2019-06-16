@@ -2,6 +2,6 @@
 {
     public static class RabbitMqExchangeConstants
     {
-        public const string YugiohHeadersArticle = "yugioh.headers.article";
+        public const string YugiohHeadersArticleExchange = "yugioh.headers.article";
     }
 }

@@ -1,25 +1,23 @@
 ﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using article.application.Configuration;
 using article.core.Models;
 using article.domain.Services.Messaging.Cards;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
-using System.Linq;
-using System.Threading.Tasks;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace article.infrastructure.Services.Messaging.Cards
 {
-    public class CardArticleQueue : ICardArticleQueue
+    public class SemanticCardArticleQueue : ISemanticCardArticleQueue
     {
         private readonly IOptions<RabbitMqSettings> _rabbitMqConfig;
-        private readonly IOptions<AppSettings> _appSettings;
 
-        public CardArticleQueue(IOptions<RabbitMqSettings> rabbitMqConfig, IOptions<AppSettings> appSettings)
+        public SemanticCardArticleQueue(IOptions<RabbitMqSettings> rabbitMqConfig)
         {
             _rabbitMqConfig = rabbitMqConfig;
-            _appSettings = appSettings;
         }
 
         public Task Publish(UnexpandedArticle article)
@@ -27,9 +25,7 @@ namespace article.infrastructure.Services.Messaging.Cards
             var messageToBeSent = new Article
             {
                 Id = article.Id,
-                CorrelationId = Guid.NewGuid(),
-                Title = article.Title,
-                Url = new Uri(new Uri(_appSettings.Value.WikiaDomainUrl), article.Url).AbsoluteUri
+                CorrelationId = Guid.NewGuid()
             };
 
             var messageBodyBytes = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(messageToBeSent));
@@ -40,13 +36,13 @@ namespace article.infrastructure.Services.Messaging.Cards
             {
                 var props = channel.CreateBasicProperties();
                 props.ContentType = _rabbitMqConfig.Value.ContentType;
-                props.DeliveryMode = _rabbitMqConfig.Value.Exchanges[RabbitMqExchangeConstants.YugiohHeadersArticleExchange].Queues[RabbitMqQueueConstants.CardArticleQueue].PersistentMode;
-                props.Headers = _rabbitMqConfig.Value.Exchanges[RabbitMqExchangeConstants.YugiohHeadersArticleExchange].Queues[RabbitMqQueueConstants.CardArticleQueue].Headers.ToDictionary(k => k.Key, k => (object) k.Value);
+                props.DeliveryMode = _rabbitMqConfig.Value.Exchanges[RabbitMqExchangeConstants.YugiohHeadersArticleExchange].Queues[RabbitMqQueueConstants.SemanticQueue].PersistentMode;
+                props.Headers = _rabbitMqConfig.Value.Exchanges[RabbitMqExchangeConstants.YugiohHeadersArticleExchange].Queues[RabbitMqQueueConstants.SemanticQueue].Headers.ToDictionary(k => k.Key, k => (object)k.Value);
 
                 channel.BasicPublish
                 (
                     RabbitMqExchangeConstants.YugiohHeadersArticleExchange,
-                    string.Empty, 
+                    string.Empty,
                     props,
                     messageBodyBytes
                 );

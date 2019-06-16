@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using article.application.Configuration;
+﻿using article.application.Configuration;
 using article.core.Enums;
-using article.domain.WebPages;
 using article.domain.WebPages.Banlists;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace article.infrastructure.WebPages.Banlists
 {
     public class BanlistWebPage : IBanlistWebPage
     {
-        private readonly IHtmlWebPage _htmlWebPage;
         private readonly IOptions<AppSettings> _appSettingsOptions;
         private readonly IBanlistHtmlDocument _banlistHtmlDocument;
 
-        public BanlistWebPage(IHtmlWebPage htmlWebPage, IOptions<AppSettings> appSettingsOptions, IBanlistHtmlDocument banlistHtmlDocument)
+        public BanlistWebPage(IOptions<AppSettings> appSettingsOptions, IBanlistHtmlDocument banlistHtmlDocument)
         {
-            _htmlWebPage = htmlWebPage;
             _appSettingsOptions = appSettingsOptions;
             _banlistHtmlDocument = banlistHtmlDocument;
         }

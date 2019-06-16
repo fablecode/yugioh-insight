@@ -31,11 +31,11 @@ namespace article.domain.Banlist.Processor
 
             foreach (var (year, banlistIds) in banListArticleIds)
             {
-                _logger.LogInformation($"{banlistType.ToString().ToUpper()} banlists for the year: {year}");
+                _logger.LogInformation("{@BanlistType} banlists for the year: {@Year}", banlistType.ToString().ToUpper(), year);
 
                 foreach (var articleId in banlistIds)
                 {
-                    _logger.LogInformation($"{banlistType.ToString().ToUpper()} banlist articleId: {articleId}");
+                    _logger.LogInformation("{@BanlistType} banlist articleId: {@ArticleId}", banlistType.ToString().ToUpper(), articleId);
 
                     var articleResult = await _articleProcessor.Process(ArticleCategory.ForbiddenAndLimited, new UnexpandedArticle {Id = articleId});
 
