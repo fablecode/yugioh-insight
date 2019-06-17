@@ -39,17 +39,17 @@ namespace carddata.domain.Processor
         public async Task<ArticleCompletion> ProcessDataFlow(Article article)
         {
             var taggedData = TagInputData(article);
-            var job = CreateJob(taggedData);
-            var isJobAdded = _jobs.TryAdd(job.Key, job.Value);
+            var (jobId, taskCompletionSource) = CreateJob(taggedData);
+            var isJobAdded = _jobs.TryAdd(jobId, taskCompletionSource);
 
             if (isJobAdded)
                 await _articleBufferBlock.SendAsync(article);
             else
             {
-                job.Value.SetResult(new ArticleCompletion { Message = article, Exception = new Exception($"Job not created for item with id {article.Id}") });
+                taskCompletionSource.SetResult(new ArticleCompletion { Message = article, Exception = new Exception($"Job not created for item with id {article.Id}") });
             }
 
-            return await job.Value.Task;
+            return await taskCompletionSource.Task;
         }
 
         #region private helper
