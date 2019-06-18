@@ -33,12 +33,14 @@ namespace article.domain.unit.tests.ArticleListTests.ProcessorTests.ArticleCateg
             // Arrange
             const string category = "category";
             const int pageSize = 10;
+            BufferBlock <UnexpandedArticle[]> argumentUsed = null;
+            await _articleCategoryDataSource.Producer(Arg.Any<string>(), Arg.Any<int>(), Arg.Do<BufferBlock<UnexpandedArticle[]>>(x => argumentUsed =  x));
 
             // Act
             await _sut.Process(category, pageSize);
 
             // Assert
-            await _articleCategoryDataSource.Received().Producer(Arg.Any<string>(), Arg.Any<int>(), Arg.Any<BufferBlock<UnexpandedArticle[]>>());
+            await _articleCategoryDataSource.Received().Producer(Arg.Any<string>(), Arg.Any<int>(), argumentUsed);
         }
     }
 }
