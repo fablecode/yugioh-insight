@@ -23,6 +23,7 @@
 				        <ModulePath>.*Moq.dll</ModulePath>
 				        <ModulePath>.*FluentAssertions.dll</ModulePath>
 				        <ModulePath>.*FluentAssertions.core.dll</ModulePath>
+				        <ModulePath>.*htmlagilitypack.dll</ModulePath>
               </Exclude>
             </ModulePaths>
 
