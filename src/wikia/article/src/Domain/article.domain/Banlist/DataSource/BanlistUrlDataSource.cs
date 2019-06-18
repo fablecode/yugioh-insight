@@ -14,7 +14,7 @@ namespace article.domain.Banlist.DataSource
         public BanlistUrlDataSource(IBanlistWebPage banlistWebPage, IHtmlWebPage htmlWebPage)
         {
             _banlistWebPage = banlistWebPage;
-            _htmlWebPage = htmlWebPage;
+            _htmlWebPage = htmlWebPage; 
         }
 
         public IDictionary<int, List<int>> GetBanlists(BanlistType banlistType, string banlistUrl)
@@ -24,12 +24,12 @@ namespace article.domain.Banlist.DataSource
             var articleIdRegex = new Regex("wgArticleId=([^,]*),");
             var banlistUrlsByYear = _banlistWebPage.GetBanlistUrlList(banlistType, banlistUrl);
 
-            foreach (var banlist in banlistUrlsByYear)
+            foreach (var (year, banlistUrls) in banlistUrlsByYear)
             {
-                var banlistYear = int.Parse(banlist.Key);
+                var banlistYear = int.Parse(year);
                 var articleIds = new List<int>();
 
-                foreach (var url in banlist.Value)
+                foreach (var url in banlistUrls)
                 {
                     var banlistPageHtml = _htmlWebPage.Load(url).DocumentNode.InnerHtml;
 
