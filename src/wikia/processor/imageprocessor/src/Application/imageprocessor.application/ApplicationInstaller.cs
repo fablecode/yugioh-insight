@@ -1,12 +1,10 @@
-﻿using System.Reflection;
-using FluentValidation;
-using imageprocessor.application.Commands;
+﻿using FluentValidation;
 using imageprocessor.application.Commands.DownloadImage;
-using imageprocessor.application.Decorators.Loggers;
 using imageprocessor.core.Services;
 using imageprocessor.domain.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace imageprocessor.application
 {
