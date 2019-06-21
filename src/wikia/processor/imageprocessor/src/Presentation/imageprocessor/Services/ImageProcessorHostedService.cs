@@ -24,7 +24,6 @@ namespace imageprocessor.Services
         private readonly IOptions<RabbitMqSettings> _rabbitMqOptions;
         private readonly IOptions<AppSettings> _appSettingsOptions;
         private readonly IMediator _mediator;
-        private readonly IHost _host;
         private ConnectionFactory _factory;
         private IConnection _connection;
         private IModel _channel;
@@ -35,15 +34,13 @@ namespace imageprocessor.Services
             IServiceProvider services, 
             IOptions<RabbitMqSettings> rabbitMqOptions,
             IOptions<AppSettings> appSettingsOptions,
-            IMediator mediator,
-            IHost host
+            IMediator mediator
         )
         {
             Services = services;
             _rabbitMqOptions = rabbitMqOptions;
             _appSettingsOptions = appSettingsOptions;
             _mediator = mediator;
-            _host = host;
 
             ConfigureSerilog();
         }
