@@ -12,5 +12,4 @@ namespace imageprocessor.application.Configuration
         public Dictionary<string, ExchangeSetting> Exchanges { get; set; }
 
     }
-
 }
