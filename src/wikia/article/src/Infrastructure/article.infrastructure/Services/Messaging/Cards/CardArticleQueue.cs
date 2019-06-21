@@ -40,8 +40,8 @@ namespace article.infrastructure.Services.Messaging.Cards
             {
                 var props = channel.CreateBasicProperties();
                 props.ContentType = _rabbitMqConfig.Value.ContentType;
-                props.DeliveryMode = _rabbitMqConfig.Value.Exchanges[RabbitMqExchangeConstants.YugiohHeadersArticleExchange].Queues[RabbitMqQueueConstants.CardArticleQueue].PersistentMode;
-                props.Headers = _rabbitMqConfig.Value.Exchanges[RabbitMqExchangeConstants.YugiohHeadersArticleExchange].Queues[RabbitMqQueueConstants.CardArticleQueue].Headers.ToDictionary(k => k.Key, k => (object) k.Value);
+                props.DeliveryMode = _rabbitMqConfig.Value.Exchanges[RabbitMqExchangeConstants.YugiohHeadersArticleExchange].PersistentMode;
+                props.Headers = _rabbitMqConfig.Value.Exchanges[RabbitMqExchangeConstants.YugiohHeadersArticleExchange].Headers.ToDictionary(k => k.Key, k => (object) k.Value);
 
                 channel.BasicPublish
                 (
