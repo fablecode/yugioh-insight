@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System.Reflection;
+using article.application.Decorators.Loggers;
 using article.core.ArticleList.DataSource;
 using wikia.Api;
 
@@ -20,7 +21,8 @@ namespace article.application
             services
                 .AddCqrs()
                 .AddValidation()
-                .AddDomainServices();
+                .AddDomainServices()
+                .AddDecorators();
 
             return services;
         }
@@ -52,6 +54,13 @@ namespace article.application
         private static IServiceCollection AddValidation(this IServiceCollection services)
         {
             services.AddTransient<IValidator<CardInformationTask>, CardInformationTaskValidator>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddDecorators(this IServiceCollection services)
+        {
+            services.Decorate<IArticleProcessor, ArticleProcessorLoggerDecorator>();
 
             return services;
         }
