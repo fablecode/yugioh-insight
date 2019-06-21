@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 using FluentValidation;
+using imageprocessor.application.Commands;
 using imageprocessor.application.Commands.DownloadImage;
+using imageprocessor.application.Decorators.Loggers;
 using imageprocessor.core.Services;
 using imageprocessor.domain.Services;
 using MediatR;
@@ -15,7 +17,8 @@ namespace imageprocessor.application
             services
                 .AddCqrs()
                 .AddValidation()
-                .AddDomainServices();
+                .AddDomainServices()
+                .AddDecorators();
 
             return services;
         }
@@ -39,5 +42,13 @@ namespace imageprocessor.application
 
             return services;
         }
+
+        private static IServiceCollection AddDecorators(this IServiceCollection services)
+        {
+            //services.Decorate<IRequestHandler<DownloadImageCommand, CommandResult>, DownloadImageCommandHandlerLoggerDecorator>();
+
+            return services;
+        }
+
     }
 }

@@ -7,6 +7,7 @@ using imageprocessor.application.Commands.DownloadImage;
 using imageprocessor.application.MessageConsumers.CardImage;
 using imageprocessor.tests.core;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
@@ -24,7 +25,9 @@ namespace imageprocessor.application.unit.tests.MessageConsumersTests
         public void SetUp()
         {
             _mediator = Substitute.For<IMediator>();
-            _sut = new CardImageConsumerHandler(_mediator);
+            var logger = Substitute.For<ILogger<CardImageConsumerHandler>>();
+
+            _sut = new CardImageConsumerHandler(_mediator, logger);
         }
 
         [Test]

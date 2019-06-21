@@ -22,6 +22,7 @@
 				        <ModulePath>.*Moq.dll</ModulePath>
 				        <ModulePath>.*FluentAssertions.dll</ModulePath>
 				        <ModulePath>.*FluentAssertions.core.dll</ModulePath>
+                <ModulePath>.*Decorator.cs</ModulePath>
               </Exclude>
             </ModulePaths>
 
