@@ -77,6 +77,7 @@ namespace imageprocessor
                     services.AddLogging();
 
                     //configuration settings
+                    services.Configure<AppSettings>(hostContext.Configuration.GetSection(nameof(AppSettings)));
                     services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
 
                     // hosted service
