@@ -26,7 +26,7 @@ namespace article.domain.Banlist.Processor
         {
             var response = new ArticleBatchTaskResult();
 
-            const string baseBanlistUrl = "http://yugioh.wikia.com/wiki/July_1999_Lists";
+            const string baseBanlistUrl = "http://yugioh.fandom.com/wiki/July_1999_Lists";
             var banListArticleIds = _banlistUrlDataSource.GetBanlists(banlistType, baseBanlistUrl);
 
             foreach (var (year, banlistIds) in banListArticleIds)

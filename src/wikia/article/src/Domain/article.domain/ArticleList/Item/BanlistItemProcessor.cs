@@ -1,83 +1,46 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using article.core.ArticleList.Processor;
-using article.core.Constants;
+﻿using article.core.ArticleList.Processor;
+using article.core.Exceptions;
 using article.core.Models;
-using wikia.Api;
+using article.domain.Services;
+using System;
+using System.Threading.Tasks;
+using article.core.Constants;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.ArticleList.Item
 {
-    //public class BanlistItemProcessor : IArticleItemProcessor
-    //{
-    //    private readonly IWikiArticle _wikiArticle;
-    //    private readonly IYugiohBanlistService _banlistService;
+    public class BanlistItemProcessor : IArticleItemProcessor
+    {
+        private readonly IBanlistArticleQueue _banlistArticleQueue;
 
-    //    public BanlistItemProcessor(IWikiArticle wikiArticle, IYugiohBanlistService banlistService)
-    //    {
-    //        _wikiArticle = wikiArticle;
-    //        _banlistService = banlistService;
-    //    }
+        public BanlistItemProcessor(IBanlistArticleQueue banlistArticleQueue)
+        {
+            _banlistArticleQueue = banlistArticleQueue;
+        }
+        public async Task<ArticleTaskResult> ProcessItem(UnexpandedArticle item)
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
 
-    //    public bool Handles(string category)
-    //    {
-    //        return category == ArticleCategory.ForbiddenAndLimited;
-    //    }
+            var articleTaskResult = new ArticleTaskResult { Article = item };
 
-    //    public async Task<ArticleTaskResult> ProcessItem(UnexpandedArticle item)
-    //    {
-    //        var response = new ArticleTaskResult { Article = item };
+            try
+            {
+                await _banlistArticleQueue.Publish(item);
 
-    //        var articleDetailsList = await _wikiArticle.Details(item.Id);
+                articleTaskResult.IsSuccessfullyProcessed = true;
+            }
+            catch (Exception ex)
+            {
+                articleTaskResult.Failed = new ArticleException { Article = item, Exception = ex };
+            }
 
-    //        var articleDetails = articleDetailsList.Items.First();
+            return articleTaskResult;
+        }
 
-    //        var banlistArticleSummary = BanlistHelpers.ExtractBanlistArticleDetails(articleDetails.Value.Id, articleDetails.Value.Abstract);
-
-    //        if (banlistArticleSummary != null)
-    //        {
-    //            const char beginChar = '「';
-    //            const char endChar = '」';
-
-    //            var banlist = new YugiohBanlist
-    //            {
-    //                ArticleId = banlistArticleSummary.ArticleId,
-    //                Title = articleDetails.Value.Title,
-    //                BanlistType = banlistArticleSummary.BanlistType,
-    //                StartDate = banlistArticleSummary.StartDate
-    //            };
-
-
-    //            var banlistContentResult = await _wikiArticle.Simple(banlistArticleSummary.ArticleId);
-
-    //            foreach (var section in banlistContentResult.Sections)
-    //            {
-    //                // skip references section
-    //                if (section.Title.ToLower() == "references")
-    //                    continue;
-
-    //                // new section
-    //                var ybls = new YugiohBanlistSection
-    //                {
-    //                    Title = StringHelpers.RemoveBetween(section.Title, beginChar, endChar).Trim(),
-    //                    Content = ContentResultHelpers.GetSectionContentList(section).OrderBy(c => c).ToList()
-    //                };
-
-    //                // remove invalid characters
-    //                if (ybls.Content.Any())
-    //                    ybls.Content = ybls.Content.Select(c => StringHelpers.RemoveBetween(c, beginChar, endChar)).ToList();
-
-    //                banlist.Sections.Add(ybls);
-    //            }
-
-    //            await _banlistService.AddOrUpdate(banlist);
-
-    //            response.Data = banlist;
-
-    //            response.IsSuccessfullyProcessed = true;
-    //        }
-
-    //        return response;
-    //    }
-    //}
+        public bool Handles(string category)
+        {
+            return category == ArticleCategory.ForbiddenAndLimited;
+        }
+    }
 }
