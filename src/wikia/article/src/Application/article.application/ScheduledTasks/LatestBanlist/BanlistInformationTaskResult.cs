@@ -8,5 +8,6 @@ namespace article.application.ScheduledTasks.LatestBanlist
         public ArticleBatchTaskResult ArticleTaskResults { get; set; }
 
         public List<string> Errors { get; set; }
+        public bool IsSuccessful { get; set; }
     }
 }

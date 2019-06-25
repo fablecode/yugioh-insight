@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using article.core.ArticleList.Processor;
 using FluentValidation;
@@ -27,6 +28,11 @@ namespace article.application.ScheduledTasks.CardInformation
                 var results = await _articleCategoryProcessor.Process(request.Categories, request.PageSize);
 
                 cardInformationTaskResult.ArticleTaskResults = results;
+                cardInformationTaskResult.IsSuccessful = true;
+            }
+            else
+            {
+                cardInformationTaskResult.Errors = validationResults.Errors.Select(err => err.ErrorMessage).ToList();
             }
 
             return cardInformationTaskResult;

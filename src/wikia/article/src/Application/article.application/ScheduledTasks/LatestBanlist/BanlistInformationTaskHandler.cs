@@ -41,6 +41,7 @@ namespace article.application.ScheduledTasks.LatestBanlist
                 await _banlistProcessor.Process(BanlistType.Ocg);
 
                 response.ArticleTaskResults = categoryResult;
+                response.IsSuccessful = true;
             }
             else
             {
