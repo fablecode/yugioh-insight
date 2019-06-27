@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using article.application.ScheduledTasks.CardInformation;
-using article.application.ScheduledTasks.LatestBanlist;
+﻿using article.application.ScheduledTasks.LatestBanlist;
 using article.core.ArticleList.Processor;
 using article.core.Enums;
 using article.domain.Banlist.Processor;
@@ -12,6 +8,9 @@ using FluentValidation;
 using FluentValidation.Results;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace article.application.unit.tests.ScheduledTasksTests
 {
@@ -93,7 +92,7 @@ namespace article.application.unit.tests.ScheduledTasksTests
         public async Task Given_A_BanlistInformationTask_If_Validation_Is_Succesful_Should_Be_true()
         {
             // Arrange
-            var banlistInformationTask = new BanlistInformationTask{ Category = "card", PageSize = 8};
+            var banlistInformationTask = new BanlistInformationTask{ Category = "banlist", PageSize = 8};
             _validator.Validate(Arg.Any<BanlistInformationTask>()).Returns(new BanlistInformationTaskValidator().Validate(banlistInformationTask));
 
             // Act
@@ -109,7 +108,7 @@ namespace article.application.unit.tests.ScheduledTasksTests
         {
             // Arrange
             const int expected = 2;
-            var banlistInformationTask = new BanlistInformationTask { Category = "card", PageSize = 8 };
+            var banlistInformationTask = new BanlistInformationTask { Category = "banlist", PageSize = 8 };
             _validator.Validate(Arg.Any<BanlistInformationTask>()).Returns(new BanlistInformationTaskValidator().Validate(banlistInformationTask));
 
             // Act

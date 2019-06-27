@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using article.core.ArticleList.Processor;
+﻿using article.core.ArticleList.Processor;
 using article.core.Models;
 using article.domain.ArticleList.Processor;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace article.application.Decorators.Loggers
@@ -22,11 +22,13 @@ namespace article.application.Decorators.Loggers
         {
             try
             {
-                _logger.LogInformation("Processing article '{@Title}', category '{@Category}'", article.Title, category);
+                _logger.LogInformation("Processing article '{@Title}', category '{@Category}'", article.Title ?? article.Id.ToString(), category);
 
                 var articleResult = await _articleProcessor.Process(category, article);
 
-                _logger.LogInformation("Finished processing article '{@Title}', category '{@Category}'", article.Title, category);
+                _logger.LogInformation("Finished processing article '{@Title}', category '{@Category}'", article.Title ?? article.Id.ToString(), category);
+
+                articleResult.IsSuccessfullyProcessed = true;
 
                 return articleResult;
             }

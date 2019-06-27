@@ -9,7 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System.Reflection;
 using article.application.Decorators.Loggers;
+using article.application.ScheduledTasks.LatestBanlist;
 using article.core.ArticleList.DataSource;
+using article.domain.Banlist.DataSource;
+using article.domain.Banlist.Processor;
 using wikia.Api;
 
 namespace article.application
@@ -39,9 +42,14 @@ namespace article.application
             services.AddTransient<IArticleCategoryDataSource, ArticleCategoryDataSource>();
             services.AddTransient<IArticleBatchProcessor, ArticleBatchProcessor>();
             services.AddTransient<IArticleCategoryProcessor, ArticleCategoryProcessor>();
+
             services.AddTransient<IArticleProcessor, ArticleProcessor>();
 
+            services.AddTransient<IBanlistProcessor, BanlistProcessor>();
+            services.AddTransient<IBanlistUrlDataSource, BanlistUrlDataSource>();
+
             services.AddTransient<IArticleItemProcessor, CardItemProcessor>();
+            services.AddTransient<IArticleItemProcessor, BanlistItemProcessor>();
 
 
             var appSettings = services.BuildServiceProvider().GetService<IOptions<Configuration.AppSettings>>();
@@ -54,6 +62,7 @@ namespace article.application
         private static IServiceCollection AddValidation(this IServiceCollection services)
         {
             services.AddTransient<IValidator<CardInformationTask>, CardInformationTaskValidator>();
+            services.AddTransient<IValidator<BanlistInformationTask>, BanlistInformationTaskValidator>();
 
             return services;
         }
