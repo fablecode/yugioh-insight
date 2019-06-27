@@ -15,19 +15,19 @@ using article.latestbanlists.QuartzConfiguration;
 
 namespace article.latestbanlists.Services
 {
-    public class CardInformationWorkerService : IHostedService
+    public class LatestBanlistWorkerService : IHostedService
     {
         public IServiceProvider Services { get; }
 
         private readonly IOptions<AppSettings> _options;
-        private readonly ILogger<CardInformationWorkerService> _logger;
+        private readonly ILogger<LatestBanlistWorkerService> _logger;
         private IScheduler _scheduler;
 
-        public CardInformationWorkerService
+        public LatestBanlistWorkerService
         (
             IServiceProvider services,
             IOptions<AppSettings> options,
-            ILogger<CardInformationWorkerService> logger
+            ILogger<LatestBanlistWorkerService> logger
         )
         {
             Services = services;

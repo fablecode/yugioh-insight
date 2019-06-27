@@ -80,7 +80,7 @@ namespace article.latestbanlists
                     services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
 
                     // hosted service
-                    services.AddHostedService<CardInformationWorkerService>();
+                    services.AddHostedService<LatestBanlistWorkerService>();
 
                     services.AddApplicationServices();
                     services.AddInfrastructureServices();
