@@ -4,5 +4,6 @@
     {
         public Article Article { get; set; }
         public YugiohBanlist Banlist { get; set; }
+        public bool IsSuccessful { get; set; }
     }
 }
