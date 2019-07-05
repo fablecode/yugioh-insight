@@ -5,6 +5,6 @@ namespace banlistdata.domain.Services.Messaging
 {
     public interface IBanlistDataQueue
     {
-        Task<YugiohBanlistCompletion> Publish(YugiohBanlist articleProcessed);
+        Task<YugiohBanlistCompletion> Publish(ArticleProcessed articleProcessed);
     }
 }

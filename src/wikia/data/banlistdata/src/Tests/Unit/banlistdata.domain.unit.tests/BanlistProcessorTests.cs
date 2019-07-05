@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using banlistdata.core.Models;
+﻿using banlistdata.core.Models;
 using banlistdata.domain.Processor;
 using banlistdata.domain.Services.Messaging;
 using banlistdata.tests.core;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using wikia.Api;
-using wikia.Models.Article.AlphabeticalList;
 using wikia.Models.Article.Details;
 using wikia.Models.Article.Simple;
 
@@ -48,7 +47,7 @@ namespace banlistdata.domain.unit.tests
             }});
 
             _wikiArticle.Simple(Arg.Any<long>()).Returns(new ContentResult {Sections = new Section[0]});
-            _banlistDataQueue.Publish(Arg.Any<YugiohBanlist>()).Returns(new YugiohBanlistCompletion());
+            _banlistDataQueue.Publish(Arg.Any<ArticleProcessed>()).Returns(new YugiohBanlistCompletion());
 
             // Act
             var result = await _sut.Process(article);
@@ -72,7 +71,7 @@ namespace banlistdata.domain.unit.tests
             }});
 
             _wikiArticle.Simple(Arg.Any<long>()).Returns(new ContentResult {Sections = new Section[0]});
-            _banlistDataQueue.Publish(Arg.Any<YugiohBanlist>()).Returns(new YugiohBanlistCompletion{ IsSuccessful = true});
+            _banlistDataQueue.Publish(Arg.Any<ArticleProcessed>()).Returns(new YugiohBanlistCompletion{ IsSuccessful = true});
 
             // Act
             var result = await _sut.Process(article);
@@ -105,7 +104,7 @@ namespace banlistdata.domain.unit.tests
                 }
             });
 
-            _banlistDataQueue.Publish(Arg.Any<YugiohBanlist>()).Returns(new YugiohBanlistCompletion{ IsSuccessful = true});
+            _banlistDataQueue.Publish(Arg.Any<ArticleProcessed>()).Returns(new YugiohBanlistCompletion{ IsSuccessful = true});
 
             // Act
             var result = await _sut.Process(article);
@@ -150,7 +149,7 @@ namespace banlistdata.domain.unit.tests
                 }
             });
 
-            _banlistDataQueue.Publish(Arg.Any<YugiohBanlist>()).Returns(new YugiohBanlistCompletion{ IsSuccessful = true});
+            _banlistDataQueue.Publish(Arg.Any<ArticleProcessed>()).Returns(new YugiohBanlistCompletion{ IsSuccessful = true});
 
             // Act
             var result = await _sut.Process(article);

@@ -15,15 +15,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Presentation", "5. Prese
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Tests", "6. Tests", "{250EDB63-C7BB-46B8-B844-E0F3BF3EBAF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistdata.domain", "src\Domain\banlistdata.domain\banlistdata.domain.csproj", "{42E3E5CA-7DC7-4B86-87F7-08D20FEEA6A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "banlistdata.domain", "src\Domain\banlistdata.domain\banlistdata.domain.csproj", "{42E3E5CA-7DC7-4B86-87F7-08D20FEEA6A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistdata.core", "src\Core\banlistdata.core\banlistdata.core.csproj", "{B6EE0E16-93EF-428A-9134-3C5B257D7E46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "banlistdata.core", "src\Core\banlistdata.core\banlistdata.core.csproj", "{B6EE0E16-93EF-428A-9134-3C5B257D7E46}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{AD75AF54-07AF-44EB-9592-3E55AA163312}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistdata.domain.unit.tests", "src\Tests\Unit\banlistdata.domain.unit.tests\banlistdata.domain.unit.tests.csproj", "{BD29E950-FC9F-4327-83CE-BA73D25861EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "banlistdata.domain.unit.tests", "src\Tests\Unit\banlistdata.domain.unit.tests\banlistdata.domain.unit.tests.csproj", "{BD29E950-FC9F-4327-83CE-BA73D25861EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistdata.tests.core", "src\Tests\banlistdata.tests.core\banlistdata.tests.core.csproj", "{0A91D64F-F52D-44A5-A1D3-80061358C7E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "banlistdata.tests.core", "src\Tests\banlistdata.tests.core\banlistdata.tests.core.csproj", "{0A91D64F-F52D-44A5-A1D3-80061358C7E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistdata.infrastructure", "src\Infrastructure\banlistdata.infrastructure\banlistdata.infrastructure.csproj", "{63AEAA49-89D2-489C-BE30-AFCD89C10833}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistdata.application", "src\Application\banlistdata.application\banlistdata.application.csproj", "{536230E7-DA03-445D-BB44-ABD31C3C766A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,14 @@ Global
 		{0A91D64F-F52D-44A5-A1D3-80061358C7E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A91D64F-F52D-44A5-A1D3-80061358C7E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A91D64F-F52D-44A5-A1D3-80061358C7E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63AEAA49-89D2-489C-BE30-AFCD89C10833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63AEAA49-89D2-489C-BE30-AFCD89C10833}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63AEAA49-89D2-489C-BE30-AFCD89C10833}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63AEAA49-89D2-489C-BE30-AFCD89C10833}.Release|Any CPU.Build.0 = Release|Any CPU
+		{536230E7-DA03-445D-BB44-ABD31C3C766A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{536230E7-DA03-445D-BB44-ABD31C3C766A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{536230E7-DA03-445D-BB44-ABD31C3C766A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{536230E7-DA03-445D-BB44-ABD31C3C766A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +69,8 @@ Global
 		{AD75AF54-07AF-44EB-9592-3E55AA163312} = {250EDB63-C7BB-46B8-B844-E0F3BF3EBAF4}
 		{BD29E950-FC9F-4327-83CE-BA73D25861EB} = {AD75AF54-07AF-44EB-9592-3E55AA163312}
 		{0A91D64F-F52D-44A5-A1D3-80061358C7E5} = {250EDB63-C7BB-46B8-B844-E0F3BF3EBAF4}
+		{63AEAA49-89D2-489C-BE30-AFCD89C10833} = {22B96E35-18E1-484C-AA26-94747D65B119}
+		{536230E7-DA03-445D-BB44-ABD31C3C766A} = {3D5E29EA-D973-4313-BC79-56F5D960848C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4AE25ACC-70FF-4AE1-818E-FD92EE64CF8F}

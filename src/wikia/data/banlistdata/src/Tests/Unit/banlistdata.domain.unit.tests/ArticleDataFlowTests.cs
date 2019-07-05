@@ -34,7 +34,7 @@ namespace banlistdata.domain.unit.tests
             var article = new Article { Id = 3242423, CorrelationId = Guid.NewGuid() };
 
             _banlistProcessor.Process(Arg.Any<Article>()).Returns(new ArticleProcessed() {Article = article, IsSuccessful = true});
-            _banlistDataQueue.Publish(Arg.Any<YugiohBanlist>()).Returns(new YugiohBanlistCompletion { Article = article, IsSuccessful = true });
+            _banlistDataQueue.Publish(Arg.Any<ArticleProcessed>()).Returns(new YugiohBanlistCompletion { Article = article, IsSuccessful = true });
 
             // Act
             await _sut.ProcessDataFlow(article);
@@ -50,13 +50,13 @@ namespace banlistdata.domain.unit.tests
             var article = new Article { Id = 3242423, CorrelationId = Guid.NewGuid() };
 
             _banlistProcessor.Process(Arg.Any<Article>()).Returns(new ArticleProcessed() { Article = article, IsSuccessful = true });
-            _banlistDataQueue.Publish(Arg.Any<YugiohBanlist>()).Returns(new YugiohBanlistCompletion { Article = article, IsSuccessful = true});
+            _banlistDataQueue.Publish(Arg.Any<ArticleProcessed>()).Returns(new YugiohBanlistCompletion { Article = article, IsSuccessful = true});
 
             // Act
             await _sut.ProcessDataFlow(article);
 
             // Assert
-            await _banlistDataQueue.Received(1).Publish(Arg.Any<YugiohBanlist>());
+            await _banlistDataQueue.Received(1).Publish(Arg.Any<ArticleProcessed>());
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace banlistdata.domain.unit.tests
             var article = new Article{Id = 3242423, CorrelationId = Guid.NewGuid()};
 
             _banlistProcessor.Process(Arg.Any<Article>()).Returns(new ArticleProcessed {Article = article});
-            _banlistDataQueue.Publish(Arg.Any<YugiohBanlist>()).Returns(new YugiohBanlistCompletion {Article = article});
+            _banlistDataQueue.Publish(Arg.Any<ArticleProcessed>()).Returns(new YugiohBanlistCompletion {Article = article});
 
             // Act
             Func<Task<ArticleCompletion>> act = () => _sut.ProcessDataFlow(article);

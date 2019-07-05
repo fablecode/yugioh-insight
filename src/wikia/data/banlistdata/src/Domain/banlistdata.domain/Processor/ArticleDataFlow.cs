@@ -26,7 +26,7 @@ namespace banlistdata.domain.Processor
             _articleBufferBlock = new BufferBlock<Article>();
 
             var banlistProcessorTransformBlock = new TransformBlock<Article, ArticleProcessed>(article => banlistProcessor.Process(article), nonGreedy);
-            var publishBanlistTransformBlock = new TransformBlock<ArticleProcessed, YugiohBanlistCompletion>(articleProcessed => banlistDataQueue.Publish(articleProcessed.Banlist), nonGreedy);
+            var publishBanlistTransformBlock = new TransformBlock<ArticleProcessed, YugiohBanlistCompletion>(articleProcessed => banlistDataQueue.Publish(articleProcessed), nonGreedy);
             var publishToQueueActionBlock = new ActionBlock<YugiohBanlistCompletion>(yugiohCardCompletion => FinishedProcessing(yugiohCardCompletion));
 
             // Form the pipeline

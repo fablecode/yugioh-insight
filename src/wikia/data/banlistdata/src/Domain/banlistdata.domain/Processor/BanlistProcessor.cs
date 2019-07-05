@@ -66,7 +66,7 @@ namespace banlistdata.domain.Processor
 
                 response.Banlist = banlist;
 
-                var publishBanlistResult = await _banlistDataQueue.Publish(banlist);
+                var publishBanlistResult = await _banlistDataQueue.Publish(new ArticleProcessed{ Article = article, Banlist = banlist});
 
                 response.IsSuccessful = publishBanlistResult.IsSuccessful;
             }
