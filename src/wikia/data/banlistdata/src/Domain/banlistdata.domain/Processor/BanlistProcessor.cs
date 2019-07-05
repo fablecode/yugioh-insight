@@ -4,6 +4,7 @@ using banlistdata.domain.Helpers;
 using banlistdata.domain.Services.Messaging;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using wikia.Api;
 
 namespace banlistdata.domain.Processor
@@ -12,11 +13,13 @@ namespace banlistdata.domain.Processor
     {
         private readonly IWikiArticle _wikiArticle;
         private readonly IBanlistDataQueue _banlistDataQueue;
+        private readonly ILogger<BanlistProcessor> _logger;
 
-        public BanlistProcessor(IWikiArticle wikiArticle, IBanlistDataQueue banlistDataQueue)
+        public BanlistProcessor(IWikiArticle wikiArticle, IBanlistDataQueue banlistDataQueue, ILogger<BanlistProcessor> logger)
         {
             _wikiArticle = wikiArticle;
             _banlistDataQueue = banlistDataQueue;
+            _logger = logger;
         }
 
         public async Task<ArticleProcessed> Process(Article article)
@@ -44,6 +47,7 @@ namespace banlistdata.domain.Processor
 
                 var banlistContentResult = await _wikiArticle.Simple(banlistArticleSummary.ArticleId);
 
+                _logger.LogInformation($"{banlist.BanlistType.ToString()}, {banlist.Title}, {banlist.StartDate}");
                 foreach (var section in banlistContentResult.Sections)
                 {
                     // skip references section

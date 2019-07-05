@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using wikia.Api;
 using wikia.Models.Article.Details;
 using wikia.Models.Article.Simple;
@@ -29,7 +30,7 @@ namespace banlistdata.domain.unit.tests
             _wikiArticle = Substitute.For<IWikiArticle>();
             _banlistDataQueue = Substitute.For<IBanlistDataQueue>();
 
-            _sut = new BanlistProcessor(_wikiArticle, _banlistDataQueue);
+            _sut = new BanlistProcessor(_wikiArticle, _banlistDataQueue, Substitute.For<ILogger<BanlistProcessor>>());
         }
 
         [Test]
