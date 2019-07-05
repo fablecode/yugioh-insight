@@ -66,7 +66,7 @@ namespace banlistdata.Services
         private EventingBasicConsumer CreateCardArticleConsumer(IConnection connection)
         {
             _banlistArticleChannel = connection.CreateModel();
-            _banlistArticleChannel.BasicQos(0, 1, false);
+            _banlistArticleChannel.BasicQos(0, 20, false);
 
             var consumer = new EventingBasicConsumer(_banlistArticleChannel);
 
