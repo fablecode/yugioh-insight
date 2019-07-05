@@ -42,7 +42,6 @@ namespace banlistdata.domain.Processor
                     StartDate = banlistArticleSummary.StartDate
                 };
 
-
                 var banlistContentResult = await _wikiArticle.Simple(banlistArticleSummary.ArticleId);
 
                 foreach (var section in banlistContentResult.Sections)
@@ -69,10 +68,7 @@ namespace banlistdata.domain.Processor
 
                 var publishBanlistResult = await _banlistDataQueue.Publish(banlist);
 
-                if (publishBanlistResult.IsSuccessful)
-                {
-                    response.IsSuccessful = true;
-                }
+                response.IsSuccessful = publishBanlistResult.IsSuccessful;
             }
 
             return response;
