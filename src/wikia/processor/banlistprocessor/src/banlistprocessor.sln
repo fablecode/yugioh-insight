@@ -1,0 +1,71 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Core", "1. Core", "{CD498636-9042-454E-94CB-9DA5794D6C12}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domain", "2. Domain", "{DFA13673-ADB9-47D7-B57C-5C2171BE228C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Application", "3. Application", "{C3CCFBF7-5BE6-4C5D-82E9-6D1BCD54B10F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Infrastructure", "4. Infrastructure", "{7B1C2F96-FCD8-436D-9DA0-374CE02439BC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Presentation", "5. Presentation", "{9FA52EA6-6531-4410-9DBF-8CF18E8A2DBC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Tests", "6. Tests", "{3F94B50D-CF9D-434A-82B2-CA45BDCA2CFD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{8D41E7EB-3FCF-45C1-BC57-20F08FCDC87B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistprocessor.core", "Core\banlistprocessor.core\banlistprocessor.core.csproj", "{EAAA65CA-4258-4869-8594-CBA22ED42497}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistprocessor.domain", "Domain\banlistprocessor.domain\banlistprocessor.domain\banlistprocessor.domain.csproj", "{A5B5E6D5-EAC2-4150-AFF3-1293FE9ED673}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistprocessor.application", "Application\banlistprocessor.application\banlistprocessor.application.csproj", "{1014C061-48E7-4DDF-A6A7-3EB551B062A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistprocessor.application.unit.tests", "Tests\Unit\banlistprocessor.application.unit.tests\banlistprocessor.application.unit.tests.csproj", "{4198AF9D-2E7F-4166-A368-E6976E445D45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistprocessor.tests.core", "Tests\banlistprocessor.tests.core\banlistprocessor.tests.core.csproj", "{A428D237-E469-4921-86CD-51CFBECCE670}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAAA65CA-4258-4869-8594-CBA22ED42497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAAA65CA-4258-4869-8594-CBA22ED42497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAAA65CA-4258-4869-8594-CBA22ED42497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAAA65CA-4258-4869-8594-CBA22ED42497}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5B5E6D5-EAC2-4150-AFF3-1293FE9ED673}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5B5E6D5-EAC2-4150-AFF3-1293FE9ED673}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5B5E6D5-EAC2-4150-AFF3-1293FE9ED673}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5B5E6D5-EAC2-4150-AFF3-1293FE9ED673}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1014C061-48E7-4DDF-A6A7-3EB551B062A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1014C061-48E7-4DDF-A6A7-3EB551B062A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1014C061-48E7-4DDF-A6A7-3EB551B062A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1014C061-48E7-4DDF-A6A7-3EB551B062A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4198AF9D-2E7F-4166-A368-E6976E445D45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4198AF9D-2E7F-4166-A368-E6976E445D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4198AF9D-2E7F-4166-A368-E6976E445D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4198AF9D-2E7F-4166-A368-E6976E445D45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A428D237-E469-4921-86CD-51CFBECCE670}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A428D237-E469-4921-86CD-51CFBECCE670}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A428D237-E469-4921-86CD-51CFBECCE670}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A428D237-E469-4921-86CD-51CFBECCE670}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8D41E7EB-3FCF-45C1-BC57-20F08FCDC87B} = {3F94B50D-CF9D-434A-82B2-CA45BDCA2CFD}
+		{EAAA65CA-4258-4869-8594-CBA22ED42497} = {CD498636-9042-454E-94CB-9DA5794D6C12}
+		{A5B5E6D5-EAC2-4150-AFF3-1293FE9ED673} = {DFA13673-ADB9-47D7-B57C-5C2171BE228C}
+		{1014C061-48E7-4DDF-A6A7-3EB551B062A8} = {C3CCFBF7-5BE6-4C5D-82E9-6D1BCD54B10F}
+		{4198AF9D-2E7F-4166-A368-E6976E445D45} = {8D41E7EB-3FCF-45C1-BC57-20F08FCDC87B}
+		{A428D237-E469-4921-86CD-51CFBECCE670} = {3F94B50D-CF9D-434A-82B2-CA45BDCA2CFD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C696B37C-BAB1-41F9-B612-CA2E16D7956F}
+	EndGlobalSection
+EndGlobal
