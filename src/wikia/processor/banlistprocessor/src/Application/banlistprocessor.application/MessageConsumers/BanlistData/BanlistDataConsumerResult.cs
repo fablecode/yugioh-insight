@@ -8,9 +8,10 @@ namespace banlistprocessor.application.MessageConsumers.BanlistData
     public class BanlistDataConsumerResult
     {
         public bool IsSuccessful => !Errors.Any();
-        public YugiohBanlist Banlist { get; set; }
+        public YugiohBanlist YugiohBanlist { get; set; }
         public List<string> Errors { get; set; } = new List<string>();
         public Exception Exception { get; set; }
+        public long BanlistId { get; set; }
     }
 
 }

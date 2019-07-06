@@ -28,13 +28,15 @@ namespace banlistprocessor.application.MessageConsumers.BanlistData
             {
                 var yugiohBanlist = JsonConvert.DeserializeObject<YugiohBanlist>(request.Message);
 
-                banlistDataConsumerResult.Banlist = yugiohBanlist;
+                banlistDataConsumerResult.YugiohBanlist = yugiohBanlist;
 
                 var banlistExists = await _banlistService.BanlistExist(yugiohBanlist.ArticleId);
 
                 var result = banlistExists
                     ? await _banlistService.Update(yugiohBanlist)
                     : await _banlistService.Add(yugiohBanlist);
+
+                banlistDataConsumerResult.BanlistId = result.Id;
             }
             catch (ArgumentException ex)
             {

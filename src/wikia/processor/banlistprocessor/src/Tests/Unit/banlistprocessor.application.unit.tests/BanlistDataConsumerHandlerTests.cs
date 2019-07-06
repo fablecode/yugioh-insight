@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using banlistprocessor.application.MessageConsumers.BanlistData;
 using banlistprocessor.core.Models;
+using banlistprocessor.core.Models.Db;
 using banlistprocessor.core.Services;
 using banlistprocessor.tests.core;
 using FluentAssertions;
@@ -49,12 +50,13 @@ namespace banlistprocessor.application.unit.tests
             {
                 Message = "{\"ArticleId\":642752,\"Title\":\"April 2000 Lists\",\"BanlistType\":\"Ocg\",\"StartDate\":\"2000-04-01T00:00:00\",\"Sections\":[{\"Title\":\"April 2000 Lists\",\"Content\":[]},{\"Title\":\"Full Lists\",\"Content\":[]},{\"Title\":\"Limited\",\"Content\":[\"Change of Heart\",\"Dark Hole\",\"Exodia the Forbidden One\",\"Last Will\",\"Left Arm of the Forbidden One\",\"Left Leg of the Forbidden One\",\"Mirror Force\",\"Pot of Greed\",\"Raigeki\",\"Right Arm of the Forbidden One\",\"Right Leg of the Forbidden One\"]},{\"Title\":\"Semi-Limited\",\"Content\":[\"Graceful Charity\",\"Harpie's Feather Duster\",\"Monster Reborn\"]}]}"
             };
+            _banlistService.Add(Arg.Any<YugiohBanlist>()).Returns(new Banlist());
 
             // Act
             var result = await _sut.Handle(banlistDataConsumer, CancellationToken.None);
 
             // Assert
-            result.Banlist.Should().NotBeNull();
+            result.YugiohBanlist.Should().NotBeNull();
         }
 
 
@@ -67,6 +69,7 @@ namespace banlistprocessor.application.unit.tests
             {
                 Message = "{\"ArticleId\":642752,\"Title\":\"April 2000 Lists\",\"BanlistType\":\"Ocg\",\"StartDate\":\"2000-04-01T00:00:00\",\"Sections\":[{\"Title\":\"April 2000 Lists\",\"Content\":[]},{\"Title\":\"Full Lists\",\"Content\":[]},{\"Title\":\"Limited\",\"Content\":[\"Change of Heart\",\"Dark Hole\",\"Exodia the Forbidden One\",\"Last Will\",\"Left Arm of the Forbidden One\",\"Left Leg of the Forbidden One\",\"Mirror Force\",\"Pot of Greed\",\"Raigeki\",\"Right Arm of the Forbidden One\",\"Right Leg of the Forbidden One\"]},{\"Title\":\"Semi-Limited\",\"Content\":[\"Graceful Charity\",\"Harpie's Feather Duster\",\"Monster Reborn\"]}]}"
             };
+            _banlistService.Add(Arg.Any<YugiohBanlist>()).Returns(new Banlist());
 
             // Act
             await _sut.Handle(banlistDataConsumer, CancellationToken.None);
@@ -86,6 +89,7 @@ namespace banlistprocessor.application.unit.tests
                 Message = "{\"ArticleId\":642752,\"Title\":\"April 2000 Lists\",\"BanlistType\":\"Ocg\",\"StartDate\":\"2000-04-01T00:00:00\",\"Sections\":[{\"Title\":\"April 2000 Lists\",\"Content\":[]},{\"Title\":\"Full Lists\",\"Content\":[]},{\"Title\":\"Limited\",\"Content\":[\"Change of Heart\",\"Dark Hole\",\"Exodia the Forbidden One\",\"Last Will\",\"Left Arm of the Forbidden One\",\"Left Leg of the Forbidden One\",\"Mirror Force\",\"Pot of Greed\",\"Raigeki\",\"Right Arm of the Forbidden One\",\"Right Leg of the Forbidden One\"]},{\"Title\":\"Semi-Limited\",\"Content\":[\"Graceful Charity\",\"Harpie's Feather Duster\",\"Monster Reborn\"]}]}"
             };
             _banlistService.BanlistExist(Arg.Any<int>()).Returns(false);
+            _banlistService.Add(Arg.Any<YugiohBanlist>()).Returns(new Banlist());
 
             // Act
             await _sut.Handle(banlistDataConsumer, CancellationToken.None);
@@ -105,6 +109,7 @@ namespace banlistprocessor.application.unit.tests
             };
 
             _banlistService.BanlistExist(Arg.Any<int>()).Returns(true);
+            _banlistService.Update(Arg.Any<YugiohBanlist>()).Returns(new Banlist());
 
             // Act
             await _sut.Handle(banlistDataConsumer, CancellationToken.None);

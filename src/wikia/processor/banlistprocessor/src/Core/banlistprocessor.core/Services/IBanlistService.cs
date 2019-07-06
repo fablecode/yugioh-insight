@@ -7,7 +7,7 @@ namespace banlistprocessor.core.Services
     public interface IBanlistService
     {
         Task<bool> BanlistExist(int id);
-        Task<Banlist> Add(YugiohBanlist any);
-        Task<Banlist> Update(YugiohBanlist any);
+        Task<Banlist> Add(YugiohBanlist yugiohBanlist);
+        Task<Banlist> Update(YugiohBanlist yugiohBanlist);
     }
 }
