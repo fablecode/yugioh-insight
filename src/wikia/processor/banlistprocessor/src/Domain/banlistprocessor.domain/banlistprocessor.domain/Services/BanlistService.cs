@@ -37,8 +37,11 @@ namespace banlistprocessor.domain.Services
         {
             var format = await _formatRepository.FormatByAcronym(yugiohBanlist.BanlistType.ToString());
 
+            if(format == null)
+                throw new ArgumentException($"Format with acronym '{yugiohBanlist.BanlistType.ToString()}' not found.");
+
             var newBanlist = _mapper.Map<Banlist>(yugiohBanlist);
-            newBanlist.Format = format ?? throw new ArgumentException($"Format with acronym '{yugiohBanlist.BanlistType.ToString()}' not found.");
+            newBanlist.FormatId = format.Id;
 
             newBanlist = await _banlistRepository.Add(newBanlist);
             newBanlist.BanlistCard = await _banlistCardService.Update(newBanlist.Id, yugiohBanlist.Sections);
@@ -48,10 +51,14 @@ namespace banlistprocessor.domain.Services
 
         public async Task<Banlist> Update(YugiohBanlist yugiohBanlist)
         {
-            var banlistToupdate = await _banlistRepository.GetBanlistById(yugiohBanlist.ArticleId);
             var format = await _formatRepository.FormatByAcronym(yugiohBanlist.BanlistType.ToString());
 
-            banlistToupdate.Format = format ?? throw new ArgumentException($"Format with acronym '{yugiohBanlist.BanlistType.ToString()}' not found."); ;
+            if (format == null)
+                throw new ArgumentException($"Format with acronym '{yugiohBanlist.BanlistType.ToString()}' not found.");
+
+            var banlistToupdate = await _banlistRepository.GetBanlistById(yugiohBanlist.ArticleId);
+
+            banlistToupdate.FormatId = format.Id;
             banlistToupdate.Name = yugiohBanlist.Title;
             banlistToupdate.ReleaseDate = yugiohBanlist.StartDate;
             banlistToupdate.Updated = DateTime.UtcNow;
