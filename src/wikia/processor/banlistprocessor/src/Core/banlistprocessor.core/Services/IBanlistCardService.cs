@@ -7,6 +7,6 @@ namespace banlistprocessor.core.Services
 {
     public interface IBanlistCardService
     {
-        Task<ICollection<BanlistCard>> Update(long newBanlistId, List<YugiohBanlistSection> yugiohBanlistSections);
+        Task<ICollection<BanlistCard>> Update(long banlistId, List<YugiohBanlistSection> yugiohBanlistSections);
     }
 }

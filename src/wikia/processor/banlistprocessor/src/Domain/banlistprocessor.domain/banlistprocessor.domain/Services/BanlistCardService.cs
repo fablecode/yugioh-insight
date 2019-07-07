@@ -22,10 +22,10 @@ namespace banlistprocessor.domain.Services
             _banlistCardRepository = banlistCardRepository;
         }
 
-        public async Task<ICollection<BanlistCard>> Update(long newBanlistId, List<YugiohBanlistSection> yugiohBanlistSections)
+        public async Task<ICollection<BanlistCard>> Update(long banlistId, List<YugiohBanlistSection> yugiohBanlistSections)
         {
-            var banlistCards = await MapToBanlistCards(newBanlistId, yugiohBanlistSections);
-            return await _banlistCardRepository.Update(newBanlistId, banlistCards);
+            var banlistCards = await MapToBanlistCards(banlistId, yugiohBanlistSections);
+            return await _banlistCardRepository.Update(banlistId, banlistCards);
         }
 
 
