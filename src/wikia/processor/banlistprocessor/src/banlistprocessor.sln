@@ -17,17 +17,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Tests", "6. Tests", "{3F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{8D41E7EB-3FCF-45C1-BC57-20F08FCDC87B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistprocessor.core", "Core\banlistprocessor.core\banlistprocessor.core.csproj", "{EAAA65CA-4258-4869-8594-CBA22ED42497}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "banlistprocessor.core", "Core\banlistprocessor.core\banlistprocessor.core.csproj", "{EAAA65CA-4258-4869-8594-CBA22ED42497}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistprocessor.domain", "Domain\banlistprocessor.domain\banlistprocessor.domain\banlistprocessor.domain.csproj", "{A5B5E6D5-EAC2-4150-AFF3-1293FE9ED673}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "banlistprocessor.domain", "Domain\banlistprocessor.domain\banlistprocessor.domain\banlistprocessor.domain.csproj", "{A5B5E6D5-EAC2-4150-AFF3-1293FE9ED673}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistprocessor.application", "Application\banlistprocessor.application\banlistprocessor.application.csproj", "{1014C061-48E7-4DDF-A6A7-3EB551B062A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "banlistprocessor.application", "Application\banlistprocessor.application\banlistprocessor.application.csproj", "{1014C061-48E7-4DDF-A6A7-3EB551B062A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistprocessor.application.unit.tests", "Tests\Unit\banlistprocessor.application.unit.tests\banlistprocessor.application.unit.tests.csproj", "{4198AF9D-2E7F-4166-A368-E6976E445D45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "banlistprocessor.application.unit.tests", "Tests\Unit\banlistprocessor.application.unit.tests\banlistprocessor.application.unit.tests.csproj", "{4198AF9D-2E7F-4166-A368-E6976E445D45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistprocessor.tests.core", "Tests\banlistprocessor.tests.core\banlistprocessor.tests.core.csproj", "{A428D237-E469-4921-86CD-51CFBECCE670}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "banlistprocessor.tests.core", "Tests\banlistprocessor.tests.core\banlistprocessor.tests.core.csproj", "{A428D237-E469-4921-86CD-51CFBECCE670}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistprocessor.domain.unit.tests", "Tests\Unit\banlistprocessor.domain.unit.tests\banlistprocessor.domain.unit.tests.csproj", "{89EF8FCC-3E82-43E7-98C5-13E38CBB4AB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "banlistprocessor.domain.unit.tests", "Tests\Unit\banlistprocessor.domain.unit.tests\banlistprocessor.domain.unit.tests.csproj", "{89EF8FCC-3E82-43E7-98C5-13E38CBB4AB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistprocessor", "Presentation\banlistprocessor\banlistprocessor.csproj", "{E41FEE76-0B8E-4B78-9004-AA3C83620BF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "banlistprocessor.infrastructure", "Infrastructure\banlistprocessor.infrastructure\banlistprocessor.infrastructure.csproj", "{7975B5AC-E0A7-423E-8523-0BB17E73F981}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +63,14 @@ Global
 		{89EF8FCC-3E82-43E7-98C5-13E38CBB4AB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89EF8FCC-3E82-43E7-98C5-13E38CBB4AB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89EF8FCC-3E82-43E7-98C5-13E38CBB4AB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E41FEE76-0B8E-4B78-9004-AA3C83620BF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E41FEE76-0B8E-4B78-9004-AA3C83620BF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E41FEE76-0B8E-4B78-9004-AA3C83620BF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E41FEE76-0B8E-4B78-9004-AA3C83620BF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7975B5AC-E0A7-423E-8523-0BB17E73F981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7975B5AC-E0A7-423E-8523-0BB17E73F981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7975B5AC-E0A7-423E-8523-0BB17E73F981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7975B5AC-E0A7-423E-8523-0BB17E73F981}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +83,8 @@ Global
 		{4198AF9D-2E7F-4166-A368-E6976E445D45} = {8D41E7EB-3FCF-45C1-BC57-20F08FCDC87B}
 		{A428D237-E469-4921-86CD-51CFBECCE670} = {3F94B50D-CF9D-434A-82B2-CA45BDCA2CFD}
 		{89EF8FCC-3E82-43E7-98C5-13E38CBB4AB1} = {8D41E7EB-3FCF-45C1-BC57-20F08FCDC87B}
+		{E41FEE76-0B8E-4B78-9004-AA3C83620BF5} = {9FA52EA6-6531-4410-9DBF-8CF18E8A2DBC}
+		{7975B5AC-E0A7-423E-8523-0BB17E73F981} = {7B1C2F96-FCD8-436D-9DA0-374CE02439BC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C696B37C-BAB1-41F9-B612-CA2E16D7956F}

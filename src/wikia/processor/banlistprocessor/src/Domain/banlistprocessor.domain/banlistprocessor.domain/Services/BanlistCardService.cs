@@ -28,7 +28,6 @@ namespace banlistprocessor.domain.Services
             return await _banlistCardRepository.Update(banlistId, banlistCards);
         }
 
-
         #region private helpers
 
         private async Task<IList<BanlistCard>> MapToBanlistCards(long banlistId, IList<YugiohBanlistSection> yugiohBanlistSections)
