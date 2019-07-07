@@ -41,10 +41,10 @@ namespace banlistprocessor.domain.Services
             const string semiLimited = "semi-limited";
             const string unlimited = "unlimited";
 
-            var forbiddenBanSection = yugiohBanlistSections.SingleOrDefault(bs => bs.Title.Equals(forbidden, StringComparison.OrdinalIgnoreCase));
-            var limitedBanSection = yugiohBanlistSections.SingleOrDefault(bs => bs.Title.Equals(limited, StringComparison.OrdinalIgnoreCase));
-            var semiLimitedBanSection = yugiohBanlistSections.SingleOrDefault(bs => bs.Title.Equals(semiLimited, StringComparison.OrdinalIgnoreCase));
-            var unlimitedBanSection = yugiohBanlistSections.SingleOrDefault(bs => bs.Title.Equals(unlimited, StringComparison.OrdinalIgnoreCase));
+            var forbiddenBanSection = yugiohBanlistSections.FirstOrDefault(bs => bs.Title.Equals(forbidden, StringComparison.OrdinalIgnoreCase));
+            var limitedBanSection = yugiohBanlistSections.FirstOrDefault(bs => bs.Title.Equals(limited, StringComparison.OrdinalIgnoreCase));
+            var semiLimitedBanSection = yugiohBanlistSections.FirstOrDefault(bs => bs.Title.Equals(semiLimited, StringComparison.OrdinalIgnoreCase));
+            var unlimitedBanSection = yugiohBanlistSections.FirstOrDefault(bs => bs.Title.Equals(unlimited, StringComparison.OrdinalIgnoreCase));
 
             if (forbiddenBanSection != null && forbiddenBanSection.Content.Any())
                 await AddCardsToBanlist(banlistCards, forbiddenBanSection, banlistId, cardlimits, forbidden);

@@ -14,6 +14,7 @@ namespace banlistprocessor.application.MessageConsumers.BanlistData
         private readonly IBanlistService _banlistService;
         private readonly ILogger<BanlistDataConsumerHandler> _logger;
 
+
         public BanlistDataConsumerHandler(IBanlistService banlistService, ILogger<BanlistDataConsumerHandler> logger)
         {
             _banlistService = banlistService;
@@ -29,7 +30,8 @@ namespace banlistprocessor.application.MessageConsumers.BanlistData
                 var yugiohBanlist = JsonConvert.DeserializeObject<YugiohBanlist>(request.Message);
                 banlistDataConsumerResult.YugiohBanlist = yugiohBanlist;
 
-                _logger.LogInformation($"{yugiohBanlist.BanlistType.ToString()}, {yugiohBanlist.Title}, {yugiohBanlist.StartDate}");
+                _logger.LogInformation(
+                    $"{yugiohBanlist.BanlistType.ToString()}, {yugiohBanlist.Title}, {yugiohBanlist.StartDate}");
 
                 var banlistExists = await _banlistService.BanlistExist(yugiohBanlist.ArticleId);
 
@@ -39,9 +41,17 @@ namespace banlistprocessor.application.MessageConsumers.BanlistData
 
                 banlistDataConsumerResult.BanlistId = result.Id;
             }
-            catch (ArgumentException ex)
+            catch (ArgumentNullException ex)
             {
                 _logger.LogError("Argument {@Param} was null. Message: {@Message}: ", ex.ParamName, request.Message);
+            }
+            catch (NullReferenceException ex)
+            {
+                _logger.LogError("Null reference exception {@Message}. Exception: {@Exception}: ", request.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Unexpected error occured {@Exception}: ", ex);
             }
 
             return banlistDataConsumerResult;
