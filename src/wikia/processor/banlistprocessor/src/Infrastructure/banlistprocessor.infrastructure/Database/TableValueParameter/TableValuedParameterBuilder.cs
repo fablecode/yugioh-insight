@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.SqlServer.Server;
 
-namespace cardprocessor.infrastructure.Database.TableValueParameter
+namespace banlistprocessor.infrastructure.Database.TableValueParameter
 {
     public class TableValuedParameterBuilder
     {

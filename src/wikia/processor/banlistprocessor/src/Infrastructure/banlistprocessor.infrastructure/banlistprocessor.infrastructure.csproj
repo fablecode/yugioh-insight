@@ -16,10 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\banlistprocessor.core\banlistprocessor.core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Repository\" />
+    <ProjectReference Include="..\..\Domain\banlistprocessor.domain\banlistprocessor.domain\banlistprocessor.domain.csproj" />
   </ItemGroup>
 
 </Project>

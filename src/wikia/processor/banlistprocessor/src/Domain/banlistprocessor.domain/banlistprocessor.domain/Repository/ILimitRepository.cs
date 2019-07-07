@@ -6,6 +6,6 @@ namespace banlistprocessor.domain.Repository
 {
     public interface ILimitRepository
     {
-        Task<ICollection<Limit>> GetAll();
+        Task<List<Limit>> GetAll();
     }
 }

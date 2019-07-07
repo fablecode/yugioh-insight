@@ -27,8 +27,9 @@ namespace banlistprocessor.application.MessageConsumers.BanlistData
             try
             {
                 var yugiohBanlist = JsonConvert.DeserializeObject<YugiohBanlist>(request.Message);
-
                 banlistDataConsumerResult.YugiohBanlist = yugiohBanlist;
+
+                _logger.LogInformation($"{yugiohBanlist.BanlistType.ToString()}, {yugiohBanlist.Title}, {yugiohBanlist.StartDate}");
 
                 var banlistExists = await _banlistService.BanlistExist(yugiohBanlist.ArticleId);
 

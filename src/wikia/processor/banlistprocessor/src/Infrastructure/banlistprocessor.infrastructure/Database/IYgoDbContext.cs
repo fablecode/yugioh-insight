@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace cardprocessor.infrastructure.Database
+namespace banlistprocessor.infrastructure.Database
 {
     public interface IYgoDbContext
     {

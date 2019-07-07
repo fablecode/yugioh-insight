@@ -4,7 +4,7 @@
     <LangVersion>7.1</LangVersion>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <UserSecretsId>d8c688bd-1ee6-4e4f-a883-c810b6146f3b</UserSecretsId>
+    <UserSecretsId>f0b3952b-903e-4a65-ad04-6f046de97610</UserSecretsId>
     <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
     <SelfContained>false</SelfContained>
     <IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>

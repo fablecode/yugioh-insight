@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using AutoMapper;
+using banlistprocessor.core.Services;
+using banlistprocessor.domain.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,6 +28,8 @@ namespace banlistprocessor.application
 
         private static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
+            services.AddTransient<IBanlistService, BanlistService>();
+            services.AddTransient<IBanlistCardService, BanlistCardService>();
 
             return services;
         }

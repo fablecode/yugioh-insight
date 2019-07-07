@@ -1,4 +1,4 @@
-﻿namespace cardprocessor.infrastructure.Database.TableValueParameter
+﻿namespace banlistprocessor.infrastructure.Database.TableValueParameter
 {
     public class ArcheytpeCardsByNameRecord
     {

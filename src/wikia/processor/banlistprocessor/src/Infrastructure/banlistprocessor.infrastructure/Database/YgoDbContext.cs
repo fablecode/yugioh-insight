@@ -1,7 +1,7 @@
 ﻿using banlistprocessor.core.Models.Db;
 using Microsoft.EntityFrameworkCore;
 
-namespace cardprocessor.infrastructure.Database
+namespace banlistprocessor.infrastructure.Database
 {
     public class YgoDbContext : DbContext, IYgoDbContext
     {
