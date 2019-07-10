@@ -1,11 +1,10 @@
 ﻿using article.core.ArticleList.Processor;
+using article.core.Constants;
 using article.core.Exceptions;
 using article.core.Models;
-using article.domain.Services;
+using article.domain.Services.Messaging;
 using System;
 using System.Threading.Tasks;
-using article.core.Constants;
-using article.domain.Services.Messaging;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.ArticleList.Item
