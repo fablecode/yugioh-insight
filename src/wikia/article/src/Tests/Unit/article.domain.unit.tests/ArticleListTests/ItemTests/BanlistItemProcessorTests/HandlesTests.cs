@@ -1,6 +1,7 @@
 ﻿using article.core.Constants;
 using article.domain.ArticleList.Item;
 using article.domain.Services;
+using article.domain.Services.Messaging;
 using article.tests.core;
 using FluentAssertions;
 using NSubstitute;

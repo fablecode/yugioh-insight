@@ -1,23 +1,23 @@
 ﻿using article.core.ArticleList.Processor;
+using article.core.Constants;
 using article.core.Exceptions;
 using article.core.Models;
-using article.domain.Services;
+using article.domain.Services.Messaging;
 using System;
 using System.Threading.Tasks;
-using article.core.Constants;
-using article.domain.Services.Messaging;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.ArticleList.Item
 {
-    public class BanlistItemProcessor : IArticleItemProcessor
+    public class ArchetypeItemProcessor : IArticleItemProcessor
     {
-        private readonly IBanlistArticleQueue _banlistArticleQueue;
+        private readonly IArchetypeArticleQueue _archetypeArticleQueue;
 
-        public BanlistItemProcessor(IBanlistArticleQueue banlistArticleQueue)
+        public ArchetypeItemProcessor(IArchetypeArticleQueue archetypeArticleQueue)
         {
-            _banlistArticleQueue = banlistArticleQueue;
+            _archetypeArticleQueue = archetypeArticleQueue;
         }
+
         public async Task<ArticleTaskResult> ProcessItem(UnexpandedArticle item)
         {
             if (item == null)
@@ -27,7 +27,7 @@ namespace article.domain.ArticleList.Item
 
             try
             {
-                await _banlistArticleQueue.Publish(item);
+                await _archetypeArticleQueue.Publish(item);
 
                 articleTaskResult.IsSuccessfullyProcessed = true;
             }
@@ -41,7 +41,7 @@ namespace article.domain.ArticleList.Item
 
         public bool Handles(string category)
         {
-            return category == ArticleCategory.ForbiddenAndLimited;
+            return category == ArticleCategory.Archetype;
         }
     }
 }

@@ -25,6 +25,7 @@ namespace article.infrastructure
         {
             services.AddTransient<IQueue<Article>, ArticleQueue>();
             services.AddTransient<IBanlistArticleQueue, BanlistArticleQueue>();
+            services.AddTransient<IArchetypeArticleQueue, ArchetypeArticleQueue>();
 
             services.AddTransient<ICardArticleQueue, CardArticleQueue>();
             services.AddTransient<ISemanticCardArticleQueue, SemanticCardArticleQueue>();

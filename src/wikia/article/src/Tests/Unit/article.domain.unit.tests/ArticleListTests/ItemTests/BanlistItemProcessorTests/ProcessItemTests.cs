@@ -8,6 +8,7 @@ using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
+using article.domain.Services.Messaging;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.unit.tests.ArticleListTests.ItemTests.BanlistItemProcessorTests

@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using wikia.Models.Article.AlphabeticalList;
 
-namespace article.domain.Services
+namespace article.domain.Services.Messaging
 {
-    public interface IBanlistArticleQueue
+    public interface IArchetypeArticleQueue
     {
         Task Publish(UnexpandedArticle article);
     }

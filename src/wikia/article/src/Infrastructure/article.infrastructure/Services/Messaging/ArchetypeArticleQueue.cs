@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using article.application.Configuration;
 using article.core.Models;
 using article.domain.Services.Messaging;
-using article.domain.Services.Messaging.Cards;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using RabbitMQ.Client;
 using wikia.Models.Article.AlphabeticalList;
 
-namespace article.infrastructure.Services.Messaging.Cards
+namespace article.infrastructure.Services.Messaging
 {
-    public class SemanticCardArticleQueue : ISemanticCardArticleQueue
+    public class ArchetypeArticleQueue : IArchetypeArticleQueue
     {
-        private readonly IOptions<RabbitMqSettings> _rabbitMqConfig;
         private readonly IQueue<Article> _queue;
+        private readonly IOptions<AppSettings> _appSettings;
 
-        public SemanticCardArticleQueue(IOptions<RabbitMqSettings> rabbitMqConfig, IQueue<Article> queue)
+        public ArchetypeArticleQueue(IQueue<Article> queue, IOptions<AppSettings> appSettings)
         {
-            _rabbitMqConfig = rabbitMqConfig;
             _queue = queue;
+            _appSettings = appSettings;
         }
 
         public Task Publish(UnexpandedArticle article)
@@ -28,7 +24,9 @@ namespace article.infrastructure.Services.Messaging.Cards
             var messageToBeSent = new Article
             {
                 Id = article.Id,
-                CorrelationId = Guid.NewGuid()
+                CorrelationId = Guid.NewGuid(),
+                Title = article.Title,
+                Url = new Uri(new Uri(_appSettings.Value.WikiaDomainUrl), article.Url).AbsoluteUri
             };
 
             return _queue.Publish(messageToBeSent);
