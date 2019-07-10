@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System.Reflection;
 using article.application.Decorators.Loggers;
+using article.application.ScheduledTasks.Archetype;
 using article.application.ScheduledTasks.LatestBanlist;
 using article.core.ArticleList.DataSource;
 using article.domain.Banlist.DataSource;
@@ -50,6 +51,7 @@ namespace article.application
 
             services.AddTransient<IArticleItemProcessor, CardItemProcessor>();
             services.AddTransient<IArticleItemProcessor, BanlistItemProcessor>();
+            services.AddTransient<IArticleItemProcessor, ArchetypeItemProcessor>();
 
 
             var appSettings = services.BuildServiceProvider().GetService<IOptions<Configuration.AppSettings>>();
@@ -63,6 +65,7 @@ namespace article.application
         {
             services.AddTransient<IValidator<CardInformationTask>, CardInformationTaskValidator>();
             services.AddTransient<IValidator<BanlistInformationTask>, BanlistInformationTaskValidator>();
+            services.AddTransient<IValidator<ArchetypeInformationTask>, ArchetypeInformationTaskValidator>();
 
             return services;
         }
