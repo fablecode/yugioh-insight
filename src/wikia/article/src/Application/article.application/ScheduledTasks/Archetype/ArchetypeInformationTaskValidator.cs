@@ -7,12 +7,10 @@ namespace article.application.ScheduledTasks.Archetype
     {
         public ArchetypeInformationTaskValidator()
         {
-            RuleFor(ci => ci.Categories)
+            RuleFor(ci => ci.Category)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotNull()
-                .NotEmpty()
-                .Must(ci => ci.All(c => !string.IsNullOrWhiteSpace(c)))
-                .WithMessage("All {PropertyName} must be valid.");
+                .NotEmpty();
 
             RuleFor(ci => ci.PageSize)
                 .GreaterThan(0);

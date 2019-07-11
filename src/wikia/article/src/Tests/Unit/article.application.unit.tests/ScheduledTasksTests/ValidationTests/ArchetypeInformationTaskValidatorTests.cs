@@ -17,13 +17,13 @@ namespace article.application.unit.tests.ScheduledTasksTests.ValidationTests
         }
 
         [TestCaseSource(nameof(_invalidCategories))]
-        public void Given_Invalid_Categories_Validation_Should_Fail(string[] categories)
+        public void Given_Invalid_Categories_Validation_Should_Fail(string category)
         {
             // Arrange
-            var inputModel = new ArchetypeInformationTask { Categories = categories };
+            var inputModel = new ArchetypeInformationTask { Category = category };
 
             // Act
-            Action act = () => _sut.ShouldHaveValidationErrorFor(ci => ci.Categories, inputModel);
+            Action act = () => _sut.ShouldHaveValidationErrorFor(ci => ci.Category, inputModel);
 
             // Assert
             act.Invoke();
@@ -47,9 +47,9 @@ namespace article.application.unit.tests.ScheduledTasksTests.ValidationTests
 
         static object[] _invalidCategories =
         {
-            new object[] { null },
-            new object[] { new string[0] },
-            new object[] { new[] { "", " "} }
+            null,
+            "",
+            " "
         };
 
         #endregion

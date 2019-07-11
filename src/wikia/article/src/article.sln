@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "article.latestbanlists", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "article.application.unit.tests", "Tests\Unit\article.application.unit.tests\article.application.unit.tests.csproj", "{5B298229-BBDF-483B-A3D0-142B37E3E16E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "article.archetypes", "Presentation\article.archetypes\article.archetypes.csproj", "{E266580C-8F5A-4800-A006-78B14D1D26A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "article.archetypes", "Presentation\article.archetypes\article.archetypes.csproj", "{E266580C-8F5A-4800-A006-78B14D1D26A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

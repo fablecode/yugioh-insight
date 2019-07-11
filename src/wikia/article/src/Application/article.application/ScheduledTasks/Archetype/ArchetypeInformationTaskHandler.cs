@@ -1,10 +1,9 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using article.core.ArticleList.Processor;
-using article.core.Models;
+﻿using article.core.ArticleList.Processor;
 using FluentValidation;
 using MediatR;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace article.application.ScheduledTasks.Archetype
 {
@@ -27,9 +26,9 @@ namespace article.application.ScheduledTasks.Archetype
 
             if (validationResults.IsValid)
             {
-                var results = await _articleCategoryProcessor.Process(request.Categories, request.PageSize);
+                var results = await _articleCategoryProcessor.Process(request.Category, request.PageSize);
 
-                archetypeInformationTaskResult.ArticleTaskResults = results;
+                archetypeInformationTaskResult.ArticleTaskResult = results;
             }
             else
             {

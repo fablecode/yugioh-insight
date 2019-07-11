@@ -56,7 +56,7 @@ namespace article.application.unit.tests.ScheduledTasksTests
             // Arrange
             var task = new ArchetypeInformationTask
             {
-                Categories = new []{"category"},
+                Category = "category",
                 PageSize = 1
             };
 

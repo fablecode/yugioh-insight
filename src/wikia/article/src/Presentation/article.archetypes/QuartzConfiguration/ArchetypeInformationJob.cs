@@ -19,9 +19,10 @@ namespace article.archetypes.QuartzConfiguration
         public async Task Execute(IJobExecutionContext context)
         {
             const int pageSize = 500;
-            var categories = new[] { "Archetypes", "Cards by archetype", "Cards by archetype support" };
+            //var categories = new[] { "Archetypes", "Cards by archetype", "Cards by archetype support" };
+            const string category = "Archetypes";
 
-            await _mediator.Send(new ArchetypeInformationTask { Categories = categories, PageSize = pageSize });
+            await _mediator.Send(new ArchetypeInformationTask { Category = category, PageSize = pageSize });
         }
     }
 }
