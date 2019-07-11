@@ -41,7 +41,9 @@ namespace article.domain.ArticleList.Item
 
         public bool Handles(string category)
         {
-            return category == ArticleCategory.Archetype;
+            return category == ArticleCategory.Archetype ||
+                   category == ArticleCategory.CardsByArchetype ||
+                   category == ArticleCategory.CardsByArchetypeSupport;
         }
     }
 }

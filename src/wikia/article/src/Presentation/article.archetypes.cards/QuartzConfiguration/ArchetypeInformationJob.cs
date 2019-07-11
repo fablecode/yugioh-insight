@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Quartz;
 
-namespace article.archetypes.QuartzConfiguration
+namespace article.archetypes.cards.QuartzConfiguration
 {
     public class ArchetypeInformationJob : IJob
     {
@@ -19,7 +19,7 @@ namespace article.archetypes.QuartzConfiguration
         public async Task Execute(IJobExecutionContext context)
         {
             const int pageSize = 500;
-            const string category = "Archetypes";
+            const string category = "Cards by archetype";
 
             await _mediator.Send(new ArchetypeInformationTask { Category = category, PageSize = pageSize });
         }

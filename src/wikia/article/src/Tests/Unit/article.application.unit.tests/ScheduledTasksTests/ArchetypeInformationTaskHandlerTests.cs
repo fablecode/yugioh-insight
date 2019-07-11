@@ -66,7 +66,7 @@ namespace article.application.unit.tests.ScheduledTasksTests
             await _sut.Handle(task, CancellationToken.None);
 
             // Assert
-            await _articleCategoryProcessor.Received(1).Process(Arg.Any<string[]>(), Arg.Any<int>());
+            await _articleCategoryProcessor.Received(1).Process(Arg.Any<string>(), Arg.Any<int>());
         }
     }
 }
