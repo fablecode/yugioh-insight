@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
 using article.application.Configuration;
-using article.cardtips.QuartzConfiguration;
+using article.cardrulings.QuartzConfiguration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -13,21 +13,21 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
 
-namespace article.cardtips.Services
+namespace article.cardrulings.Services
 {
-    public class CardInformationWorkerService : IHostedService
+    public class CardRulingsWorkerService : IHostedService
     {
         public IServiceProvider Services { get; }
 
         private readonly IOptions<AppSettings> _options;
-        private readonly ILogger<CardInformationWorkerService> _logger;
+        private readonly ILogger<CardRulingsWorkerService> _logger;
         private IScheduler _scheduler;
 
-        public CardInformationWorkerService
+        public CardRulingsWorkerService
         (
             IServiceProvider services,
             IOptions<AppSettings> options,
-            ILogger<CardInformationWorkerService> logger
+            ILogger<CardRulingsWorkerService> logger
         )
         {
             Services = services;

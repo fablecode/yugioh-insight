@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using article.application;
 using article.application.Configuration;
-using article.cardtips.Extensions.WindowsService;
-using article.cardtips.QuartzConfiguration;
-using article.cardtips.Services;
+using article.cardrulings.Extensions.WindowsService;
+using article.cardrulings.QuartzConfiguration;
+using article.cardrulings.Services;
 using article.infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 using Quartz;
 using Serilog;
 
-namespace article.cardtips
+namespace article.cardrulings
 {
     internal class Program
     {
@@ -80,7 +80,7 @@ namespace article.cardtips
                     services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
 
                     // hosted service
-                    services.AddHostedService<CardTipsWorkerService>();
+                    services.AddHostedService<CardRulingsWorkerService>();
 
                     services.AddApplicationServices();
                     services.AddInfrastructureServices();
