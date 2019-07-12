@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
 using article.application.Configuration;
-using article.archetypes.cards.QuartzConfiguration;
+using article.cardtips.QuartzConfiguration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -13,21 +13,21 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
 
-namespace article.archetypes.cards.Services
+namespace article.cardtips.Services
 {
-    public class ArchetypeWorkerService : IHostedService
+    public class CardInformationWorkerService : IHostedService
     {
         public IServiceProvider Services { get; }
 
         private readonly IOptions<AppSettings> _options;
-        private readonly ILogger<ArchetypeWorkerService> _logger;
+        private readonly ILogger<CardInformationWorkerService> _logger;
         private IScheduler _scheduler;
 
-        public ArchetypeWorkerService
+        public CardInformationWorkerService
         (
             IServiceProvider services,
             IOptions<AppSettings> options,
-            ILogger<ArchetypeWorkerService> logger
+            ILogger<CardInformationWorkerService> logger
         )
         {
             Services = services;
@@ -78,7 +78,7 @@ namespace article.archetypes.cards.Services
         private static async Task<IScheduler> CreateScheduler(CancellationToken cancellationToken, ISchedulerFactory factory, IServiceProvider services)
         {
             var scheduler = await factory.GetScheduler(cancellationToken);
-            scheduler.JobFactory = new ArchetypeInformationJobFactory(services);
+            scheduler.JobFactory = new CardTipsJobFactory(services);
 
             return scheduler;
         }
@@ -86,7 +86,7 @@ namespace article.archetypes.cards.Services
         private static ITrigger CreateTrigger(string cronSchedule)
         {
             return TriggerBuilder.Create()
-                .WithIdentity("archetypeCardsInformationJobTrigger", "triggerGroup")
+                .WithIdentity("cardTipsTrigger", "triggerGroup")
 #if DEBUG
                 .StartNow()
 #else
@@ -98,8 +98,8 @@ namespace article.archetypes.cards.Services
 
         private static IJobDetail CreateJob()
         {
-            return JobBuilder.Create<ArchetypeInformationJob>()
-                .WithIdentity("archetypeCardsInformationJob", "jobGroup")
+            return JobBuilder.Create<CardTipsJob>()
+                .WithIdentity("cardTipsJob", "jobGroup")
                 .Build();
         }
 
@@ -112,7 +112,7 @@ namespace article.archetypes.cards.Services
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .WriteTo.File(new JsonFormatter(renderMessage: true),
-                    (_options.Value.LogFolder + $@"/archetypes.cards.{Environment.MachineName}.txt"),
+                    (_options.Value.LogFolder + $@"/cardtipsinformation.{Environment.MachineName}.txt"),
                     fileSizeLimitBytes: 100000000, rollOnFileSizeLimit: true,
                     rollingInterval: RollingInterval.Day)
                 .CreateLogger();

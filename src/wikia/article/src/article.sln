@@ -37,9 +37,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "article.application.unit.te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "article.archetypes", "Presentation\article.archetypes\article.archetypes.csproj", "{E266580C-8F5A-4800-A006-78B14D1D26A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "article.archetypes.cards", "Presentation\article.archetypes.cards\article.archetypes.cards.csproj", "{272350DF-708A-4A40-9DE6-35655AFDE4A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "article.archetypes.cards", "Presentation\article.archetypes.cards\article.archetypes.cards.csproj", "{272350DF-708A-4A40-9DE6-35655AFDE4A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "article.archetypes.support.cards", "Presentation\article.archetypes.support.cards\article.archetypes.support.cards.csproj", "{C4DA2869-901D-410D-B30F-4ED1F110F763}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "article.archetypes.support.cards", "Presentation\article.archetypes.support.cards\article.archetypes.support.cards.csproj", "{C4DA2869-901D-410D-B30F-4ED1F110F763}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "article.cardtips", "Presentation\article.cardtips\article.cardtips.csproj", "{D00A4F52-0CA3-4240-959F-0913474EAE35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,10 @@ Global
 		{C4DA2869-901D-410D-B30F-4ED1F110F763}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4DA2869-901D-410D-B30F-4ED1F110F763}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4DA2869-901D-410D-B30F-4ED1F110F763}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D00A4F52-0CA3-4240-959F-0913474EAE35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D00A4F52-0CA3-4240-959F-0913474EAE35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D00A4F52-0CA3-4240-959F-0913474EAE35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D00A4F52-0CA3-4240-959F-0913474EAE35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +119,7 @@ Global
 		{E266580C-8F5A-4800-A006-78B14D1D26A2} = {B18EE5C7-1A8F-4DCE-A596-5A7547BE6302}
 		{272350DF-708A-4A40-9DE6-35655AFDE4A3} = {B18EE5C7-1A8F-4DCE-A596-5A7547BE6302}
 		{C4DA2869-901D-410D-B30F-4ED1F110F763} = {B18EE5C7-1A8F-4DCE-A596-5A7547BE6302}
+		{D00A4F52-0CA3-4240-959F-0913474EAE35} = {B18EE5C7-1A8F-4DCE-A596-5A7547BE6302}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B835ECF7-85EC-4D9A-9A93-67C1C23B1030}

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using System.Reflection;
 using article.application.Decorators.Loggers;
 using article.application.ScheduledTasks.Archetype;
+using article.application.ScheduledTasks.Articles;
 using article.application.ScheduledTasks.LatestBanlist;
 using article.core.ArticleList.DataSource;
 using article.domain.Banlist.DataSource;
@@ -67,6 +68,7 @@ namespace article.application
             services.AddTransient<IValidator<CardInformationTask>, CardInformationTaskValidator>();
             services.AddTransient<IValidator<BanlistInformationTask>, BanlistInformationTaskValidator>();
             services.AddTransient<IValidator<ArchetypeInformationTask>, ArchetypeInformationTaskValidator>();
+            services.AddTransient<IValidator<ArticleInformationTask>, ArticleInformationTaskValidator>();
 
             return services;
         }

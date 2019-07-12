@@ -86,7 +86,7 @@ namespace article.archetypes.support.cards.Services
         private static ITrigger CreateTrigger(string cronSchedule)
         {
             return TriggerBuilder.Create()
-                .WithIdentity("archetypeInformationJobTrigger", "triggerGroup")
+                .WithIdentity("archetypeSupportCardsInformationJobTrigger", "triggerGroup")
 #if DEBUG
                 .StartNow()
 #else
@@ -99,7 +99,7 @@ namespace article.archetypes.support.cards.Services
         private static IJobDetail CreateJob()
         {
             return JobBuilder.Create<ArchetypeInformationJob>()
-                .WithIdentity("archetypeInformationJob", "jobGroup")
+                .WithIdentity("archetypeSupportCardsInformationJob", "jobGroup")
                 .Build();
         }
 
@@ -112,7 +112,7 @@ namespace article.archetypes.support.cards.Services
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .WriteTo.File(new JsonFormatter(renderMessage: true),
-                    (_options.Value.LogFolder + $@"/archetypes.{Environment.MachineName}.txt"),
+                    (_options.Value.LogFolder + $@"/archetypes.support.cards.{Environment.MachineName}.txt"),
                     fileSizeLimitBytes: 100000000, rollOnFileSizeLimit: true,
                     rollingInterval: RollingInterval.Day)
                 .CreateLogger();
