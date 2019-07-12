@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using article.application.Configuration;
 using article.core.Models;
@@ -6,16 +7,32 @@ using article.domain.Services.Messaging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using wikia.Models.Article.AlphabeticalList;
 
 namespace article.infrastructure.Services.Messaging
 {
     public class ArticleQueue : IQueue<Article>
     {
         private readonly IOptions<RabbitMqSettings> _rabbitMqConfig;
+        private readonly IOptions<AppSettings> _appSettings;
 
-        public ArticleQueue(IOptions<RabbitMqSettings> rabbitMqConfig)
+        public ArticleQueue(IOptions<RabbitMqSettings> rabbitMqConfig, IOptions<AppSettings> appSettings)
         {
             _rabbitMqConfig = rabbitMqConfig;
+            _appSettings = appSettings;
+        }
+
+        public Task Publish(UnexpandedArticle message)
+        {
+            var messageToBeSent = new Article
+            {
+                Id = message.Id,
+                CorrelationId = Guid.NewGuid(),
+                Title = message.Title,
+                Url = new Uri(new Uri(_appSettings.Value.WikiaDomainUrl), message.Url).AbsoluteUri
+            };
+
+            return Publish(messageToBeSent);
         }
 
         public Task Publish(Article message)

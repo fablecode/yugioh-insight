@@ -52,6 +52,7 @@ namespace article.application
             services.AddTransient<IArticleItemProcessor, CardItemProcessor>();
             services.AddTransient<IArticleItemProcessor, BanlistItemProcessor>();
             services.AddTransient<IArticleItemProcessor, ArchetypeItemProcessor>();
+            services.AddTransient<IArticleItemProcessor, ArticleItemProcessor>();
 
 
             var appSettings = services.BuildServiceProvider().GetService<IOptions<Configuration.AppSettings>>();
