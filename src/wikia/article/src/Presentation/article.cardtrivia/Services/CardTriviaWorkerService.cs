@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
 using article.application.Configuration;
-using article.cardrulings.QuartzConfiguration;
+using article.cardtrivia.QuartzConfiguration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -13,21 +13,21 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
 
-namespace article.cardrulings.Services
+namespace article.cardtrivia.Services
 {
-    public class CardRulingsWorkerService : IHostedService
+    public class CardTriviaWorkerService : IHostedService
     {
         public IServiceProvider Services { get; }
 
         private readonly IOptions<AppSettings> _options;
-        private readonly ILogger<CardRulingsWorkerService> _logger;
+        private readonly ILogger<CardTriviaWorkerService> _logger;
         private IScheduler _scheduler;
 
-        public CardRulingsWorkerService
+        public CardTriviaWorkerService
         (
             IServiceProvider services,
             IOptions<AppSettings> options,
-            ILogger<CardRulingsWorkerService> logger
+            ILogger<CardTriviaWorkerService> logger
         )
         {
             Services = services;
@@ -78,7 +78,7 @@ namespace article.cardrulings.Services
         private static async Task<IScheduler> CreateScheduler(CancellationToken cancellationToken, ISchedulerFactory factory, IServiceProvider services)
         {
             var scheduler = await factory.GetScheduler(cancellationToken);
-            scheduler.JobFactory = new CardRulingsJobFactory(services);
+            scheduler.JobFactory = new CardTriviaJobFactory(services);
 
             return scheduler;
         }
@@ -86,7 +86,7 @@ namespace article.cardrulings.Services
         private static ITrigger CreateTrigger(string cronSchedule)
         {
             return TriggerBuilder.Create()
-                .WithIdentity("cardRulingsTrigger", "triggerGroup")
+                .WithIdentity("cardTriviaTrigger", "triggerGroup")
 #if DEBUG
                 .StartNow()
 #else
@@ -98,8 +98,8 @@ namespace article.cardrulings.Services
 
         private static IJobDetail CreateJob()
         {
-            return JobBuilder.Create<CardRulingsJob>()
-                .WithIdentity("cardRulingsJob", "jobGroup")
+            return JobBuilder.Create<CardTriviaJob>()
+                .WithIdentity("cardTriviaJob", "jobGroup")
                 .Build();
         }
 
@@ -112,7 +112,7 @@ namespace article.cardrulings.Services
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .WriteTo.File(new JsonFormatter(renderMessage: true),
-                    (_options.Value.LogFolder + $@"/cardrulingsinformation.{Environment.MachineName}.txt"),
+                    (_options.Value.LogFolder + $@"/cardtriviainformation.{Environment.MachineName}.txt"),
                     fileSizeLimitBytes: 100000000, rollOnFileSizeLimit: true,
                     rollingInterval: RollingInterval.Day)
                 .CreateLogger();

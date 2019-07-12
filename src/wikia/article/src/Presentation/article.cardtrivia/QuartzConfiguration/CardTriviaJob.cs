@@ -4,14 +4,14 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Quartz;
 
-namespace article.cardrulings.QuartzConfiguration
+namespace article.cardtrivia.QuartzConfiguration
 {
-    public class CardTipsJob : IJob
+    public class CardTriviaJob : IJob
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<CardTipsJob> _logger;
+        private readonly ILogger<CardTriviaJob> _logger;
 
-        public CardTipsJob(IMediator mediator, ILogger<CardTipsJob> logger)
+        public CardTriviaJob(IMediator mediator, ILogger<CardTriviaJob> logger)
         {
             _mediator = mediator;
             _logger = logger;
@@ -19,7 +19,7 @@ namespace article.cardrulings.QuartzConfiguration
         public async Task Execute(IJobExecutionContext context)
         {
             const int pageSize = 500;
-            const string category = "Card Rulings";
+            const string category = "Card Trivia";
 
             await _mediator.Send(new ArticleInformationTask { Category = category, PageSize = pageSize });
         }

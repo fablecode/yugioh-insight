@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using article.application;
 using article.application.Configuration;
-using article.cardrulings.Extensions.WindowsService;
-using article.cardrulings.QuartzConfiguration;
-using article.cardrulings.Services;
+using article.cardtrivia.Extensions.WindowsService;
+using article.cardtrivia.QuartzConfiguration;
+using article.cardtrivia.Services;
 using article.infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 using Quartz;
 using Serilog;
 
-namespace article.cardrulings
+namespace article.cardtrivia
 {
     internal class Program
     {
@@ -73,14 +73,14 @@ namespace article.cardrulings
                 {
                     services.AddLogging();
 
-                    services.AddScoped<IJob, CardRulingsJob>();
+                    services.AddScoped<IJob, CardTriviaJob>();
 
                     //configuration settings
                     services.Configure<AppSettings>(hostContext.Configuration.GetSection(nameof(AppSettings)));
                     services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
 
                     // hosted service
-                    services.AddHostedService<CardRulingsWorkerService>();
+                    services.AddHostedService<CardTriviaWorkerService>();
 
                     services.AddApplicationServices();
                     services.AddInfrastructureServices();

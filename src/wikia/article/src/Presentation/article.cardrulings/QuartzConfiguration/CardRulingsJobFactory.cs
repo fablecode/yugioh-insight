@@ -5,11 +5,11 @@ using Quartz.Spi;
 
 namespace article.cardrulings.QuartzConfiguration
 {
-    public class CardTipsJobFactory : IJobFactory
+    public class CardRulingsJobFactory : IJobFactory
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public CardTipsJobFactory(IServiceProvider serviceProvider)
+        public CardRulingsJobFactory(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
