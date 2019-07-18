@@ -4,10 +4,11 @@ using archetypedata.domain.Services.Messaging;
 using archetypedata.domain.WebPages;
 using System;
 using System.Threading.Tasks;
+using archetypedata.core.Processor;
 
 namespace archetypedata.domain.Processor
 {
-    public class ArchetypeProcessor
+    public class ArchetypeProcessor : IArchetypeProcessor
     {
         private readonly IArchetypeWebPage _archetypeWebPage;
         private readonly IQueue<Archetype> _queue;
