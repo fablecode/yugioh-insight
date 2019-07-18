@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypedata.tests.core", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypedata.domain.unit.tests", "Tests\Unit\archetypedata.domain.unit.tests\archetypedata.domain.unit.tests.csproj", "{BACA3738-B125-427B-801F-4AA71FB7BAD7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypedata", "Presentation\archetypedata\archetypedata.csproj", "{7896E606-3F8F-421D-B073-043FA93BE1C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{BACA3738-B125-427B-801F-4AA71FB7BAD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BACA3738-B125-427B-801F-4AA71FB7BAD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BACA3738-B125-427B-801F-4AA71FB7BAD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7896E606-3F8F-421D-B073-043FA93BE1C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7896E606-3F8F-421D-B073-043FA93BE1C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7896E606-3F8F-421D-B073-043FA93BE1C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7896E606-3F8F-421D-B073-043FA93BE1C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{A9A718E2-00A1-490A-A280-CD15AC747D38} = {1C1E8B55-FC74-423A-8EA0-FD9096CAA4C1}
 		{A6B7D289-E8FA-440F-BD6D-EF66959870C4} = {1C1E8B55-FC74-423A-8EA0-FD9096CAA4C1}
 		{BACA3738-B125-427B-801F-4AA71FB7BAD7} = {A9A718E2-00A1-490A-A280-CD15AC747D38}
+		{7896E606-3F8F-421D-B073-043FA93BE1C4} = {F9576CE8-4048-4FA6-B160-48814A17C452}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D9EFAEF2-FF3D-413A-AF5D-9F1B20F4975A}
