@@ -20,7 +20,7 @@ namespace archetypedata.domain.Processor
         }
         public async Task<ArticleTaskResult> Process(Article article)
         {
-            var response = new ArticleTaskResult { Article = article };
+            var articleTaskResult = new ArticleTaskResult { Article = article };
 
             if (!article.Title.Equals("Archetype", StringComparison.OrdinalIgnoreCase))
             {
@@ -35,9 +35,11 @@ namespace archetypedata.domain.Processor
                 };
 
                 await _queue.Publish(archetype);
+
+                articleTaskResult.IsSuccessful = true;
             }
 
-            return response;
+            return articleTaskResult;
         }
     }
 }

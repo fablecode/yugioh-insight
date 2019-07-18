@@ -2,7 +2,7 @@
 {
     public class ArticleTaskResult
     {
-        public bool IsSuccessfullyProcessed { get; set; }
+        public bool IsSuccessful { get; set; }
 
         public Article Article { get; set; }
     }
