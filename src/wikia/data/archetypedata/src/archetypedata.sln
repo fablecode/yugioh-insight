@@ -21,11 +21,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "archetypedata.core", "Core\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{A9A718E2-00A1-490A-A280-CD15AC747D38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypedata.tests.core", "Tests\archetypedata.tests.core\archetypedata.tests.core.csproj", "{A6B7D289-E8FA-440F-BD6D-EF66959870C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "archetypedata.tests.core", "Tests\archetypedata.tests.core\archetypedata.tests.core.csproj", "{A6B7D289-E8FA-440F-BD6D-EF66959870C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypedata.domain.unit.tests", "Tests\Unit\archetypedata.domain.unit.tests\archetypedata.domain.unit.tests.csproj", "{BACA3738-B125-427B-801F-4AA71FB7BAD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "archetypedata.domain.unit.tests", "Tests\Unit\archetypedata.domain.unit.tests\archetypedata.domain.unit.tests.csproj", "{BACA3738-B125-427B-801F-4AA71FB7BAD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypedata", "Presentation\archetypedata\archetypedata.csproj", "{7896E606-3F8F-421D-B073-043FA93BE1C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "archetypedata", "Presentation\archetypedata\archetypedata.csproj", "{7896E606-3F8F-421D-B073-043FA93BE1C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypedata.infrastructure", "Infrastructure\archetypedata.infrastructure\archetypedata.infrastructure.csproj", "{DF2FE7E7-D6FE-47F0-A1C2-40D606954E29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypedata.application", "Application\archetypedata.application\archetypedata.application.csproj", "{52B7D93F-B297-4383-A30F-97B20FDBE4E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +57,14 @@ Global
 		{7896E606-3F8F-421D-B073-043FA93BE1C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7896E606-3F8F-421D-B073-043FA93BE1C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7896E606-3F8F-421D-B073-043FA93BE1C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF2FE7E7-D6FE-47F0-A1C2-40D606954E29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF2FE7E7-D6FE-47F0-A1C2-40D606954E29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF2FE7E7-D6FE-47F0-A1C2-40D606954E29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF2FE7E7-D6FE-47F0-A1C2-40D606954E29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52B7D93F-B297-4383-A30F-97B20FDBE4E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52B7D93F-B297-4383-A30F-97B20FDBE4E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52B7D93F-B297-4383-A30F-97B20FDBE4E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52B7D93F-B297-4383-A30F-97B20FDBE4E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +76,8 @@ Global
 		{A6B7D289-E8FA-440F-BD6D-EF66959870C4} = {1C1E8B55-FC74-423A-8EA0-FD9096CAA4C1}
 		{BACA3738-B125-427B-801F-4AA71FB7BAD7} = {A9A718E2-00A1-490A-A280-CD15AC747D38}
 		{7896E606-3F8F-421D-B073-043FA93BE1C4} = {F9576CE8-4048-4FA6-B160-48814A17C452}
+		{DF2FE7E7-D6FE-47F0-A1C2-40D606954E29} = {7CF9BBE2-8759-4E52-87B4-B8F3B694E801}
+		{52B7D93F-B297-4383-A30F-97B20FDBE4E7} = {BE9F023B-DC12-4760-954F-89EACB0CA41C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D9EFAEF2-FF3D-413A-AF5D-9F1B20F4975A}

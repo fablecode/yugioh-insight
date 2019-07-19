@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Messaging\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\archetypedata.application\archetypedata.application.csproj" />
+    <ProjectReference Include="..\..\Domain\archetypedata.domain\archetypedata.domain.csproj" />
+  </ItemGroup>
+
+</Project>
