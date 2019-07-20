@@ -1,4 +1,7 @@
-﻿using archetypedata.domain.WebPages;
+﻿using archetypedata.core.Models;
+using archetypedata.domain.Services.Messaging;
+using archetypedata.domain.WebPages;
+using archetypedata.infrastructure.Services.Messaging;
 using archetypedata.infrastructure.WebPages;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,7 +20,9 @@ namespace archetypedata.infrastructure
             services.AddTransient<IHtmlWebPage, HtmlWebPage>();
 
             services.AddTransient<IArchetypeThumbnail, ArchetypeThumbnail>();
-            services.AddTransient<IArchetypeWebPage, IArchetypeWebPage>();
+            services.AddTransient<IArchetypeWebPage, ArchetypeWebPage>();
+            services.AddTransient<IQueue<Archetype>, ArchetypeQueue>();
+            services.AddTransient<IQueue<ArchetypeCard>, ArchetypeCardQueue>();
 
             return services;
         }
