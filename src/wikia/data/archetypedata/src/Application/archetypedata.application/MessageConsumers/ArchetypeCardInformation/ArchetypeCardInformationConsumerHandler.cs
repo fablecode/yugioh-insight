@@ -1,13 +1,12 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using archetypedata.application.MessageConsumers.ArchetypeInformation;
-using archetypedata.core.Models;
+﻿using archetypedata.core.Models;
 using archetypedata.core.Processor;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace archetypedata.application.MessageConsumers.ArchetypeCardInformation
 {
