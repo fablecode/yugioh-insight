@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using archetypedata.core.Models;
 using archetypedata.domain.Processor;
@@ -8,6 +9,9 @@ using archetypedata.tests.core;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
+using wikia.Api;
+using wikia.Models.Article;
+using wikia.Models.Article.Details;
 
 namespace archetypedata.domain.unit.tests.ArchetypeProcessorTests
 {
@@ -18,6 +22,7 @@ namespace archetypedata.domain.unit.tests.ArchetypeProcessorTests
         private IArchetypeWebPage _archetypeWebPage;
         private IQueue<Archetype> _queue;
         private ArchetypeProcessor _sut;
+        private IWikiArticle _wikiArticle;
 
         [SetUp]
         public void SetUp()
@@ -25,7 +30,8 @@ namespace archetypedata.domain.unit.tests.ArchetypeProcessorTests
             _archetypeWebPage = Substitute.For<IArchetypeWebPage>();
             _queue = Substitute.For<IQueue<Archetype>>();
 
-            _sut = new ArchetypeProcessor(_archetypeWebPage, _queue);
+            _wikiArticle = Substitute.For<IWikiArticle>();
+            _sut = new ArchetypeProcessor(_archetypeWebPage, _queue, _wikiArticle);
         }
 
         [Test]
@@ -97,6 +103,17 @@ namespace archetypedata.domain.unit.tests.ArchetypeProcessorTests
                 Url = "http://yugioh.wikia.com/wiki/Blue-Eyes"
             };
 
+            _wikiArticle.Details(Arg.Any<int>()).Returns(new ExpandedArticleResultSet
+            {
+                Items = new Dictionary<string, ExpandedArticle>
+                {
+                    ["690148"] = new ExpandedArticle
+                    {
+                        Revision = new Revision {Timestamp = 1563318260}
+                    }
+                }
+            });
+
             // Act
             var result = await _sut.Process(article);
 
@@ -116,6 +133,18 @@ namespace archetypedata.domain.unit.tests.ArchetypeProcessorTests
                 Url = "http://yugioh.wikia.com/wiki/Blue-Eyes"
             };
 
+            _wikiArticle.Details(Arg.Any<int>()).Returns(new ExpandedArticleResultSet
+            {
+                Items = new Dictionary<string, ExpandedArticle>
+                {
+                    ["690148"] = new ExpandedArticle
+                    {
+                        Revision = new Revision { Timestamp = 1563318260 }
+                    }
+                }
+            });
+
+
             // Act
             await _sut.Process(article);
 
@@ -134,6 +163,18 @@ namespace archetypedata.domain.unit.tests.ArchetypeProcessorTests
                 Title = "Blue-Eyes",
                 Url = "http://yugioh.wikia.com/wiki/Blue-Eyes"
             };
+
+            _wikiArticle.Details(Arg.Any<int>()).Returns(new ExpandedArticleResultSet
+            {
+                Items = new Dictionary<string, ExpandedArticle>
+                {
+                    ["690148"] = new ExpandedArticle
+                    {
+                        Revision = new Revision { Timestamp = 1563318260 }
+                    }
+                }
+            });
+
 
             // Act
             await _sut.Process(article);
