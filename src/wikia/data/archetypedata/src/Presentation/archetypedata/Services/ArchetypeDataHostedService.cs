@@ -29,12 +29,13 @@ namespace archetypedata.Services
         private readonly IMediator _mediator;
 
         private ConnectionFactory _factory;
-        private IConnection _connection;
+        private IConnection _archetypeConnection;
         private IModel _archetypeArticleChannel;
 
         private EventingBasicConsumer _archetypeArticleConsumer;
         private EventingBasicConsumer _archetypeCardArticleConsumer;
         private IModel _archetypeCardArticleChannel;
+        private IConnection _archetypeCardConnection;
 
         public ArchetypeDataHostedService
         (
@@ -61,10 +62,11 @@ namespace archetypedata.Services
         private Task StartConsumer()
         {
             _factory = new ConnectionFactory() { HostName = _rabbitMqOptions.Value.Host };
-            _connection = _factory.CreateConnection();
+            _archetypeConnection = _factory.CreateConnection();
+            _archetypeCardConnection = _factory.CreateConnection();
 
-            _archetypeArticleConsumer = CreateArchetypeArticleConsumer(_connection);
-            _archetypeCardArticleConsumer = CreateArchetypeCardArticleConsumer(_connection);
+            _archetypeArticleConsumer = CreateArchetypeArticleConsumer(_archetypeConnection);
+            _archetypeCardArticleConsumer = CreateArchetypeCardArticleConsumer(_archetypeCardConnection);
 
             return Task.CompletedTask;
         }
@@ -134,11 +136,11 @@ namespace archetypedata.Services
 
                     if (result.IsSuccessful)
                     {
-                        _archetypeArticleChannel.BasicAck(ea.DeliveryTag, false);
+                        _archetypeCardArticleChannel.BasicAck(ea.DeliveryTag, false);
                     }
                     else
                     {
-                        _archetypeArticleChannel.BasicNack(ea.DeliveryTag, false, false);
+                        _archetypeCardArticleChannel.BasicNack(ea.DeliveryTag, false, false);
                     }
                 }
                 catch (Exception ex)
@@ -172,7 +174,7 @@ namespace archetypedata.Services
         public override void Dispose()
         {
             _archetypeArticleChannel.Close();
-            _connection.Close();
+            _archetypeConnection.Close();
             base.Dispose();
         }
 
