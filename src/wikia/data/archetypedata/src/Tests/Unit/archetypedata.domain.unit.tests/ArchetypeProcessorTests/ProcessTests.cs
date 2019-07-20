@@ -35,7 +35,7 @@ namespace archetypedata.domain.unit.tests.ArchetypeProcessorTests
         }
 
         [Test]
-        public async Task Given_A_Valid_Article_If_The_Title_Equals_Archetype_IsSuccessful_Should_Be_False()
+        public async Task Given_A_Valid_Article_If_The_Title_Equals_Archetype_IsSuccessful_Should_Be_True()
         {
             // Arrange
             var article = new Article
@@ -50,7 +50,7 @@ namespace archetypedata.domain.unit.tests.ArchetypeProcessorTests
             var result = await _sut.Process(article);
 
             // Assert
-            result.IsSuccessful.Should().BeFalse();
+            result.IsSuccessful.Should().BeTrue();
         }
 
         [Test]

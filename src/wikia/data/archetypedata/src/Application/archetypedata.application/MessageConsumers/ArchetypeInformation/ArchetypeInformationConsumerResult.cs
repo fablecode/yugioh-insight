@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace archetypedata.core.Models
+namespace archetypedata.application.MessageConsumers.ArchetypeInformation
 {
-    public class ArticleTaskResult
+    public class ArchetypeInformationConsumerResult
     {
         public bool IsSuccessful => !Errors.Any();
 
-        public Article Article { get; set; }
+        public string Message { get; set; }
 
         public List<string> Errors { get; set; } = new List<string>();
     }
-
 }

@@ -46,8 +46,6 @@ namespace archetypedata.domain.Processor
                 };
 
                 await _queue.Publish(archetype);
-
-                articleTaskResult.IsSuccessful = true;
             }
 
             return articleTaskResult;

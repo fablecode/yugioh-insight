@@ -33,8 +33,6 @@ namespace archetypedata.domain.Processor
 
             await _queue.Publish(archetypeCards);
 
-            articleTaskResult.IsSuccessful = true;
-
             return articleTaskResult;
         }
     }
