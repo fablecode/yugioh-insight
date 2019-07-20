@@ -1,9 +1,11 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using archetypedata.core.Models;
 using archetypedata.core.Processor;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace archetypedata.application.MessageConsumers.ArchetypeInformation
@@ -12,11 +14,13 @@ namespace archetypedata.application.MessageConsumers.ArchetypeInformation
     {
         private readonly IArchetypeProcessor _archetypeProcessor;
         private readonly IValidator<ArchetypeInformationConsumer> _validator;
+        private readonly ILogger<ArchetypeInformationConsumerHandler> _logger;
 
-        public ArchetypeInformationConsumerHandler(IArchetypeProcessor archetypeProcessor, IValidator<ArchetypeInformationConsumer> validator)
+        public ArchetypeInformationConsumerHandler(IArchetypeProcessor archetypeProcessor, IValidator<ArchetypeInformationConsumer> validator, ILogger<ArchetypeInformationConsumerHandler> logger)
         {
             _archetypeProcessor = archetypeProcessor;
             _validator = validator;
+            _logger = logger;
         }
         public async Task<ArchetypeInformationConsumerResult> Handle(ArchetypeInformationConsumer request, CancellationToken cancellationToken)
         {
@@ -26,14 +30,20 @@ namespace archetypedata.application.MessageConsumers.ArchetypeInformation
 
             if (validationResults.IsValid)
             {
-                var cardArticle = JsonConvert.DeserializeObject<Article>(request.Message);
+                var archetypeArticle = JsonConvert.DeserializeObject<Article>(request.Message);
 
-                var results = await _archetypeProcessor.Process(cardArticle);
+                _logger.LogInformation("Processing archetype '{@Title}'", archetypeArticle.Title);
+                var results = await _archetypeProcessor.Process(archetypeArticle);
+                _logger.LogInformation("Finished processing archetype '{@Title}'", archetypeArticle.Title);
 
                 if (!results.IsSuccessful)
                 {
                     archetypeInformationConsumerResult.Errors.AddRange(results.Errors);
                 }
+            }
+            else
+            {
+                archetypeInformationConsumerResult.Errors = validationResults.Errors.Select(err => err.ErrorMessage).ToList();
             }
 
             return archetypeInformationConsumerResult;
