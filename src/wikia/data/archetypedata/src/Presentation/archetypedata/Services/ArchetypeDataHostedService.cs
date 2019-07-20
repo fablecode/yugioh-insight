@@ -3,6 +3,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using archetypedata.application.Configuration;
+using archetypedata.application.MessageConsumers.ArchetypeCardInformation;
 using archetypedata.application.MessageConsumers.ArchetypeInformation;
 using MediatR;
 using Microsoft.Extensions.Hosting;
@@ -18,6 +19,8 @@ namespace archetypedata.Services
     public class ArchetypeDataHostedService : BackgroundService
     {
         private const string ArchetypeArticleQueue = "archetype-article";
+        private const string ArchetypeCardArticleQueue = "archetype-cards-article";
+        private const string ArchetypeSupportCardArticleQueue = "archetype-support-cards-article";
 
         public IServiceProvider Services { get; }
 
@@ -30,6 +33,8 @@ namespace archetypedata.Services
         private IModel _archetypeArticleChannel;
 
         private EventingBasicConsumer _archetypeArticleConsumer;
+        private EventingBasicConsumer _archetypeCardArticleConsumer;
+        private IModel _archetypeCardArticleChannel;
 
         public ArchetypeDataHostedService
         (
@@ -59,6 +64,7 @@ namespace archetypedata.Services
             _connection = _factory.CreateConnection();
 
             _archetypeArticleConsumer = CreateArchetypeArticleConsumer(_connection);
+            _archetypeCardArticleConsumer = CreateArchetypeCardArticleConsumer(_connection);
 
             return Task.CompletedTask;
         }
@@ -109,6 +115,59 @@ namespace archetypedata.Services
 
             return consumer;
         }
+        private EventingBasicConsumer CreateArchetypeCardArticleConsumer(IConnection connection)
+        {
+            _archetypeCardArticleChannel = connection.CreateModel();
+            _archetypeCardArticleChannel.BasicQos(0, 20, false);
+
+            var consumer = new EventingBasicConsumer(_archetypeCardArticleChannel);
+
+            consumer.Received += async (model, ea) =>
+            {
+                try
+                {
+                    var body = ea.Body;
+                    var message = Encoding.UTF8.GetString(body);
+
+                    var result = await _mediator.Send(new ArchetypeCardInformationConsumer { Message = message });
+
+
+                    if (result.IsSuccessful)
+                    {
+                        _archetypeArticleChannel.BasicAck(ea.DeliveryTag, false);
+                    }
+                    else
+                    {
+                        _archetypeArticleChannel.BasicNack(ea.DeliveryTag, false, false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error("RabbitMq Consumer: " + ArchetypeCardArticleQueue + " exception. Exception: {@Exception}", ex);
+                }
+            };
+
+            consumer.Shutdown += OnArchetypeCardArticleConsumerShutdown;
+            consumer.Registered += OnArchetypeCardArticleConsumerRegistered;
+            consumer.Unregistered += OnArchetypeCardArticleConsumerUnregistered;
+            consumer.ConsumerCancelled += OnArchetypeCardArticleConsumerCancelled;
+
+            _archetypeCardArticleChannel.BasicConsume
+            (
+                queue: ArchetypeCardArticleQueue,
+                autoAck: false,
+                consumer: consumer
+            );
+
+            _archetypeCardArticleChannel.BasicConsume
+            (
+                queue: ArchetypeSupportCardArticleQueue,
+                autoAck: false,
+                consumer: consumer
+            );
+
+            return consumer;
+        }
 
         public override void Dispose()
         {
@@ -133,6 +192,26 @@ namespace archetypedata.Services
         private static void OnArchetypeArticleConsumerShutdown(object sender, ShutdownEventArgs e)
         {
             Log.Logger.Information($"Consumer '{ArchetypeArticleQueue}' Shutdown");
+        }
+
+
+
+        private static void OnArchetypeCardArticleConsumerCancelled(object sender, ConsumerEventArgs e)
+        {
+            Log.Logger.Information($"Consumer '{ArchetypeCardArticleQueue}' Cancelled");
+        }
+
+        private static void OnArchetypeCardArticleConsumerUnregistered(object sender, ConsumerEventArgs e)
+        {
+            Log.Logger.Information($"Consumer '{ArchetypeCardArticleQueue}' Unregistered");}
+
+        private static void OnArchetypeCardArticleConsumerRegistered(object sender, ConsumerEventArgs e)
+        {
+            Log.Logger.Information($"Consumer '{ArchetypeCardArticleQueue}' Registered");
+        }
+        private static void OnArchetypeCardArticleConsumerShutdown(object sender, ShutdownEventArgs e)
+        {
+            Log.Logger.Information($"Consumer '{ArchetypeCardArticleQueue}' Shutdown");
         }
 
         private void ConfigureSerilog()

@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Reflection;
+using archetypedata.application.MessageConsumers.ArchetypeCardInformation;
 using archetypedata.application.MessageConsumers.ArchetypeInformation;
 using archetypedata.core.Processor;
 using archetypedata.domain.Processor;
@@ -48,6 +49,7 @@ namespace archetypedata.application
         private static IServiceCollection AddValidation(this IServiceCollection services)
         {
             services.AddTransient<IValidator<ArchetypeInformationConsumer>, ArchetypeInformationConsumerValidator>();
+            services.AddTransient<IValidator<ArchetypeCardInformationConsumer>, ArchetypeCardInformationConsumerValidator>();
 
             return services;
         }
