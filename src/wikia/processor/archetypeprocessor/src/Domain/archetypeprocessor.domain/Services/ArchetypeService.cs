@@ -14,6 +14,11 @@ namespace archetypeprocessor.domain.Services
             _archetypeRepository = archetypeRepository;
         }
 
+        public Task<Archetype> ArchetypeByName(string name)
+        {
+            return _archetypeRepository.ArchetypeByName(name);
+        }
+
         public Task<Archetype> ArchetypeById(long id)
         {
             return _archetypeRepository.ArchetypeById(id);

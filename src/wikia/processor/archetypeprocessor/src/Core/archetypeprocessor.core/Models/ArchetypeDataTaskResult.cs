@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace archetypeprocessor.core.Models
 {
-    public class ArticleDataTaskResult
+    public class ArchetypeDataTaskResult<T>
     {
         public bool IsSuccessful => !Errors.Any();
 
-        public ArticleData ArticleData { get; set; }
+        public T ArchetypeData { get; set; }
 
         public List<string> Errors { get; set; } = new List<string>();
     }

@@ -15,6 +15,13 @@ namespace archetypeprocessor.infrastructure.Repository
             _dbContext = dbContext;
         }
 
+        public Task<Archetype> ArchetypeByName(string name)
+        {
+            return _dbContext
+                    .Archetype
+                    .SingleOrDefaultAsync(a => a.Name == name);
+        }
+
         public Task<Archetype> ArchetypeById(long id)
         {
             return _dbContext

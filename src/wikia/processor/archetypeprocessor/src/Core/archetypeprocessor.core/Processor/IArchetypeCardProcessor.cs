@@ -5,6 +5,6 @@ namespace archetypeprocessor.core.Processor
 {
     public interface IArchetypeCardProcessor
     {
-        Task<ArticleDataTaskResult> Process(ArchetypeCardMessage archetypeData);
+        Task<ArchetypeDataTaskResult<ArchetypeCardMessage>> Process(ArchetypeCardMessage archetypeData);
     }
 }
