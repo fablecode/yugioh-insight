@@ -18,7 +18,7 @@ namespace archetypeprocessor.infrastructure
         }
         public static IServiceCollection AddYgoDatabase(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<YgoDbContext>(c => c.UseSqlServer(connectionString));
+            services.AddDbContextPool<YgoDbContext>(c => c.UseSqlServer(connectionString));
 
             return services;
         }
