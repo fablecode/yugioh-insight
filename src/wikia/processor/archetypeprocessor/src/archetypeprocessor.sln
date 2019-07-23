@@ -17,13 +17,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Tests", "6. Tests", "{56
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{21071956-C6B0-46EF-891B-3DDFA9D9489F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypeprocessor.domain", "Domain\archetypeprocessor.domain\archetypeprocessor.domain.csproj", "{BC6E9EF7-4EC4-4D00-ADA9-9D3C1EB35FC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "archetypeprocessor.domain", "Domain\archetypeprocessor.domain\archetypeprocessor.domain.csproj", "{BC6E9EF7-4EC4-4D00-ADA9-9D3C1EB35FC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypeprocessor.application", "Application\archetypeprocessor.application\archetypeprocessor.application.csproj", "{C6119A54-F93C-4B08-877D-DF679EC72C68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "archetypeprocessor.application", "Application\archetypeprocessor.application\archetypeprocessor.application.csproj", "{C6119A54-F93C-4B08-877D-DF679EC72C68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypeprocessor.core", "Core\archetypeprocessor.core\archetypeprocessor.core.csproj", "{935FA4E0-B919-4951-A01A-611630AA96D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "archetypeprocessor.core", "Core\archetypeprocessor.core\archetypeprocessor.core.csproj", "{935FA4E0-B919-4951-A01A-611630AA96D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypeprocessor.infrastructure", "Infrastructure\archetypeprocessor.infrastructure\archetypeprocessor.infrastructure.csproj", "{65479969-874E-4561-92AE-2E779CF2D1F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "archetypeprocessor.infrastructure", "Infrastructure\archetypeprocessor.infrastructure\archetypeprocessor.infrastructure.csproj", "{65479969-874E-4561-92AE-2E779CF2D1F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypeprocessor.domain.unit.tests", "Tests\Unit\archetypeprocessor.domain.unit.tests\archetypeprocessor.domain.unit.tests.csproj", "{4A63718F-ABA1-409E-A999-B0FA0C3168EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypeprocessor.tests.core", "Tests\archetypeprocessor.tests.core\archetypeprocessor.tests.core.csproj", "{6F99B0F4-D4E3-442E-BE74-92DB585E5BDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypeprocessor.applicat.unit.tests", "Tests\Unit\archetypeprocessor.applicat.unit.tests\archetypeprocessor.applicat.unit.tests.csproj", "{27D79341-B2D9-4EDD-8D73-E79945CB39AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +53,18 @@ Global
 		{65479969-874E-4561-92AE-2E779CF2D1F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65479969-874E-4561-92AE-2E779CF2D1F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65479969-874E-4561-92AE-2E779CF2D1F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A63718F-ABA1-409E-A999-B0FA0C3168EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A63718F-ABA1-409E-A999-B0FA0C3168EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A63718F-ABA1-409E-A999-B0FA0C3168EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A63718F-ABA1-409E-A999-B0FA0C3168EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F99B0F4-D4E3-442E-BE74-92DB585E5BDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F99B0F4-D4E3-442E-BE74-92DB585E5BDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F99B0F4-D4E3-442E-BE74-92DB585E5BDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F99B0F4-D4E3-442E-BE74-92DB585E5BDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27D79341-B2D9-4EDD-8D73-E79945CB39AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27D79341-B2D9-4EDD-8D73-E79945CB39AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27D79341-B2D9-4EDD-8D73-E79945CB39AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27D79341-B2D9-4EDD-8D73-E79945CB39AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +75,9 @@ Global
 		{C6119A54-F93C-4B08-877D-DF679EC72C68} = {3CC6FFE8-2ECE-4984-9D5F-442C648F5671}
 		{935FA4E0-B919-4951-A01A-611630AA96D5} = {3DD9440D-75AD-4240-A572-647E65E79260}
 		{65479969-874E-4561-92AE-2E779CF2D1F7} = {9F1FB34B-0C65-4254-AED2-16FB1E3159D9}
+		{4A63718F-ABA1-409E-A999-B0FA0C3168EE} = {21071956-C6B0-46EF-891B-3DDFA9D9489F}
+		{6F99B0F4-D4E3-442E-BE74-92DB585E5BDD} = {56F28EC0-C496-4E74-8764-C7C5F936C8DE}
+		{27D79341-B2D9-4EDD-8D73-E79945CB39AF} = {21071956-C6B0-46EF-891B-3DDFA9D9489F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6A1FBC93-0565-477D-82D6-588201DAB2EA}
