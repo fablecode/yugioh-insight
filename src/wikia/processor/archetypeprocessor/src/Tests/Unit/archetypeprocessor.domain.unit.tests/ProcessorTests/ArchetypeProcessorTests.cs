@@ -1,4 +1,5 @@
-﻿using archetypeprocessor.core.Models;
+﻿using System.Threading.Tasks;
+using archetypeprocessor.core.Models;
 using archetypeprocessor.core.Models.Db;
 using archetypeprocessor.core.Services;
 using archetypeprocessor.domain.Messaging;
@@ -6,9 +7,8 @@ using archetypeprocessor.domain.Processor;
 using archetypeprocessor.tests.core;
 using NSubstitute;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
-namespace archetypeprocessor.domain.unit.tests
+namespace archetypeprocessor.domain.unit.tests.ProcessorTests
 {
     [TestFixture]
     [Category(TestType.Unit)]

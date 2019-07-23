@@ -30,9 +30,17 @@
 				        <Function>.*get_.*</Function>
 				        <Function>.*set_.*</Function>
                 <Function>.*\.\.ctor.*</Function>
-				      </Exclude>
+              </Exclude>
 			      </Functions>
-			
+
+            <!-- Match the path of the source files in which each method is defined: -->
+            <Sources>
+              <Exclude>
+                <Source>.*\\Models\\Db\\.*</Source>
+              </Exclude>
+            </Sources>
+
+
             <!--We recommend you do not change the following values:-->
             <UseVerifiableInstrumentation>True</UseVerifiableInstrumentation>
             <AllowLowIntegrityProcesses>True</AllowLowIntegrityProcesses>

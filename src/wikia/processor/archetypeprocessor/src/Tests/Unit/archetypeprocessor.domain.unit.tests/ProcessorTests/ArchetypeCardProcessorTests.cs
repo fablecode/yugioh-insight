@@ -8,7 +8,7 @@ using archetypeprocessor.tests.core;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace archetypeprocessor.domain.unit.tests
+namespace archetypeprocessor.domain.unit.tests.ProcessorTests
 {
     [TestFixture]
     [Category(TestType.Unit)]
