@@ -49,7 +49,8 @@ namespace archetypeprocessor.domain.unit.tests.ProcessorTests
             // Arrange
             var archetypeCardMessage = new ArchetypeCardMessage
             {
-                ArchetypeName = "Blue-Eyes White Dragon"
+                ArchetypeName = "Blue-Eyes White Dragon",
+                Cards = new List<string> { "Blue-Eyes White Dragon"}
             };
 
             _archetypeService.ArchetypeByName(Arg.Any<string>()).Returns(new Archetype());
