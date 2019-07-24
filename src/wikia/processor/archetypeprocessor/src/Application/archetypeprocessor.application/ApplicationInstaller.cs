@@ -4,6 +4,11 @@ using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using archetypeprocessor.application.MessageConsumers.ArchetypeCardInformation;
+using archetypeprocessor.application.MessageConsumers.ArchetypeInformation;
+using archetypeprocessor.core.Processor;
+using archetypeprocessor.domain.Processor;
+using FluentValidation;
 
 namespace archetypeprocessor.application
 {
@@ -14,6 +19,7 @@ namespace archetypeprocessor.application
             services
                 .AddCqrs()
                 .AddDomainServices()
+                .AddValidation()
                 .AddAutoMapper(); 
 
             return services;
@@ -30,12 +36,17 @@ namespace archetypeprocessor.application
         {
             services.AddTransient<IArchetypeService, ArchetypeService>();
             services.AddTransient<IArchetypeCardsService, ArchetypeCardsService>();
+            services.AddTransient<IArchetypeProcessor, ArchetypeProcessor>();
+            services.AddTransient<IArchetypeCardProcessor, ArchetypeCardProcessor>();
 
             return services;
         }
 
         private static IServiceCollection AddValidation(this IServiceCollection services)
         {
+            services.AddTransient<IValidator<ArchetypeInformationConsumer>, ArchetypeInformationConsumerValidator>();
+            services.AddTransient<IValidator<ArchetypeCardInformationConsumer>, ArchetypeCardInformationConsumerValidator>();
+
             return services;
         }
     }

@@ -35,7 +35,7 @@ namespace archetypeprocessor.infrastructure.Repository
 
             return await _dbContext
                         .ArchetypeCard
-                        .FromSql("EXECUTE usp_AddCardsToArchetype @ArchetypeId, @TvpArchetypeCards", cardsParameter)
+                        .FromSql("EXECUTE usp_AddCardsToArchetype @TvpArchetypeCards", cardsParameter)
                         .ToListAsync();
         }
     }
