@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using archetypeprocessor.core.Models.Db;
 using archetypeprocessor.core.Services;
@@ -16,7 +17,9 @@ namespace archetypeprocessor.domain.Services
         }
         public Task<IEnumerable<ArchetypeCard>> Update(long archetypeId, IEnumerable<string> cards)
         {
-            return _archetypeCardsRepository.Update(archetypeId, cards);
+            var archetypeCards = cards.Distinct().ToList();
+
+            return _archetypeCardsRepository.Update(archetypeId, archetypeCards);
         }
     }
 }

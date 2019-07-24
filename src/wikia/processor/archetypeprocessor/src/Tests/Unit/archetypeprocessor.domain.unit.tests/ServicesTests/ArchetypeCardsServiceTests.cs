@@ -34,7 +34,7 @@ namespace archetypeprocessor.domain.unit.tests.ServicesTests
             await _sut.Update(archetypeId, cards);
 
             // Assert
-            await _archetypeCardsRepository.Received(1).Update(Arg.Is(archetypeId), Arg.Is(cards));
+            await _archetypeCardsRepository.Received(1).Update(Arg.Is(archetypeId), Arg.Any<IEnumerable<string>>());
         }
     }
 }

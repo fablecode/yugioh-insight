@@ -1,4 +1,5 @@
-﻿using archetypeprocessor.core.Models;
+﻿using System.Linq;
+using archetypeprocessor.core.Models;
 using archetypeprocessor.core.Processor;
 using archetypeprocessor.core.Services;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace archetypeprocessor.domain.Processor
 
             var existingArchetype = await _archetypeService.ArchetypeByName(archetypeData.ArchetypeName);
 
-            if (existingArchetype != null)
+            if (existingArchetype != null && archetypeData.Cards.Any())
             {
                 await _archetypeCardsService.Update(existingArchetype.Id, archetypeData.Cards);
             }
