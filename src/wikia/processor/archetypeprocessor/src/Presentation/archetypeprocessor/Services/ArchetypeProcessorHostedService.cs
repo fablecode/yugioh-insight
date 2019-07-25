@@ -170,13 +170,6 @@ namespace archetypeprocessor.Services
                 consumer: consumer
             );
 
-            _archetypeCardDataChannel.BasicConsume
-            (
-                queue: ArchetypeCardDataQueue,
-                autoAck: false,
-                consumer: consumer
-            );
-
             return consumer;
         }
 
