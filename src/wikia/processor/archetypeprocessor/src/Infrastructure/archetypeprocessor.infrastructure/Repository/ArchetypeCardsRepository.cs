@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.SqlServer.Server;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace archetypeprocessor.infrastructure.Repository
@@ -20,6 +21,14 @@ namespace archetypeprocessor.infrastructure.Repository
         }
         public async Task<IEnumerable<ArchetypeCard>> Update(long archetypeId, IEnumerable<string> cards)
         {
+            var archetypeCards = await _dbContext.ArchetypeCard.Where(ac => ac.ArchetypeId == archetypeId).ToArrayAsync();
+
+            if (archetypeCards.Any())
+            {
+                _dbContext.ArchetypeCard.RemoveRange(archetypeCards);
+                await _dbContext.SaveChangesAsync();
+            }
+
             var tvp = new TableValuedParameterBuilder
             (
                 "tvp_ArchetypeCardsByCardName", 
