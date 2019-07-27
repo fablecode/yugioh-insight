@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using imageprocessor.application.Commands;
 using imageprocessor.application.Commands.DownloadImage;
-using imageprocessor.application.MessageConsumers.CardImage;
+using imageprocessor.application.MessageConsumers.YugiohImage;
 using imageprocessor.tests.core;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -16,25 +16,25 @@ namespace imageprocessor.application.unit.tests.MessageConsumersTests
 {
     [TestFixture]
     [Category(TestType.Unit)]
-    public class CardImageConsumerHandlerTests
+    public class ImageConsumerHandlerTests
     {
         private IMediator _mediator;
-        private CardImageConsumerHandler _sut;
+        private ImageConsumerHandler _sut;
 
         [SetUp]
         public void SetUp()
         {
             _mediator = Substitute.For<IMediator>();
-            var logger = Substitute.For<ILogger<CardImageConsumerHandler>>();
+            var logger = Substitute.For<ILogger<ImageConsumerHandler>>();
 
-            _sut = new CardImageConsumerHandler(_mediator, logger);
+            _sut = new ImageConsumerHandler(_mediator, logger);
         }
 
         [Test]
         public async Task Given_A_CardImageConsumer_If_Exception_Is_Thrown_Exception_Variable_Should_Not_Be_Null()
         {
             // Arrange
-            var cardImageConsumer = new CardImageConsumer
+            var cardImageConsumer = new ImageConsumer
             {
                 Message = "{\"RemoteImageUrl\":\"https://vignette.wikia.nocookie.net/yugioh/images/f/f6/AdreusKeeperofArmageddon-BP01-EN-R-1E.png\",\"ImageFileName\":\"Adreus, Keeper of Armageddon\",\"ImageFolderPath\":\"D:\\\\Apps\\\\ygo-api\\\\Images\\\\Cards\"}\r"
             };
@@ -52,7 +52,7 @@ namespace imageprocessor.application.unit.tests.MessageConsumersTests
         public async Task Given_A_CardImageConsumer_If_Exception_Is_Thrown_IsSuccessful_Should_False()
         {
             // Arrange
-            var cardImageConsumer = new CardImageConsumer
+            var cardImageConsumer = new ImageConsumer
             {
                 Message = "{\"RemoteImageUrl\":\"https://vignette.wikia.nocookie.net/yugioh/images/f/f6/AdreusKeeperofArmageddon-BP01-EN-R-1E.png\",\"ImageFileName\":\"Adreus, Keeper of Armageddon\",\"ImageFolderPath\":\"D:\\\\Apps\\\\ygo-api\\\\Images\\\\Cards\"}\r"
             };
@@ -70,7 +70,7 @@ namespace imageprocessor.application.unit.tests.MessageConsumersTests
         public async Task Given_A_CardImageConsumer_Should_Process_CardImage_Successfully()
         {
             // Arrange
-            var cardImageConsumer = new CardImageConsumer
+            var cardImageConsumer = new ImageConsumer
             {
                 Message = "{\"RemoteImageUrl\":\"https://vignette.wikia.nocookie.net/yugioh/images/f/f6/AdreusKeeperofArmageddon-BP01-EN-R-1E.png\",\"ImageFileName\":\"Adreus, Keeper of Armageddon\",\"ImageFolderPath\":\"D:\\\\Apps\\\\ygo-api\\\\Images\\\\Cards\"}\r"
             };

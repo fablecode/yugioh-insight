@@ -7,22 +7,22 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace imageprocessor.application.MessageConsumers.CardImage
+namespace imageprocessor.application.MessageConsumers.YugiohImage
 {
-    public class CardImageConsumerHandler : IRequestHandler<CardImageConsumer, CardImageConsumerResult>
+    public class ImageConsumerHandler : IRequestHandler<ImageConsumer, ImageConsumerResult>
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<CardImageConsumerHandler> _logger;
+        private readonly ILogger<ImageConsumerHandler> _logger;
 
-        public CardImageConsumerHandler(IMediator mediator, ILogger<CardImageConsumerHandler> logger)
+        public ImageConsumerHandler(IMediator mediator, ILogger<ImageConsumerHandler> logger)
         {
             _mediator = mediator;
             _logger = logger;
         }
 
-        public async Task<CardImageConsumerResult> Handle(CardImageConsumer request, CancellationToken cancellationToken)
+        public async Task<ImageConsumerResult> Handle(ImageConsumer request, CancellationToken cancellationToken)
         {
-            var cardImageConsumerResult = new CardImageConsumerResult();
+            var cardImageConsumerResult = new ImageConsumerResult();
 
             try
             {

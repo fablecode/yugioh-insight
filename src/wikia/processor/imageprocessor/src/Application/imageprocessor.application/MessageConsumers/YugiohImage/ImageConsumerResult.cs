@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace imageprocessor.application.MessageConsumers.CardImage
+namespace imageprocessor.application.MessageConsumers.YugiohImage
 {
-    public class CardImageConsumerResult
+    public class ImageConsumerResult
     {
         public bool IsSuccessful { get; set; }
         public string Errors { get; set; }

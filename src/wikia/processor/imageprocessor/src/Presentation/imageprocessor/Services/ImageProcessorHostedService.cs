@@ -3,7 +3,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using imageprocessor.application.Configuration;
-using imageprocessor.application.MessageConsumers.CardImage;
+using imageprocessor.application.MessageConsumers.YugiohImage;
 using MediatR;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -18,6 +18,7 @@ namespace imageprocessor.Services
     public class ImageProcessorHostedService : BackgroundService
     {
         private const string CardImageQueue = "card-image";
+        private const string ArchetypeImageQueue = "archetype-image";
 
         public IServiceProvider Services { get; }
 
@@ -27,7 +28,7 @@ namespace imageprocessor.Services
         private ConnectionFactory _factory;
         private IConnection _connection;
         private IModel _channel;
-        private EventingBasicConsumer _cardImageConsumer;
+        private EventingBasicConsumer _imageConsumer;
 
         public ImageProcessorHostedService
         (
@@ -57,14 +58,14 @@ namespace imageprocessor.Services
             _channel = _connection.CreateModel();
             _channel.BasicQos(0, 20, false);
 
-            _cardImageConsumer = new EventingBasicConsumer(_channel);
+            _imageConsumer = new EventingBasicConsumer(_channel);
 
-            _cardImageConsumer.Received += async (model, ea) =>
+            _imageConsumer.Received += async (model, ea) =>
             {
                 var body = ea.Body;
                 var message = Encoding.UTF8.GetString(body);
 
-                var result = await _mediator.Send(new CardImageConsumer { Message = message });
+                var result = await _mediator.Send(new ImageConsumer { Message = message });
 
                 if(result.IsSuccessful)
                 {
@@ -80,7 +81,14 @@ namespace imageprocessor.Services
             (
                 queue: _rabbitMqOptions.Value.Queues[CardImageQueue].Name,
                 autoAck: _rabbitMqOptions.Value.Queues[CardImageQueue].AutoAck,
-                consumer: _cardImageConsumer
+                consumer: _imageConsumer
+            );
+
+            _channel.BasicConsume
+            (
+                queue: _rabbitMqOptions.Value.Queues[ArchetypeImageQueue].Name,
+                autoAck: _rabbitMqOptions.Value.Queues[ArchetypeImageQueue].AutoAck,
+                consumer: _imageConsumer
             );
 
             return Task.CompletedTask;
