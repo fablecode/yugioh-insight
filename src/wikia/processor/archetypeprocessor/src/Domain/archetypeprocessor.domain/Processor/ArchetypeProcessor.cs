@@ -11,12 +11,12 @@ namespace archetypeprocessor.domain.Processor
     public class ArchetypeProcessor : IArchetypeProcessor
     {
         private readonly IArchetypeService _archetypeService;
-        private readonly IImageQueueService _imageQueueService;
+        private readonly IArchetypeImageQueueService _archetypeImageQueueService;
 
-        public ArchetypeProcessor(IArchetypeService archetypeService, IImageQueueService imageQueueService)
+        public ArchetypeProcessor(IArchetypeService archetypeService, IArchetypeImageQueueService archetypeImageQueueService)
         {
             _archetypeService = archetypeService;
-            _imageQueueService = imageQueueService;
+            _archetypeImageQueueService = archetypeImageQueueService;
         }
 
         public async Task<ArchetypeDataTaskResult<ArchetypeMessage>> Process(ArchetypeMessage archetypeData)
@@ -58,7 +58,7 @@ namespace archetypeprocessor.domain.Processor
                     ImageFileName = archetypeData.Id.ToString(),
                 };
 
-                await _imageQueueService.Publish(downloadImage);
+                await _archetypeImageQueueService.Publish(downloadImage);
             }
 
             return articleDataTaskResult;

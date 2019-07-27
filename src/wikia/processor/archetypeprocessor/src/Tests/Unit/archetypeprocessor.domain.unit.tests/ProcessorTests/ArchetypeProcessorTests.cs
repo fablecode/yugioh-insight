@@ -15,16 +15,16 @@ namespace archetypeprocessor.domain.unit.tests.ProcessorTests
     public class ArchetypeProcessorTests
     {
         private IArchetypeService _archetypeService;
-        private IImageQueueService _imageQueueService;
+        private IArchetypeImageQueueService _archetypeImageQueueService;
         private ArchetypeProcessor _sut;
 
         [SetUp]
         public void SetUp()
         {
             _archetypeService = Substitute.For<IArchetypeService>();
-            _imageQueueService = Substitute.For<IImageQueueService>();
+            _archetypeImageQueueService = Substitute.For<IArchetypeImageQueueService>();
 
-            _sut = new ArchetypeProcessor(_archetypeService, _imageQueueService);
+            _sut = new ArchetypeProcessor(_archetypeService, _archetypeImageQueueService);
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace archetypeprocessor.domain.unit.tests.ProcessorTests
             await _sut.Process(archetypeMessage);
 
             // Assert
-            await _imageQueueService.Received(1).Publish(Arg.Any<DownloadImage>());
+            await _archetypeImageQueueService.Received(1).Publish(Arg.Any<DownloadImage>());
         }
     }
 }
