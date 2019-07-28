@@ -5,7 +5,7 @@ namespace cardsectiondata.core.Processor
 {
     public interface IArticleItemProcessor
     {
-        Task<ArticleTaskResult> ProcessItem(Article item);
+        Task<ArticleTaskResult> ProcessItem(Article article);
 
         bool Handles(string category);
     }
