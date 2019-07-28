@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectiondata.application
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectiondata.application.unit.tests", "Tests\Unit\cardsectiondata.application.unit.tests\cardsectiondata.application.unit.tests.csproj", "{C3779BAE-5E58-49B8-97C6-DFB20B9FC722}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectiondata", "Presentation\cardsectiondata\cardsectiondata.csproj", "{808EA450-1754-4A7B-A5B7-6582E1CDBC5E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{C3779BAE-5E58-49B8-97C6-DFB20B9FC722}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3779BAE-5E58-49B8-97C6-DFB20B9FC722}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3779BAE-5E58-49B8-97C6-DFB20B9FC722}.Release|Any CPU.Build.0 = Release|Any CPU
+		{808EA450-1754-4A7B-A5B7-6582E1CDBC5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{808EA450-1754-4A7B-A5B7-6582E1CDBC5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{808EA450-1754-4A7B-A5B7-6582E1CDBC5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{808EA450-1754-4A7B-A5B7-6582E1CDBC5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +77,7 @@ Global
 		{B08C03C8-FFFA-4327-9C49-E2D4AC7C1F0C} = {B258C448-924B-477A-A4D9-74F72D0C4359}
 		{C2D3B67C-3838-4FFB-A974-7A56425FCCA8} = {7B6A7A4F-18D4-44F2-8CC2-79CDEF61561C}
 		{C3779BAE-5E58-49B8-97C6-DFB20B9FC722} = {F72E805B-A3A3-4FD6-9650-1920894A7C98}
+		{808EA450-1754-4A7B-A5B7-6582E1CDBC5E} = {FE616B85-DF73-4846-A4D0-323F521C173A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {211EBB96-C10D-4E29-B212-706F73F1779C}
