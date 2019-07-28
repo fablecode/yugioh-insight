@@ -1,13 +1,13 @@
-﻿using wikia.Models.Article.AlphabeticalList;
+﻿using System.Collections.Generic;
 
 namespace cardsectiondata.core.Models
 {
     public class ArticleTaskResult
     {
-        public bool IsSuccessfullyProcessed { get; set; }
+        public bool IsSuccessful { get; set; }
 
-        public UnexpandedArticle Article { get; set; }
+        public Article Article { get; set; }
 
-        public ArticleException Failed { get; set; }
+        public List<string> Errors { get; set; } = new List<string>();
     }
 }

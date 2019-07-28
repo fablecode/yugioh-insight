@@ -1,12 +1,10 @@
-﻿using System;
+﻿using cardsectiondata.core.Models;
 using System.Threading.Tasks;
-using cardsectiondata.core.Models;
-using wikia.Models.Article.AlphabeticalList;
 
-namespace cardsectiondata.core
+namespace cardsectiondata.core.Processor
 {
     public interface IArticleProcessor
     {
-        Task<ArticleTaskResult> Process(string category, UnexpandedArticle article);
+        Task<ArticleTaskResult> Process(string category, Article article);
     }
 }

@@ -3,9 +3,74 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Core", "1. Core", "{1EFDE152-0014-4F7E-B838-6618EF7861A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domain", "2. Domain", "{A01A1B09-DA82-4384-AECA-BF655FEA4F44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Application", "3. Application", "{7B6A7A4F-18D4-44F2-8CC2-79CDEF61561C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Infrastructure", "4. Infrastructure", "{5FB1B9AE-FE25-4C36-A96B-F66485A14FF8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Presentation", "5. Presentation", "{FE616B85-DF73-4846-A4D0-323F521C173A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Tests", "6. Tests", "{B258C448-924B-477A-A4D9-74F72D0C4359}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{F72E805B-A3A3-4FD6-9650-1920894A7C98}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardsectiondata.core", "Core\cardsectiondata.core\cardsectiondata.core.csproj", "{90A35DD4-629C-4647-ACEA-F5911B63A9C3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardsectiondata.domain", "Domain\cardsectiondata.domain\cardsectiondata.domain.csproj", "{9F30F801-D1F6-4310-A051-9A0B3151AE72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectiondata.domain.unit.tests", "Tests\Unit\cardsectiondata.domain.unit.tests\cardsectiondata.domain.unit.tests.csproj", "{BC779C24-8807-46FB-A8D4-4C666A0C6525}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectiondata.tests.core", "Tests\cardsectiondata.tests.core\cardsectiondata.tests.core.csproj", "{B08C03C8-FFFA-4327-9C49-E2D4AC7C1F0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectiondata.application", "Application\cardsectiondata.application\cardsectiondata.application.csproj", "{C2D3B67C-3838-4FFB-A974-7A56425FCCA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectiondata.application.unit.tests", "Tests\Unit\cardsectiondata.application.unit.tests\cardsectiondata.application.unit.tests.csproj", "{C3779BAE-5E58-49B8-97C6-DFB20B9FC722}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90A35DD4-629C-4647-ACEA-F5911B63A9C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90A35DD4-629C-4647-ACEA-F5911B63A9C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90A35DD4-629C-4647-ACEA-F5911B63A9C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90A35DD4-629C-4647-ACEA-F5911B63A9C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F30F801-D1F6-4310-A051-9A0B3151AE72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F30F801-D1F6-4310-A051-9A0B3151AE72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F30F801-D1F6-4310-A051-9A0B3151AE72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F30F801-D1F6-4310-A051-9A0B3151AE72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC779C24-8807-46FB-A8D4-4C666A0C6525}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC779C24-8807-46FB-A8D4-4C666A0C6525}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC779C24-8807-46FB-A8D4-4C666A0C6525}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC779C24-8807-46FB-A8D4-4C666A0C6525}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B08C03C8-FFFA-4327-9C49-E2D4AC7C1F0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B08C03C8-FFFA-4327-9C49-E2D4AC7C1F0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B08C03C8-FFFA-4327-9C49-E2D4AC7C1F0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B08C03C8-FFFA-4327-9C49-E2D4AC7C1F0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2D3B67C-3838-4FFB-A974-7A56425FCCA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2D3B67C-3838-4FFB-A974-7A56425FCCA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2D3B67C-3838-4FFB-A974-7A56425FCCA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2D3B67C-3838-4FFB-A974-7A56425FCCA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3779BAE-5E58-49B8-97C6-DFB20B9FC722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3779BAE-5E58-49B8-97C6-DFB20B9FC722}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3779BAE-5E58-49B8-97C6-DFB20B9FC722}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3779BAE-5E58-49B8-97C6-DFB20B9FC722}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F72E805B-A3A3-4FD6-9650-1920894A7C98} = {B258C448-924B-477A-A4D9-74F72D0C4359}
+		{90A35DD4-629C-4647-ACEA-F5911B63A9C3} = {1EFDE152-0014-4F7E-B838-6618EF7861A7}
+		{9F30F801-D1F6-4310-A051-9A0B3151AE72} = {A01A1B09-DA82-4384-AECA-BF655FEA4F44}
+		{BC779C24-8807-46FB-A8D4-4C666A0C6525} = {F72E805B-A3A3-4FD6-9650-1920894A7C98}
+		{B08C03C8-FFFA-4327-9C49-E2D4AC7C1F0C} = {B258C448-924B-477A-A4D9-74F72D0C4359}
+		{C2D3B67C-3838-4FFB-A974-7A56425FCCA8} = {7B6A7A4F-18D4-44F2-8CC2-79CDEF61561C}
+		{C3779BAE-5E58-49B8-97C6-DFB20B9FC722} = {F72E805B-A3A3-4FD6-9650-1920894A7C98}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {211EBB96-C10D-4E29-B212-706F73F1779C}
