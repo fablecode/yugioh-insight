@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\cardsectiondata.application\cardsectiondata.application.csproj" />
     <ProjectReference Include="..\..\Domain\cardsectiondata.domain\cardsectiondata.domain.csproj" />
   </ItemGroup>
 
