@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using cardsectiondata.domain.Services.Messaging;
 using wikia.Api;
 
 namespace cardsectiondata.domain.ArticleList.Item
@@ -15,18 +16,18 @@ namespace cardsectiondata.domain.ArticleList.Item
     {
         private readonly IWikiArticle _wikiArticle;
         private readonly ITipRelatedWebPage _tipRelatedWebPage;
-        private readonly ITipQueue _queue;
+        private readonly IEnumerable<IQueue> _queues;
 
         public CardTipItemProcessor
         (
             IWikiArticle wikiArticle,
             ITipRelatedWebPage tipRelatedWebPage,
-            ITipQueue queue
+            IEnumerable<IQueue> queues
         )
         {
             _wikiArticle = wikiArticle;
             _tipRelatedWebPage = tipRelatedWebPage;
-            _queue = queue;
+            _queues = queues;
         }
 
         public async Task<ArticleTaskResult> ProcessItem(Article article)
@@ -59,7 +60,7 @@ namespace cardsectiondata.domain.ArticleList.Item
 
             var cardSectionMessage = new CardSectionMessage { Name = article.Title, CardSections = tipSections };
 
-            await _queue.Publish(cardSectionMessage);
+            await _queues.Single(q => q.Handles(ArticleCategory.CardTips)).Publish(cardSectionMessage);
 
             return response;
         }
@@ -67,37 +68,6 @@ namespace cardsectiondata.domain.ArticleList.Item
         public bool Handles(string category)
         {
             return category == ArticleCategory.CardTips;
-        }
-    }
-
-    public interface ITipQueue
-    {
-        Task Publish(CardSectionMessage message);
-    }
-
-    public class CardRulingItemProcessor : IArticleItemProcessor
-    {
-        public Task<ArticleTaskResult> ProcessItem(Article article)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Handles(string category)
-        {
-            return category == ArticleCategory.CardRulings;
-        }
-    }
-
-    public class CardTriviaItemProcessor : IArticleItemProcessor
-    {
-        public Task<ArticleTaskResult> ProcessItem(Article article)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Handles(string category)
-        {
-            return category == ArticleCategory.CardTrivia;
         }
     }
 }
