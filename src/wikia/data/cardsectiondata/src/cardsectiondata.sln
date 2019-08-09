@@ -21,15 +21,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardsectiondata.core", "Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardsectiondata.domain", "Domain\cardsectiondata.domain\cardsectiondata.domain.csproj", "{9F30F801-D1F6-4310-A051-9A0B3151AE72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectiondata.domain.unit.tests", "Tests\Unit\cardsectiondata.domain.unit.tests\cardsectiondata.domain.unit.tests.csproj", "{BC779C24-8807-46FB-A8D4-4C666A0C6525}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardsectiondata.domain.unit.tests", "Tests\Unit\cardsectiondata.domain.unit.tests\cardsectiondata.domain.unit.tests.csproj", "{BC779C24-8807-46FB-A8D4-4C666A0C6525}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectiondata.tests.core", "Tests\cardsectiondata.tests.core\cardsectiondata.tests.core.csproj", "{B08C03C8-FFFA-4327-9C49-E2D4AC7C1F0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardsectiondata.tests.core", "Tests\cardsectiondata.tests.core\cardsectiondata.tests.core.csproj", "{B08C03C8-FFFA-4327-9C49-E2D4AC7C1F0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectiondata.application", "Application\cardsectiondata.application\cardsectiondata.application.csproj", "{C2D3B67C-3838-4FFB-A974-7A56425FCCA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardsectiondata.application", "Application\cardsectiondata.application\cardsectiondata.application.csproj", "{C2D3B67C-3838-4FFB-A974-7A56425FCCA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectiondata.application.unit.tests", "Tests\Unit\cardsectiondata.application.unit.tests\cardsectiondata.application.unit.tests.csproj", "{C3779BAE-5E58-49B8-97C6-DFB20B9FC722}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardsectiondata.application.unit.tests", "Tests\Unit\cardsectiondata.application.unit.tests\cardsectiondata.application.unit.tests.csproj", "{C3779BAE-5E58-49B8-97C6-DFB20B9FC722}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectiondata", "Presentation\cardsectiondata\cardsectiondata.csproj", "{808EA450-1754-4A7B-A5B7-6582E1CDBC5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cardsectiondata", "Presentation\cardsectiondata\cardsectiondata.csproj", "{808EA450-1754-4A7B-A5B7-6582E1CDBC5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectiondata.infrastructure", "Infrastructure\cardsectiondata.infrastructure\cardsectiondata.infrastructure.csproj", "{1647BC72-CF23-417F-9D72-68B5927488D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{808EA450-1754-4A7B-A5B7-6582E1CDBC5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{808EA450-1754-4A7B-A5B7-6582E1CDBC5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{808EA450-1754-4A7B-A5B7-6582E1CDBC5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1647BC72-CF23-417F-9D72-68B5927488D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1647BC72-CF23-417F-9D72-68B5927488D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1647BC72-CF23-417F-9D72-68B5927488D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1647BC72-CF23-417F-9D72-68B5927488D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +84,7 @@ Global
 		{C2D3B67C-3838-4FFB-A974-7A56425FCCA8} = {7B6A7A4F-18D4-44F2-8CC2-79CDEF61561C}
 		{C3779BAE-5E58-49B8-97C6-DFB20B9FC722} = {F72E805B-A3A3-4FD6-9650-1920894A7C98}
 		{808EA450-1754-4A7B-A5B7-6582E1CDBC5E} = {FE616B85-DF73-4846-A4D0-323F521C173A}
+		{1647BC72-CF23-417F-9D72-68B5927488D1} = {5FB1B9AE-FE25-4C36-A96B-F66485A14FF8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {211EBB96-C10D-4E29-B212-706F73F1779C}
