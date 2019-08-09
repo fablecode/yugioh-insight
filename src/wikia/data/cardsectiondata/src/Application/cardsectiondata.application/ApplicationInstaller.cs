@@ -1,10 +1,12 @@
-﻿using System.Net.Http;
-using System.Reflection;
-using cardsectiondata.application.Configuration;
-using FluentValidation;
+﻿using cardsectiondata.application.Configuration;
+using cardsectiondata.core.Processor;
+using cardsectiondata.domain.ArticleList.Item;
+using cardsectiondata.domain.ArticleList.Processor;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System.Net.Http;
+using System.Reflection;
 using wikia.Api;
 
 namespace cardsectiondata.application
@@ -30,6 +32,13 @@ namespace cardsectiondata.application
 
         private static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
+            services.AddTransient<IArticleProcessor, ArticleProcessor>();
+            services.AddTransient<ICardSectionProcessor, CardSectionProcessor>();
+
+            services.AddTransient<IArticleItemProcessor, CardTipItemProcessor>();
+            services.AddTransient<IArticleItemProcessor, CardRulingItemProcessor>();
+            services.AddTransient<IArticleItemProcessor, CardTriviaItemProcessor>();
+
             var buildServiceProvider = services.BuildServiceProvider();
 
             var appSettings = buildServiceProvider.GetService<IOptions<AppSettings>>();
