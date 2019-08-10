@@ -7,6 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
 using System.Reflection;
+using cardsectiondata.application.MessageConsumers.CardInformation;
+using cardsectiondata.application.MessageConsumers.CardRulingInformation;
+using cardsectiondata.application.MessageConsumers.CardTipInformation;
+using cardsectiondata.application.MessageConsumers.CardTriviaInformation;
+using FluentValidation;
 using wikia.Api;
 
 namespace cardsectiondata.application
@@ -51,8 +56,9 @@ namespace cardsectiondata.application
 
         private static IServiceCollection AddValidation(this IServiceCollection services)
         {
+            services.AddTransient<IValidator<CardInformationConsumer>, CardInformationConsumerValidator>();
+
             return services;
         }
-
     }
 }

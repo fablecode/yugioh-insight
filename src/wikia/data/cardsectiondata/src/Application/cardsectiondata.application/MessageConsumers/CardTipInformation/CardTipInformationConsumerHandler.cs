@@ -1,50 +1,31 @@
-﻿using System.Linq;
+﻿using cardsectiondata.application.MessageConsumers.CardInformation;
+using cardsectiondata.core.Constants;
+using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using cardsectiondata.core.Constants;
-using cardsectiondata.core.Models;
-using cardsectiondata.core.Processor;
-using FluentValidation;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace cardsectiondata.application.MessageConsumers.CardTipInformation
 {
     public class CardTipInformationConsumerHandler : IRequestHandler<CardTipInformationConsumer, CardTipInformationConsumerResult>
     {
-        private readonly IArticleProcessor _articleProcessor;
-        private readonly IValidator<CardTipInformationConsumer> _validator;
-        private readonly ILogger<CardTipInformationConsumerHandler> _logger;
+        private readonly IMediator _mediator;
 
-        public CardTipInformationConsumerHandler(IArticleProcessor articleProcessor, IValidator<CardTipInformationConsumer> validator, ILogger<CardTipInformationConsumerHandler> logger)
+        public CardTipInformationConsumerHandler(IMediator mediator)
         {
-            _articleProcessor = articleProcessor;
-            _validator = validator;
-            _logger = logger;
+            _mediator = mediator;
         }
+
         public async Task<CardTipInformationConsumerResult> Handle(CardTipInformationConsumer request, CancellationToken cancellationToken)
         {
             var cardTipInformationConsumerResult = new CardTipInformationConsumerResult();
 
-            var validationResults = _validator.Validate(request);
+            var cardInformation = new CardInformationConsumer { Category = ArticleCategory.CardTips, Message = request.Message};
 
-            if (validationResults.IsValid)
+            var result = await _mediator.Send(cardInformation, cancellationToken);
+
+            if (!result.IsSuccessful)
             {
-                var cardTipArticle = JsonConvert.DeserializeObject<Article>(request.Message);
-
-                _logger.LogInformation("Processing card tip '{@Title}'", cardTipArticle.Title);
-                var results = await _articleProcessor.Process(ArticleCategory.CardTips, cardTipArticle);
-                _logger.LogInformation("Finished processing card tip '{@Title}'", cardTipArticle.Title);
-
-                if (!results.IsSuccessful)
-                {
-                    cardTipInformationConsumerResult.Errors.AddRange(results.Errors);
-                }
-            }
-            else
-            {
-                cardTipInformationConsumerResult.Errors = validationResults.Errors.Select(err => err.ErrorMessage).ToList();
+                cardTipInformationConsumerResult.Errors = result.Errors;
             }
 
             return cardTipInformationConsumerResult;
