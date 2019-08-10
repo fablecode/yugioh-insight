@@ -142,7 +142,7 @@ namespace cardsectiondata.Services
         private EventingBasicConsumer CreateCardTipArticleConsumer(IConnection connection)
         {
             _cardTipArticleChannel = connection.CreateModel();
-            _cardTipArticleChannel.BasicQos(0, 1, false);
+            _cardTipArticleChannel.BasicQos(0, 20, false);
 
             var consumer = new EventingBasicConsumer(_cardTipArticleChannel);
 

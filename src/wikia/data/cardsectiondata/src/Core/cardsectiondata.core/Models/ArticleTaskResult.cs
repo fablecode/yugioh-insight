@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace cardsectiondata.core.Models
 {
     public class ArticleTaskResult
     {
-        public bool IsSuccessful { get; set; }
+        public bool IsSuccessful => !Errors.Any();
 
         public Article Article { get; set; }
 
