@@ -37,7 +37,7 @@ namespace cardsectiondata.infrastructure.WebPages
             if (item == null)
                 throw new ArgumentNullException(nameof(item));
 
-            var tipWebPage = new HtmlWeb().Load(_appsettingsOptions.Value.WikiaDomainUrl + item.Url);
+            var tipWebPage = new HtmlWeb().Load(item.Url);
 
             //Get tip related card list url
             var cardListUrl = _tipRelatedHtmlDocument.GetUrl(tipWebPage);

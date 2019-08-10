@@ -107,7 +107,7 @@ namespace cardsectiondata.Services
                     var body = ea.Body;
                     var message = Encoding.UTF8.GetString(body);
 
-                    var result = await _mediator.Send(new CardRulingInformationConsumer { Message = message });
+                    var result = await _mediator.Send(new CardTriviaInformationConsumer { Message = message });
 
 
                     if (result.IsSuccessful)
@@ -199,7 +199,7 @@ namespace cardsectiondata.Services
                     var body = ea.Body;
                     var message = Encoding.UTF8.GetString(body);
 
-                    var result = await _mediator.Send(new CardTriviaInformationConsumer { Message = message });
+                    var result = await _mediator.Send(new CardRulingInformationConsumer { Message = message });
 
 
                     if (result.IsSuccessful)
