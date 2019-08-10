@@ -46,7 +46,6 @@ namespace cardsectiondata.domain.ArticleList.Item
                     ContentList = SectionHelper.GetSectionContentList(cardTipSection)
                 };
 
-
                 if (cardTipSection.Title.Equals("List", StringComparison.OrdinalIgnoreCase) ||
                     cardTipSection.Title.Equals("Lists", StringComparison.OrdinalIgnoreCase))
                 {
