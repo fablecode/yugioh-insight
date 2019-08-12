@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\cardsectionprocessor.core\cardsectionprocessor.core.csproj" />
+    <ProjectReference Include="..\..\Domain\cardsectionprocessor.domain\cardsectionprocessor.domain.csproj" />
   </ItemGroup>
 
 
