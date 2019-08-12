@@ -4,9 +4,9 @@ using cardsectionprocessor.core.Models.Db;
 
 namespace cardsectionprocessor.core.Services
 {
-    public interface ICardTipService
+    public interface ICardTriviaService
     {
         Task DeleteByCardId(long id);
-        Task Update(List<TipSection> tips);
+        Task Update(List<TriviaSection> tips);
     }
 }
