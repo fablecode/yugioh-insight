@@ -10,15 +10,15 @@ using cardsectionprocessor.core.Strategy;
 
 namespace cardsectionprocessor.domain.Strategy
 {
-    public class CardRulingsProcessorStrategy : ICardSectionProcessorStrategy
+    public class CardTriviaProcessorStrategy : ICardSectionProcessorStrategy
     {
         private readonly ICardService _cardService;
-        private readonly ICardRulingService _cardRulingService;
+        private readonly ICardTriviaService _cardTriviaService;
 
-        public CardRulingsProcessorStrategy(ICardService cardService, ICardRulingService cardRulingService)
+        public CardTriviaProcessorStrategy(ICardService cardService, ICardTriviaService cardTriviaService)
         {
             _cardService = cardService;
-            _cardRulingService = cardRulingService;
+            _cardTriviaService = cardTriviaService;
         }
 
         public async Task<CardSectionDataTaskResult<CardSectionMessage>> Process(CardSectionMessage cardSectionData)
@@ -32,13 +32,13 @@ namespace cardsectionprocessor.domain.Strategy
 
             if (card != null)
             {
-                await _cardRulingService.DeleteByCardId(card.Id);
+                await _cardTriviaService.DeleteByCardId(card.Id);
 
-                var rulingSections = new List<RulingSection>();
+                var triviaSections = new List<TriviaSection>();
 
                 foreach (var cardSection in cardSectionData.CardSections)
                 {
-                    var rulingSection = new RulingSection
+                    var triviaSection = new TriviaSection
                     {
                         CardId = card.Id,
                         Name = cardSection.Name,
@@ -46,28 +46,28 @@ namespace cardsectionprocessor.domain.Strategy
                         Updated = DateTime.UtcNow
                     };
 
-                    foreach (var ruling in cardSection.ContentList)
+                    foreach (var trivia in cardSection.ContentList)
                     {
-                        rulingSection.Ruling.Add(new Ruling
+                        triviaSection.Trivia.Add(new Trivia
                         {
-                            RulingSection = rulingSection,
-                            Text = ruling,
+                            TriviaSection = triviaSection,
+                            Text = trivia,
                             Created = DateTime.UtcNow,
                             Updated = DateTime.UtcNow
                         });
                     }
 
-                    rulingSections.Add(rulingSection);
+                    triviaSections.Add(triviaSection);
                 }
 
-                if (rulingSections.Any())
+                if (triviaSections.Any())
                 {
-                    await _cardRulingService.Update(rulingSections);
+                    await _cardTriviaService.Update(triviaSections);
                 }
             }
             else
             {
-                cardSectionDataTaskResult.Errors.Add($"Card Rulings: card '{cardSectionData.Name}' not found.");
+                cardSectionDataTaskResult.Errors.Add($"Card Trivia: card '{cardSectionData.Name}' not found.");
             }
 
 
@@ -76,7 +76,7 @@ namespace cardsectionprocessor.domain.Strategy
 
         public bool Handles(string category)
         {
-            return category == ArticleCategory.CardRulings;
+            return category == ArticleCategory.CardTrivia;
         }
     }
 }
