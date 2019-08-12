@@ -1,5 +1,5 @@
 ﻿using cardsectionprocessor.core.Constants;
-using cardsectionprocessor.core.Services;
+using cardsectionprocessor.core.Service;
 using cardsectionprocessor.domain.Strategy;
 using cardsectionprocessor.tests.core;
 using FluentAssertions;

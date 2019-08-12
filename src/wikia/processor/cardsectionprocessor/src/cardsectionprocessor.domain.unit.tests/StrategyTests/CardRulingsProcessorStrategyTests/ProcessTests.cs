@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using cardsectionprocessor.core.Models;
 using cardsectionprocessor.core.Models.Db;
-using cardsectionprocessor.core.Services;
+using cardsectionprocessor.core.Service;
 using cardsectionprocessor.domain.Strategy;
 using cardsectionprocessor.tests.core;
 using FluentAssertions;

@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using cardsectionprocessor.core.Models.Db;
 
-namespace cardsectionprocessor.core.Services
+namespace cardsectionprocessor.core.Service
 {
-    public interface ICardTriviaService
+    public interface ICardRulingService
     {
         Task DeleteByCardId(long id);
-        Task Update(List<TriviaSection> tips);
+        Task Update(List<RulingSection> tipSections);
     }
 }
