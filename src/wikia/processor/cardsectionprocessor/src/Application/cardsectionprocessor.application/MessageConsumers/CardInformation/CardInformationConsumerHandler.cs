@@ -32,9 +32,9 @@ namespace cardsectionprocessor.application.MessageConsumers.CardInformation
             {
                 var article = JsonConvert.DeserializeObject<CardSectionMessage>(request.Message);
 
-                _logger.LogInformation("Processing category {@Category} '{@Title}'", request.Category, article.Name);
+                _logger.LogInformation("Processing category {@Category} '{@Name}'", request.Category, article.Name);
                 var results = await _cardSectionProcessor.Process(request.Category, article);
-                _logger.LogInformation("Finished processing category {@Category} '{@Title}'", request.Category, article.Name);
+                _logger.LogInformation("Finished processing category {@Category} '{@Name}'", request.Category, article.Name);
 
                 if (!results.IsSuccessful)
                 {
