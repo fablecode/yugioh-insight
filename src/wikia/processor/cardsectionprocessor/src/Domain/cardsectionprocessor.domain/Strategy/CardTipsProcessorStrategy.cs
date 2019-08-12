@@ -8,7 +8,7 @@ using cardsectionprocessor.core.Models.Db;
 using cardsectionprocessor.core.Services;
 using cardsectionprocessor.core.Strategy;
 
-namespace cardsectionprocessor.domain.Processor
+namespace cardsectionprocessor.domain.Strategy
 {
     public class CardTipsProcessorStrategy : ICardSectionProcessorStrategy
     {

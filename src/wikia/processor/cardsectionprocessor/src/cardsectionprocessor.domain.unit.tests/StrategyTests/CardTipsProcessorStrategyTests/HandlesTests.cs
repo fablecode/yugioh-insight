@@ -1,12 +1,12 @@
 ﻿using cardsectionprocessor.core.Constants;
 using cardsectionprocessor.core.Services;
-using cardsectionprocessor.domain.Processor;
+using cardsectionprocessor.domain.Strategy;
 using cardsectionprocessor.tests.core;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace cardsectionprocessor.domain.unit.tests.CardTipsProcessorStrategyTests
+namespace cardsectionprocessor.domain.unit.tests.StrategyTests.CardTipsProcessorStrategyTests
 {
     [TestFixture]
     [Category(TestType.Unit)]
