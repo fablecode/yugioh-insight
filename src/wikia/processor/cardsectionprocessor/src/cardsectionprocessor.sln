@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectionprocessor.infras
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectionprocessor.application", "Application\cardsectionprocessor.application\cardsectionprocessor.application.csproj", "{FA9827C6-1BAE-4355-9B9E-BABA2FE60235}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cardsectionprocessor.application.unit.tests", "cardsectionprocessor.application.unit.tests\cardsectionprocessor.application.unit.tests.csproj", "{6BEA6093-7FAF-45D6-8958-7BC9DE21BD69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{FA9827C6-1BAE-4355-9B9E-BABA2FE60235}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA9827C6-1BAE-4355-9B9E-BABA2FE60235}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA9827C6-1BAE-4355-9B9E-BABA2FE60235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BEA6093-7FAF-45D6-8958-7BC9DE21BD69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BEA6093-7FAF-45D6-8958-7BC9DE21BD69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BEA6093-7FAF-45D6-8958-7BC9DE21BD69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BEA6093-7FAF-45D6-8958-7BC9DE21BD69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +84,7 @@ Global
 		{1AB0A636-48B4-49AA-BCE8-4DEE1A6FE152} = {48F8471F-F06A-471A-BCA5-B8F7977BE5A0}
 		{5FE4B91B-F4E8-4CB1-85C9-01C205F91148} = {0F9A2D71-8034-4326-97D9-23C9E07193A0}
 		{FA9827C6-1BAE-4355-9B9E-BABA2FE60235} = {71F5C017-1F5A-477F-B7F3-D45BD13A621B}
+		{6BEA6093-7FAF-45D6-8958-7BC9DE21BD69} = {48F8471F-F06A-471A-BCA5-B8F7977BE5A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {354D570D-F6F3-436A-BB49-9925D904989F}

@@ -31,6 +31,7 @@ namespace cardsectionprocessor.application
                 return services;
             }
 
+
             private static IServiceCollection AddDomainServices(this IServiceCollection services)
             {
                 services.AddTransient<ICardService, CardService>();
