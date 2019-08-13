@@ -8,6 +8,8 @@ using cardsectionprocessor.domain.Strategy;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using cardsectionprocessor.application.MessageConsumers.CardInformation;
+using FluentValidation;
 
 namespace cardsectionprocessor.application
 {
@@ -50,6 +52,8 @@ namespace cardsectionprocessor.application
 
             private static IServiceCollection AddValidation(this IServiceCollection services)
             {
+                services.AddTransient<IValidator<CardInformationConsumer>, CardInformationConsumerValidator>();
+
                 return services;
             }
     }

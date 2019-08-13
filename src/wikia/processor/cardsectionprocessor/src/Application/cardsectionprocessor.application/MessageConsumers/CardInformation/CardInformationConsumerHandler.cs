@@ -30,11 +30,11 @@ namespace cardsectionprocessor.application.MessageConsumers.CardInformation
 
             if (validationResults.IsValid)
             {
-                var article = JsonConvert.DeserializeObject<CardSectionMessage>(request.Message);
+                var cardSectionData = JsonConvert.DeserializeObject<CardSectionMessage>(request.Message);
 
-                _logger.LogInformation("Processing category {@Category} '{@Name}'", request.Category, article.Name);
-                var results = await _cardSectionProcessor.Process(request.Category, article);
-                _logger.LogInformation("Finished processing category {@Category} '{@Name}'", request.Category, article.Name);
+                _logger.LogInformation("Processing category {@Category} '{@Name}'", request.Category, cardSectionData.Name);
+                var results = await _cardSectionProcessor.Process(request.Category, cardSectionData);
+                _logger.LogInformation("Finished processing category {@Category} '{@Name}'", request.Category, cardSectionData.Name);
 
                 if (!results.IsSuccessful)
                 {
