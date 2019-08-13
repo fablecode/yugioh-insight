@@ -82,7 +82,7 @@ namespace archetypeprocessor.Services
         private EventingBasicConsumer CreateArchetypeDataConsumer(IConnection connection)
         {
             _archetypeDataChannel = connection.CreateModel();
-            _archetypeDataChannel.BasicQos(0, 20, false);
+            _archetypeDataChannel.BasicQos(0, 1, false);
 
             var consumer = new EventingBasicConsumer(_archetypeDataChannel);
 
@@ -129,7 +129,7 @@ namespace archetypeprocessor.Services
         private EventingBasicConsumer CreateArchetypeCardDataConsumer(IConnection connection)
         {
             _archetypeCardDataChannel = connection.CreateModel();
-            _archetypeCardDataChannel.BasicQos(0, 20, false);
+            _archetypeCardDataChannel.BasicQos(0, 1, false);
 
             var consumer = new EventingBasicConsumer(_archetypeCardDataChannel);
 
