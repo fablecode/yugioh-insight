@@ -26,24 +26,33 @@ namespace archetypedata.application.MessageConsumers.ArchetypeInformation
         {
             var archetypeInformationConsumerResult = new ArchetypeInformationConsumerResult();
 
-            var validationResults = _validator.Validate(request);
-
-            if (validationResults.IsValid)
+            try
             {
-                var archetypeArticle = JsonConvert.DeserializeObject<Article>(request.Message);
+                var validationResults = _validator.Validate(request);
 
-                _logger.LogInformation("Processing archetype '{@Title}'", archetypeArticle.Title);
-                var results = await _archetypeProcessor.Process(archetypeArticle);
-                _logger.LogInformation("Finished processing archetype '{@Title}'", archetypeArticle.Title);
-
-                if (!results.IsSuccessful)
+                if (validationResults.IsValid)
                 {
-                    archetypeInformationConsumerResult.Errors.AddRange(results.Errors);
+                    var archetypeArticle = JsonConvert.DeserializeObject<Article>(request.Message);
+
+                    _logger.LogInformation("Processing archetype '{@Title}'", archetypeArticle.Title);
+                    var results = await _archetypeProcessor.Process(archetypeArticle);
+                    _logger.LogInformation("Finished processing archetype '{@Title}'", archetypeArticle.Title);
+
+                    if (!results.IsSuccessful)
+                    {
+                        archetypeInformationConsumerResult.Errors.AddRange(results.Errors);
+                    }
                 }
+                else
+                {
+                    archetypeInformationConsumerResult.Errors = validationResults.Errors.Select(err => err.ErrorMessage).ToList();
+                }
+
             }
-            else
+            catch (System.Exception ex)
             {
-                archetypeInformationConsumerResult.Errors = validationResults.Errors.Select(err => err.ErrorMessage).ToList();
+                archetypeInformationConsumerResult.Errors.Add(ex.Message);
+                _logger.LogError("Processing archetype '{@Exception}'", ex);
             }
 
             return archetypeInformationConsumerResult;
