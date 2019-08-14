@@ -1,7 +1,7 @@
-![alt text](https://fablecode.visualstudio.com/Yugioh%20Insight/_apis/build/status/Build_ArticleData "Visual studio team services build status")
+![alt text](https://fablecode.visualstudio.com/Yugioh%20Insight/_apis/build/status/Build-ArchetypeData "Visual studio team services build status")
 
-# Card Data
-Amalgamates data about a [Yu-Gi-Oh](http://www.yugioh-card.com/uk/) archetype, from different sources.
+# Archetype Data
+Amalgamates data about a [Yu-Gi-Oh](http://www.yugioh-card.com/uk/) archetypes, from different sources.
 
 ## Built With
 * [Visual Studio 2019](https://www.visualstudio.com/downloads/)
