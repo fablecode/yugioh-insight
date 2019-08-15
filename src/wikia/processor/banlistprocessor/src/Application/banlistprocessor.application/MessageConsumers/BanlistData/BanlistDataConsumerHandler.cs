@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using banlistprocessor.core.Models;
@@ -28,18 +29,26 @@ namespace banlistprocessor.application.MessageConsumers.BanlistData
             try
             {
                 var yugiohBanlist = JsonConvert.DeserializeObject<YugiohBanlist>(request.Message);
-                banlistDataConsumerResult.YugiohBanlist = yugiohBanlist;
 
-                _logger.LogInformation(
-                    $"{yugiohBanlist.BanlistType.ToString()}, {yugiohBanlist.Title}, {yugiohBanlist.StartDate}");
+                if (yugiohBanlist != null && yugiohBanlist.Sections.Any())
+                {
+                    banlistDataConsumerResult.YugiohBanlist = yugiohBanlist;
 
-                var banlistExists = await _banlistService.BanlistExist(yugiohBanlist.ArticleId);
+                    _logger.LogInformation(
+                        $"{yugiohBanlist.BanlistType.ToString()}, {yugiohBanlist.Title}, {yugiohBanlist.StartDate}");
 
-                var result = banlistExists
-                    ? await _banlistService.Update(yugiohBanlist)
-                    : await _banlistService.Add(yugiohBanlist);
+                    var banlistExists = await _banlistService.BanlistExist(yugiohBanlist.ArticleId);
 
-                banlistDataConsumerResult.BanlistId = result.Id;
+                    var result = banlistExists
+                        ? await _banlistService.Update(yugiohBanlist)
+                        : await _banlistService.Add(yugiohBanlist);
+
+                    banlistDataConsumerResult.BanlistId = result.Id;
+                }
+                else
+                {
+                    _logger.LogInformation("Banlist not processed, {@Title}, {@StartDate}", yugiohBanlist.Title, yugiohBanlist.StartDate);
+                }
             }
             catch (ArgumentNullException ex)
             {
