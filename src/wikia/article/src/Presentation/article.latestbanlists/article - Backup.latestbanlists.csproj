@@ -4,7 +4,7 @@
     <LangVersion>7.1</LangVersion>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <UserSecretsId>6ac79461-a62e-4e38-8cf5-bc349b740774</UserSecretsId>
+    <UserSecretsId>0bc70b63-44b2-4bda-b29e-eda8128cb82e</UserSecretsId>
     <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
     <SelfContained>false</SelfContained>
     <IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
@@ -27,15 +27,16 @@
     <PackageReference Include="Serilog.Extensions.Hosting" Version="4.1.2" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <PackageReference Include="System.ServiceProcess.ServiceController" Version="5.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Application\article.application\article.application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\article.infrastructure\article.infrastructure.csproj" />
   </ItemGroup>
+
 
   <ItemGroup>
     <Compile Update="Extensions\WindowsService\ServiceBaseLifetime.cs">

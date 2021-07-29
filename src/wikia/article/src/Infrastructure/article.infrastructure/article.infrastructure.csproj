@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RabbitMQ.Client" Version="5.1.0" />
-    <PackageReference Include="wikia.core" Version="1.0.4" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.2" />
+    <PackageReference Include="wikia.core" Version="1.0.5" />
   </ItemGroup>
 
   <ItemGroup>
