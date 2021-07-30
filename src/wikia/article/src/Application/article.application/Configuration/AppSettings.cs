@@ -1,9 +1,7 @@
 ﻿namespace article.application.Configuration
 {
-    public class AppSettings
+    public record AppSettings
     {
-        public string CronSchedule { get; set; }
-        public string WikiaDomainUrl { get; set; }
-        public string LogFolder { get; set; }
+        public string WikiaDomainUrl { get; init; }
     }
 }
