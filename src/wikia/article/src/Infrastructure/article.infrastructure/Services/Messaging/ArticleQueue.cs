@@ -39,7 +39,7 @@ namespace article.infrastructure.Services.Messaging
         {
             var messageBodyBytes = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
 
-            var factory = new ConnectionFactory() { HostName = _rabbitMqConfig.Value.Host, Port = 5672 };
+            var factory = new ConnectionFactory() { HostName = _rabbitMqConfig.Value.Host, Port = _rabbitMqConfig.Value.Port };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {

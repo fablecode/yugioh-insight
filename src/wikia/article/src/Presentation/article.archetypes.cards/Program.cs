@@ -1,11 +1,5 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using article.application;
+﻿using article.application;
 using article.application.Configuration;
-using article.archetypes.cards.Extensions.WindowsService;
 using article.archetypes.cards.QuartzConfiguration;
 using article.archetypes.cards.Services;
 using article.infrastructure;
@@ -15,6 +9,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Quartz;
 using Serilog;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace article.archetypes.cards
 {
