@@ -7,6 +7,13 @@
 # Yugioh-Insight
 Yugioh Insight is a collection of solutions for gathering [Yu-Gi-Oh](http://www.yugioh-card.com/uk/) data from various sources.
 
+## Architecture Overview
+This application is cross-platform at the server and client side, thanks to .NET 5 services capable of running on Linux or Windows containers depending on your Docker host. 
+The architecture proposes a microservice oriented architecture implementation with multiple autonomous microservices (each one owning its own data/db) and implementing different approaches within each microservice (simple CRUD vs. DDD/CQRS patterns) using Http as the communication protocol between the client apps and the microservices and supports asynchronous communication for data updates propagation across multiple services based on an Event Bus ([RabbitMQ](https://www.rabbitmq.com/)). 
+
+## 
+![ETL Diagram](images/etl_diagram.png)
+
 ## Built With
 * [Visual Studio 2019](https://www.visualstudio.com/downloads/)
 * [.NET Core 2.2](https://www.microsoft.com/net/download/core)
