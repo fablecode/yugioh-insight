@@ -8,7 +8,7 @@ namespace article.application.ScheduledTasks.Archetype
         public ArchetypeInformationTaskValidator()
         {
             RuleFor(ci => ci.Category)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();
 
