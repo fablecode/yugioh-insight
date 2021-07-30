@@ -55,13 +55,41 @@
 			"arguments": {
 				"x-queue-type": "classic"
 			}
+		},
+		{
+			"name": "card-tips-article",
+			"vhost": "/",
+			"durable": true,
+			"auto_delete": false,
+			"arguments": {
+				"x-queue-type": "classic"
+			}
+		},
+		{
+			"name": "card-rulings-article",
+			"vhost": "/",
+			"durable": true,
+			"auto_delete": false,
+			"arguments": {
+				"message-type": "cardrulingsarticle",
+				"x-queue-type": "classic"
+			}
+		},
+		{
+			"name": "card-trivia-article",
+			"vhost": "/",
+			"durable": true,
+			"auto_delete": false,
+			"arguments": {
+				"x-queue-type": "classic"
+			}
 		}
 	],
 	"exchanges": [
 		{
 			"name": "yugioh.headers.article",
 			"vhost": "/",
-			"type": "direct",
+			"type": "headers",
 			"durable": true,
 			"auto_delete": false,
 			"internal": false,
@@ -86,7 +114,7 @@
 			"destination_type": "queue",
 			"routing_key": "",
 			"arguments": {
-				"messsage-type": "cardarticle"
+				"message-type": "cardarticle"
 			}
 		}
 	]
