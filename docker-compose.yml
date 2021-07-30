@@ -1,5 +1,25 @@
 version: '3.8'
 services: 
+
+    # Logging 
+    seq:
+        image: datalust/seq:latest
+        ports:
+            - 6341:80
+        environment:
+            ACCEPT_EULA: "Y"
+    
+    # Database
+    yugiohinsight-sqldata:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        container_name: yugiohinsight-db
+        environment:
+            SA_PASSWORD: "Password0!"
+            ACCEPT_EULA: "Y"   
+        ports: 
+            - "1501:1433"
+    
+    # RabbitMq
     rabbitmq:
         image: rabbitmq:management
         container_name: 'yugioh_insight_rabbitmq'
@@ -8,10 +28,10 @@ services:
             - "5672:5672"
             - "15672:15672"
         volumes:
-            - ~/docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-            - ~/docker-conf/rabbitmq/log/:/var/log/rabbitmq
-            - ~/docker-conf/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:rw
-            - ~/docker-conf/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:rw
+            - ./docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+            - ./docker-conf/rabbitmq/log/:/var/log/rabbitmq
+            - ./docker-conf/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
+            - ./docker-conf/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
         networks:
             - rabbitmq_net
         depends_on: 
