@@ -1,6 +1,6 @@
 ﻿using article.core.Models;
 using article.domain.ArticleList.Item;
-using article.domain.Services;
+using article.domain.Services.Messaging;
 using article.tests.core;
 using FluentAssertions;
 using NSubstitute;
@@ -8,7 +8,6 @@ using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
-using article.domain.Services.Messaging;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.unit.tests.ArticleListTests.ItemTests.BanlistItemProcessorTests

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using article.core.Models;
-using article.domain.Services;
+﻿using article.core.Models;
 using article.domain.Services.Messaging;
+using System;
+using System.Threading.Tasks;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace article.infrastructure.Services.Messaging

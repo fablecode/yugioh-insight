@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using article.application.ScheduledTasks.LatestBanlist;
-using article.core.Enums;
-using article.core.Models;
-using article.domain.Banlist.Processor;
+﻿using article.core.Models;
+using System.Collections.Generic;
 
 namespace article.application.ScheduledTasks.Articles
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using article.core.Enums;
+﻿using article.core.Enums;
 using article.domain.Banlist.DataSource;
 using article.domain.WebPages;
 using article.domain.WebPages.Banlists;
@@ -10,6 +7,8 @@ using FluentAssertions;
 using HtmlAgilityPack;
 using NSubstitute;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 
 namespace article.domain.unit.tests
 {

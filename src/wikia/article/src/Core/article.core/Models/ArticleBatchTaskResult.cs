@@ -1,6 +1,5 @@
-﻿using System;
+﻿using article.core.Exceptions;
 using System.Collections.Generic;
-using article.core.Exceptions;
 
 namespace article.core.Models
 {

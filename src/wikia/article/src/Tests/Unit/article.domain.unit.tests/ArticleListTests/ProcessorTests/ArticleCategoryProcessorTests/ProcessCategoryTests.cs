@@ -1,12 +1,11 @@
-﻿using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
-using article.core.ArticleList.DataSource;
+﻿using article.core.ArticleList.DataSource;
 using article.core.ArticleList.Processor;
-using article.core.Models;
 using article.domain.ArticleList.Processor;
 using article.tests.core;
 using NSubstitute;
 using NUnit.Framework;
+using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.unit.tests.ArticleListTests.ProcessorTests.ArticleCategoryProcessorTests

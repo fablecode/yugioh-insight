@@ -22,7 +22,7 @@ namespace article.application.ScheduledTasks.Archetype
         {
             var archetypeInformationTaskResult = new ArchetypeInformationTaskResult();
 
-            var validationResults = _validator.Validate(request);
+            var validationResults = await _validator.ValidateAsync(request, cancellationToken);
 
             if (validationResults.IsValid)
             {

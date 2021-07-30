@@ -2,10 +2,10 @@
 
 namespace article.application.Configuration
 {
-    public class ExchangeSetting
+    public record ExchangeSetting
     {
-        public Dictionary<string, string> Headers { get; set; }
+        public Dictionary<string, string> Headers { get; init; }
 
-        public byte PersistentMode { get; set; }
+        public byte PersistentMode { get; init; }
     }
 }
