@@ -1,5 +1,4 @@
-﻿using System;
-using article.application.ScheduledTasks.Archetype;
+﻿using article.application.ScheduledTasks.Archetype;
 using FluentValidation.TestHelper;
 using NUnit.Framework;
 
@@ -16,17 +15,18 @@ namespace article.application.unit.tests.ScheduledTasksTests.ValidationTests
             _sut = new ArchetypeInformationTaskValidator();
         }
 
-        [TestCaseSource(nameof(_invalidCategories))]
+        [TestCaseSource(nameof(InvalidCategories))]
         public void Given_Invalid_Categories_Validation_Should_Fail(string category)
         {
             // Arrange
             var inputModel = new ArchetypeInformationTask { Category = category };
+            var result = _sut.TestValidate(inputModel);
 
             // Act
-            Action act = () => _sut.ShouldHaveValidationErrorFor(ci => ci.Category, inputModel);
+            void Act() => result.ShouldHaveValidationErrorFor(ci => ci.Category);
 
             // Assert
-            act.Invoke();
+            Act();
         }
 
         [TestCase(0)]
@@ -35,17 +35,18 @@ namespace article.application.unit.tests.ScheduledTasksTests.ValidationTests
         {
             // Arrange
             var inputModel = new ArchetypeInformationTask { PageSize = pageSize };
+            var result = _sut.TestValidate(inputModel);
 
             // Act
-            Action act = () => _sut.ShouldHaveValidationErrorFor(ci => ci.PageSize, inputModel);
+            void Act() => result.ShouldHaveValidationErrorFor(ci => ci.PageSize);
 
             // Assert
-            act.Invoke();
+            Act();
         }
 
         #region private helpers
 
-        static object[] _invalidCategories =
+        private static readonly object[] InvalidCategories =
         {
             null,
             "",

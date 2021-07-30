@@ -19,10 +19,10 @@ namespace article.domain.ArticleList.DataSource
         public async Task Producer(string category, int pageSize, ITargetBlock<UnexpandedArticle[]> targetBlock)
         {
             if (string.IsNullOrWhiteSpace(category))
-                throw new ArgumentException(nameof(category));
+                throw new ArgumentException("Article Category cannot be null or empty", nameof(category));
 
             if (targetBlock == null)
-                throw new ArgumentException(nameof(targetBlock));
+                throw new ArgumentNullException(nameof(targetBlock), "Consumer target block cannot be null");
 
 
             var nextBatch = await _articleList.AlphabeticalList(new ArticleListRequestParameters { Category = category, Limit = pageSize });
