@@ -1,13 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <LangVersion>7.1</LangVersion>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>8d8addcb-06e9-4649-90b2-df0ca791ddcd</UserSecretsId>
-    <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
-    <SelfContained>false</SelfContained>
-    <IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,12 +31,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Application\article.application\article.application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\article.infrastructure\article.infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Extensions\WindowsService\ServiceBaseLifetime.cs">
-      <SubType>Component</SubType>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
