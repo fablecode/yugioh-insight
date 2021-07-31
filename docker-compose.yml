@@ -36,6 +36,25 @@ services:
             - rabbitmq_net
         depends_on: 
             - rabbitmq_net
+    
+    # Yugioh Archetype article producer
+    article-archetypes:
+        container_name: article-archetypes
+        build: 
+            context: ./src/wikia/article/src
+            dockerfile: ./Presentation/article.archetypes/Dockerfile
+        environment: 
+            - AppSettings__WikiaDomainUrl=https://yugioh.fandom.com
+            - Quartz__ArchetypeInformationJob=0 0 4 1/1 * ? *
+            - RabbitMqSettings__Host=localhost
+            - RabbitMqSettings__Port=5672
+            - RabbitMqSettings__Username=guest
+            - RabbitMqSettings__Password=guest
+            - RabbitMqSettings__ContentType=application/json
+            - RabbitMqSettings__Exchanges__yugioh.headers.article__Headers__message-type=archetypearticle
+            - RabbitMqSettings__Exchanges__yugioh.headers.article__PersistentMode=2
+        depends_on: 
+            - rabbitmq
 
 networks:
     rabbitmq_net:
