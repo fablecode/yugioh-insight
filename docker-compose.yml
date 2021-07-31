@@ -9,17 +9,18 @@ services:
         environment:
             ACCEPT_EULA: "Y"
     
-    # Database
-    yugiohinsight-sqldata:
+    # Microsoft Sql Server
+    sqldata:
         image: mcr.microsoft.com/mssql/server:2019-latest
-        container_name: yugiohinsight-db
         environment:
-            SA_PASSWORD: "Password0!"
+            SA_PASSWORD: "Pass@word"
             ACCEPT_EULA: "Y"   
         ports: 
-            - "1501:1433"
+            - "5433:1433"
+        volumes:
+            - ./docker-conf/mssql/yugiohinsight/sqldata:/var/opt/mssql
     
-    # RabbitMq
+    # Message Broker
     rabbitmq:
         image: rabbitmq:management
         container_name: 'yugioh_insight_rabbitmq'
