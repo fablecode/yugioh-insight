@@ -289,6 +289,7 @@ __pycache__/
 
 docker-conf/rabbitmq/data
 docker-conf/rabbitmq/logs
+docker-conf/mssql
 
 # NCrunch
 *.ncrunch*
