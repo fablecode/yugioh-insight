@@ -4,6 +4,8 @@ namespace article.application.ScheduledTasks.Articles
 {
     public class ArticleInformationTaskValidator : AbstractValidator<ArticleInformationTask>
     {
+        private const int MaxPageSize = 500;
+
         public ArticleInformationTaskValidator()
         {
             RuleFor(bl => bl.Category)
@@ -11,7 +13,8 @@ namespace article.application.ScheduledTasks.Articles
                 .NotEmpty();
 
             RuleFor(bl => bl.PageSize)
-                .GreaterThan(0);
+                .GreaterThan(0)
+                .LessThanOrEqualTo(MaxPageSize);
         }
     }
 }
