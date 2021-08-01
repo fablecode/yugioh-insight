@@ -8,7 +8,7 @@ COPY . .
 RUN dotnet restore "article.sln"
 
 FROM build AS publish
-RUN dotnet publish "Presentation/article.cardinformation/article.cardinformation.csproj" -c Release -o /app/publish
+RUN dotnet publish "Presentation/article.cardinformation/article.cardinformation.csproj" -c Release -o /app/publish --no-restore
 
 FROM base AS final
 WORKDIR /app

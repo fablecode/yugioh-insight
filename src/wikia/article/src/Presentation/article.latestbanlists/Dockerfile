@@ -8,9 +8,9 @@ COPY . .
 RUN dotnet restore "article.sln"
 
 FROM build AS publish
-RUN dotnet publish "Presentation/article.archetypes/article.archetypes.csproj" -c Release -o /app/publish --no-restore
+RUN dotnet publish "Presentation/article.latestbanlists/article.latestbanlists.csproj" -c Release -o /app/publish --no-restore
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "article.archetypes.dll"]
+ENTRYPOINT ["dotnet", "article.latestbanlists.dll"]
