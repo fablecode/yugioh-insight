@@ -1,11 +1,8 @@
 ﻿using article.core.ArticleList.DataSource;
 using article.core.ArticleList.Processor;
 using article.core.Models;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
-using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.ArticleList.Processor
 {
@@ -36,39 +33,14 @@ namespace article.domain.ArticleList.Processor
         {
             var response = new ArticleBatchTaskResult { Category = category };
 
-            // Data flow options
-            var processorCount = Environment.ProcessorCount / 2;
-
-            var nonGreedy = new ExecutionDataflowBlockOptions { BoundedCapacity = processorCount, MaxDegreeOfParallelism = processorCount };
-            var flowComplete = new DataflowLinkOptions { PropagateCompletion = true };
-
-            // Pipeline members
-            var articleBatchBufferBlock = new BufferBlock<UnexpandedArticle[]>();
-            var articleTransformBlock = new TransformBlock<UnexpandedArticle[], ArticleBatchTaskResult>(articles => _articleBatchProcessor.Process(category, articles), nonGreedy);
-            var articleActionBlock = new ActionBlock<ArticleBatchTaskResult>(articleBatchTaskResult => FinishedProcessing(response, articleBatchTaskResult));
-
-            // Form the pipeline
-            articleBatchBufferBlock.LinkTo(articleTransformBlock, flowComplete);
-            articleTransformBlock.LinkTo(articleActionBlock, flowComplete);
-
-            // Process "Category" and generate article batch data
-           await _articleCategoryDataSource.Producer(category, pageSize, articleBatchBufferBlock);
-
-            // Producer completed producing data. Signals to the "DataflowBlock" that it should not accept nor produce any more messages nor consume any more postponed messages.
-            articleBatchBufferBlock.Complete();
-
-            // Mark the head of the pipeline as complete. The continuation tasks  
-            // propagate completion through the pipeline as each part of the  
-            // pipeline finishes.
-            await articleActionBlock.Completion;
+            await foreach (var unexpandedArticleBatch in _articleCategoryDataSource.Producer(category, pageSize))
+            {
+                var articleBatchTaskResult = await _articleBatchProcessor.Process(category, unexpandedArticleBatch);
+                response.Processed += articleBatchTaskResult.Processed;
+                response.Failed.AddRange(articleBatchTaskResult.Failed);
+            }
 
             return response;
-        }
-
-        private static void FinishedProcessing(ArticleBatchTaskResult response, ArticleBatchTaskResult articleBatchTaskResult)
-        {
-            response.Processed += articleBatchTaskResult.Processed;
-            response.Failed.AddRange(articleBatchTaskResult.Failed);
         }
     }
 }

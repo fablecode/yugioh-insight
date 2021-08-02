@@ -6,8 +6,6 @@ using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
-using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.unit.tests.ArticleListTests.ProcessorTests.ArticleCategoryProcessorTests
 {
@@ -28,21 +26,18 @@ namespace article.domain.unit.tests.ArticleListTests.ProcessorTests.ArticleCateg
         }
 
         [Test]
-        public async Task Given_A_CategoryList_And_PageSize_Should_Invoke_Producer_Method()
+        public async Task Given_A_CategoryList_And_PageSize_Should_Invoke_Producer_Method_3_Times()
         {
             // Arrange
-            var categories = new List<string> {"category1", "category2", "category3"};
+            const int expected = 3;
+            var categories = new List<string> { "category1", "category2", "category3" };
             const int pageSize = 10;
-
-            //_articleCategoryDataSource
-            //    .Producer(Arg.Any<string>(), Arg.Any<int>(), Arg.Any<BufferBlock<UnexpandedArticle[]>>())
-            //    .Returns(Task.CompletedTask);
 
             // Act
             await _sut.Process(categories, pageSize);
 
             // Assert
-            await _articleCategoryDataSource.Received().Producer(Arg.Any<string>(), Arg.Any<int>(), Arg.Any<BufferBlock<UnexpandedArticle[]>>());
+            await _articleCategoryDataSource.Received(expected).Producer(Arg.Any<string>(), Arg.Any<int>()).ToListAsync();
         }
 
     }

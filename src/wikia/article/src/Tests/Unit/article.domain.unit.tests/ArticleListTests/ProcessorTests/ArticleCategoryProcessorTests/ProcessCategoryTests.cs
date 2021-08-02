@@ -5,8 +5,6 @@ using article.tests.core;
 using NSubstitute;
 using NUnit.Framework;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
-using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.unit.tests.ArticleListTests.ProcessorTests.ArticleCategoryProcessorTests
 {
@@ -32,14 +30,12 @@ namespace article.domain.unit.tests.ArticleListTests.ProcessorTests.ArticleCateg
             // Arrange
             const string category = "category";
             const int pageSize = 10;
-            BufferBlock <UnexpandedArticle[]> argumentUsed = null;
-            await _articleCategoryDataSource.Producer(Arg.Any<string>(), Arg.Any<int>(), Arg.Do<BufferBlock<UnexpandedArticle[]>>(x => argumentUsed =  x));
 
             // Act
             await _sut.Process(category, pageSize);
 
             // Assert
-            await _articleCategoryDataSource.Received().Producer(Arg.Any<string>(), Arg.Any<int>(), argumentUsed);
+            await _articleCategoryDataSource.Received(1).Producer(Arg.Any<string>(), Arg.Any<int>()).ToListAsync();
         }
     }
 }

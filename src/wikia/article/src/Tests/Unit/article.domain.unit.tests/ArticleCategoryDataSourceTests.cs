@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using article.core.ArticleList.DataSource;
@@ -36,19 +38,7 @@ namespace article.domain.unit.tests
             // Arrange
 
             // Act
-            Action act = () => _sut.Producer(category, 500, new BufferBlock<UnexpandedArticle[]>()).Wait();
-
-            // Assert
-            act.Should().Throw<ArgumentException>();
-        }
-
-        [Test]
-        public void Given_A_Invalid_ITargetBlock_Should_Throw_ArgumentException()
-        {
-            // Arrange
-
-            // Act
-            Action act = () => _sut.Producer("category", 500, null).Wait();
+            Func<Task<List<UnexpandedArticle[]>>> act = () => _sut.Producer(category, 500).ToListAsync();
 
             // Assert
             act.Should().Throw<ArgumentException>();
@@ -60,7 +50,6 @@ namespace article.domain.unit.tests
             // Arrange
             const int expected = 5;
             const int pageSize = 100;
-            var articleBatchBufferBlock = new BufferBlock<UnexpandedArticle[]>();
 
             var fixture = new Fixture();
 
@@ -85,12 +74,43 @@ namespace article.domain.unit.tests
                 );
 
             // Act
-            await _sut.Producer("category", 500, articleBatchBufferBlock);
+            var result = await _sut.Producer("category", 500).ToListAsync();
 
 
             // Assert
-            articleBatchBufferBlock.Count.Should().Be(expected);
+            result.Count.Should().Be(expected);
         }
 
+    }
+
+    public static class AsyncEnumerableExtensions
+    {
+        public static async Task<List<T>> ToListAsync<T>(this IAsyncEnumerable<T> enumerable)
+        {
+            var list = new List<T>();
+            await foreach (var item in enumerable)
+            {
+                list.Add(item);
+            }
+            return list;
+        }
+        public static async Task<T[]> ToArrayAsync<T>(this IAsyncEnumerable<T> enumerable)
+        {
+            var result = await ToListAsync(enumerable);
+            return result.ToArray();
+        }
+        public static async Task<T> SingleOrDefault<T>(this IAsyncEnumerable<T> enumerable)
+        {
+            var result = await ToListAsync(enumerable);
+            return result.SingleOrDefault();
+        }
+
+        public static async IAsyncEnumerable<T> ToAsyncEnumerable<T>(this IEnumerable<T> enumerable)
+        {
+            foreach (var item in enumerable)
+            {
+                yield return await Task.FromResult(item);
+            }
+        }
     }
 }

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
-using article.core.ArticleList.DataSource;
+﻿using article.core.ArticleList.DataSource;
+using System;
+using System.Collections.Generic;
 using wikia.Api;
 using wikia.Models.Article;
 using wikia.Models.Article.AlphabeticalList;
@@ -16,23 +15,19 @@ namespace article.domain.ArticleList.DataSource
         {
             _articleList = articleList;
         }
-        public async Task Producer(string category, int pageSize, ITargetBlock<UnexpandedArticle[]> targetBlock)
+        public async IAsyncEnumerable<UnexpandedArticle[]> Producer(string category, int pageSize)
         {
             if (string.IsNullOrWhiteSpace(category))
                 throw new ArgumentException("Article Category cannot be null or empty", nameof(category));
-
-            if (targetBlock == null)
-                throw new ArgumentNullException(nameof(targetBlock), "Consumer target block cannot be null");
-
 
             var nextBatch = await _articleList.AlphabeticalList(new ArticleListRequestParameters { Category = category, Limit = pageSize });
 
             bool isNextBatchAvailable;
 
+            yield return nextBatch.Items;
+
             do
             {
-                await targetBlock.SendAsync(nextBatch.Items);
-
                 isNextBatchAvailable = !string.IsNullOrEmpty(nextBatch.Offset);
 
                 if (isNextBatchAvailable)
@@ -43,7 +38,10 @@ namespace article.domain.ArticleList.DataSource
                         Limit = pageSize,
                         Offset = nextBatch.Offset
                     });
+
+                    yield return nextBatch.Items;
                 }
+
             } while (isNextBatchAvailable);
         }
     }

@@ -4,6 +4,8 @@ namespace article.application.ScheduledTasks.Archetype
 {
     public class ArchetypeInformationTaskValidator : AbstractValidator<ArchetypeInformationTask>
     {
+        private const int MaxPageSize = 500;
+
         public ArchetypeInformationTaskValidator()
         {
             RuleFor(ci => ci.Category)
@@ -12,7 +14,8 @@ namespace article.application.ScheduledTasks.Archetype
                 .NotEmpty();
 
             RuleFor(ci => ci.PageSize)
-                .GreaterThan(0);
+                .GreaterThan(0)
+                .LessThanOrEqualTo(MaxPageSize);
         }
     }
 }

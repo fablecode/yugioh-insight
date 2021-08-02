@@ -35,7 +35,7 @@ namespace article.domain.unit.tests.ArticleListTests.ProcessorTests
             const string expected = "category";
 
             // Act
-            Func<Task<ArticleBatchTaskResult>> act = () => _sut.Process(category, Arg.Any<UnexpandedArticle[]>());
+            Func<Task<ArticleBatchTaskResult>> act = () => _sut.Process(category, Array.Empty<UnexpandedArticle>());
 
             // Assert
             act

@@ -9,6 +9,7 @@ namespace article.application.ScheduledTasks.Articles
         public ArticleInformationTaskValidator()
         {
             RuleFor(bl => bl.Category)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();
 

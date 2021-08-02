@@ -1,11 +1,10 @@
-﻿using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
+﻿using System.Collections.Generic;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace article.core.ArticleList.DataSource
 {
     public interface IArticleCategoryDataSource
     {
-        Task Producer(string category, int pageSize, ITargetBlock<UnexpandedArticle[]> targetBlock);
+        IAsyncEnumerable<UnexpandedArticle[]> Producer(string category, int pageSize);
     }
 }

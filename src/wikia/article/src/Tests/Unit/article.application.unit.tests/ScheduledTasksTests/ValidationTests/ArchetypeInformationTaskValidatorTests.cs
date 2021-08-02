@@ -1,10 +1,12 @@
 ﻿using article.application.ScheduledTasks.Archetype;
+using article.tests.core;
 using FluentValidation.TestHelper;
 using NUnit.Framework;
 
 namespace article.application.unit.tests.ScheduledTasksTests.ValidationTests
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class ArchetypeInformationTaskValidatorTests
     {
         private ArchetypeInformationTaskValidator _sut;
@@ -31,6 +33,7 @@ namespace article.application.unit.tests.ScheduledTasksTests.ValidationTests
 
         [TestCase(0)]
         [TestCase(-1)]
+        [TestCase(501)]
         public void Given_Invalid_PageSize_Validation_Should_Fail(int pageSize)
         {
             // Arrange
