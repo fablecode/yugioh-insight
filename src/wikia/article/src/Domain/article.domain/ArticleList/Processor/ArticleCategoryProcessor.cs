@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace article.domain.ArticleList.Processor
 {
-    public class ArticleCategoryProcessor : IArticleCategoryProcessor
+    public sealed class ArticleCategoryProcessor : IArticleCategoryProcessor
     {
         private readonly IArticleBatchProcessor _articleBatchProcessor;
         private readonly IArticleCategoryDataSource _articleCategoryDataSource;

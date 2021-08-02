@@ -9,7 +9,7 @@ using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.ArticleList.Item
 {
-    public class CardItemProcessor : IArticleItemProcessor
+    public sealed class CardItemProcessor : IArticleItemProcessor
     {
         private readonly ICardArticleQueue _cardArticleQueue;
 

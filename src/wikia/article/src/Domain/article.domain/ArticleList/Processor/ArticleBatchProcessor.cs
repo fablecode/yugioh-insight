@@ -7,7 +7,7 @@ using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.ArticleList.Processor
 {
-    public class ArticleBatchProcessor : IArticleBatchProcessor
+    public sealed class ArticleBatchProcessor : IArticleBatchProcessor
     {
         private readonly IArticleProcessor _articleProcessor;
 

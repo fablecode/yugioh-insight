@@ -9,7 +9,7 @@ using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.Banlist.Processor
 {
-    public class BanlistProcessor : IBanlistProcessor
+    public sealed class BanlistProcessor : IBanlistProcessor
     {
         private readonly IBanlistUrlDataSource _banlistUrlDataSource;
         private readonly IArticleProcessor _articleProcessor;

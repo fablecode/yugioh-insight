@@ -9,7 +9,7 @@ using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.ArticleList.Item
 {
-    public class ArticleItemProcessor : IArticleItemProcessor
+    public sealed class ArticleItemProcessor : IArticleItemProcessor
     {
         private readonly IQueue<Article> _queue;
 
@@ -40,9 +40,10 @@ namespace article.domain.ArticleList.Item
 
         public bool Handles(string category)
         {
-            return category == ArticleCategory.CardTips  ||
-                   category == ArticleCategory.CardRulings ||
-                   category == ArticleCategory.CardTrivia;
+            return category is 
+                ArticleCategory.CardTips or 
+                ArticleCategory.CardRulings or 
+                ArticleCategory.CardTrivia;
         }
     }
 }

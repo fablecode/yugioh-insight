@@ -22,15 +22,7 @@ namespace article.infrastructure.Services.Messaging.Cards
 
         public Task Publish(UnexpandedArticle article)
         {
-            var messageToBeSent = new Article
-            {
-                Id = article.Id,
-                CorrelationId = Guid.NewGuid(),
-                Title = article.Title,
-                Url = new Uri(new Uri(_appSettings.Value.WikiaDomainUrl), article.Url).AbsoluteUri
-            };
-
-            return _queue.Publish(messageToBeSent);
+            return _queue.Publish(article);
         }
     }
 }

@@ -6,7 +6,7 @@ using article.domain.WebPages.Banlists;
 
 namespace article.domain.Banlist.DataSource
 {
-    public class BanlistUrlDataSource : IBanlistUrlDataSource
+    public sealed class BanlistUrlDataSource : IBanlistUrlDataSource
     {
         private readonly IBanlistWebPage _banlistWebPage;
         private readonly IHtmlWebPage _htmlWebPage;

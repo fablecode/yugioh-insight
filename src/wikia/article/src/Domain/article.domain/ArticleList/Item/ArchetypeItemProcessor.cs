@@ -9,7 +9,7 @@ using wikia.Models.Article.AlphabeticalList;
 
 namespace article.domain.ArticleList.Item
 {
-    public class ArchetypeItemProcessor : IArticleItemProcessor
+    public sealed class ArchetypeItemProcessor : IArticleItemProcessor
     {
         private readonly IArchetypeArticleQueue _archetypeArticleQueue;
 
@@ -41,9 +41,9 @@ namespace article.domain.ArticleList.Item
 
         public bool Handles(string category)
         {
-            return category == ArticleCategory.Archetype ||
-                   category == ArticleCategory.CardsByArchetype ||
-                   category == ArticleCategory.CardsByArchetypeSupport;
+            return category is ArticleCategory.Archetype or 
+                ArticleCategory.CardsByArchetype or 
+                ArticleCategory.CardsByArchetypeSupport;
         }
     }
 }

@@ -41,21 +41,47 @@ namespace article.application.unit.tests.DecoratorsTests.LoggerTests
             await _sut.Process("category", new UnexpandedArticle());
 
             // Assert
-            _logger.Received(expected).Log(Arg.Any<LogLevel>(), Arg.Any<EventId>(), Arg.Any<object>(), Arg.Any<Exception>(), Arg.Any<Func<object, Exception, string>>());
+            _logger.Received(expected).Log(LogLevel.Information, Arg.Any<EventId>(), Arg.Any<object>(), Arg.Any<Exception>(), Arg.Any<Func<object, Exception, string>>());
         }
 
         [Test]
-        public void Given_A_Category_And_A_Article_If_Exception_Is_Thrown_Should_Invoke_LogError_Method_Once()
+        public async Task Given_A_Category_And_A_Article_If_ArgumentNullException_Is_Thrown_Should_Invoke_LogError_Method_Once()
         {
             // Arrange
             const int expected = 1;
-            _articleProcessor.Process(Arg.Any<string>(), Arg.Any<UnexpandedArticle>()).Returns(new ArticleTaskResult());
+            _articleProcessor.Process(Arg.Any<string>(), Arg.Any<UnexpandedArticle>()).Throws<ArgumentNullException>();
 
             // Act
-            _sut.Process("category", new UnexpandedArticle()).Throws<Exception>();
+            try
+            {
+                await _sut.Process("category", new UnexpandedArticle());
+            }
+            catch (ArgumentNullException)
+            {
+            }
 
             // Assert
-            _logger.Received(expected).Log(Arg.Any<LogLevel>(), Arg.Any<EventId>(), Arg.Any<object>(), Arg.Any<Exception>(), Arg.Any<Func<object, Exception, string>>());
+            _logger.Received(expected).Log(LogLevel.Error, Arg.Any<EventId>(), Arg.Any<object>(), Arg.Any<Exception>(), Arg.Any<Func<object, Exception, string>>());
+        }
+
+        [Test]
+        public async Task Given_A_Category_And_A_Article_If_InvalidOperationException_Is_Thrown_Should_Invoke_LogError_Method_Once()
+        {
+            // Arrange
+            const int expected = 1;
+            _articleProcessor.Process(Arg.Any<string>(), Arg.Any<UnexpandedArticle>()).Throws<InvalidOperationException>();
+
+            // Act
+            try
+            {
+                await _sut.Process("category", new UnexpandedArticle());
+            }
+            catch (InvalidOperationException)
+            {
+            }
+
+            // Assert
+            _logger.Received(expected).Log(LogLevel.Error, Arg.Any<EventId>(), Arg.Any<object>(), Arg.Any<Exception>(), Arg.Any<Func<object, Exception, string>>());
         }
     }
 }
