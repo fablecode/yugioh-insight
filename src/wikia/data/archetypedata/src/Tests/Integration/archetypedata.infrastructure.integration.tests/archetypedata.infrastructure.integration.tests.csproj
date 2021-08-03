@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Folder Include="WebPagesTests\ArchetypeThumbnailTests\" />
+    <Folder Include="WebPagesTests\ArchetypeWebPageTests\" />
   </ItemGroup>
 
   <ItemGroup>

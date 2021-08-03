@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using Serilog;
 using System;
 using System.Text;
 using System.Threading;
@@ -44,17 +43,21 @@ namespace archetypedata.Services
         {
             stoppingToken.ThrowIfCancellationRequested();
 
-            _factory = new ConnectionFactory()
+            _factory = new ConnectionFactory
             {
                 HostName = _rabbitMqOptions.Value.Host,
                 UserName = _rabbitMqOptions.Value.Username,
-                Password = _rabbitMqOptions.Value.Password
+                Password = _rabbitMqOptions.Value.Password,
+                DispatchConsumersAsync = true
             };
+
 
             _connection = _factory.CreateConnection();
             _channel = _connection.CreateModel();
 
-            var consumer = new EventingBasicConsumer(_channel);
+            _channel.BasicQos(0, 1, false);
+
+            var consumer = new AsyncEventingBasicConsumer(_channel);
 
             consumer.Received += async (model, ea) =>
             {
@@ -93,23 +96,27 @@ namespace archetypedata.Services
 
         #region private helper
 
-        private void OnArchetypeCardArticleConsumerCancelled(object sender, ConsumerEventArgs e)
+        private Task OnArchetypeCardArticleConsumerCancelled(object sender, ConsumerEventArgs e)
         {
             _logger.LogInformation("Consumer '{ArchetypeCardArticleQueue}' Cancelled", ArchetypeCardArticleQueue);
+            return Task.CompletedTask;
         }
 
-        private void OnArchetypeCardArticleConsumerUnregistered(object sender, ConsumerEventArgs e)
+        private Task OnArchetypeCardArticleConsumerUnregistered(object sender, ConsumerEventArgs e)
         {
             _logger.LogInformation("Consumer '{ArchetypeCardArticleQueue}' Unregistered", ArchetypeCardArticleQueue);
+            return Task.CompletedTask;
         }
 
-        private void OnArchetypeCardArticleConsumerRegistered(object sender, ConsumerEventArgs e)
+        private Task OnArchetypeCardArticleConsumerRegistered(object sender, ConsumerEventArgs e)
         {
             _logger.LogInformation("Consumer '{ArchetypeCardArticleQueue}' Registered", ArchetypeCardArticleQueue);
+            return Task.CompletedTask;
         }
-        private void OnArchetypeCardArticleConsumerShutdown(object sender, ShutdownEventArgs e)
+        private Task OnArchetypeCardArticleConsumerShutdown(object sender, ShutdownEventArgs e)
         {
             _logger.LogInformation("Consumer '{ArchetypeCardArticleQueue}' Shutdown", ArchetypeCardArticleQueue);
+            return Task.CompletedTask;
         }
 
         #endregion

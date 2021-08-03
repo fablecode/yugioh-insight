@@ -25,7 +25,7 @@ namespace archetypedata.infrastructure.WebPages
 
         public IEnumerable<string> Cards(Uri archetypeUrl)
         {
-            var cardList = new List<string>();
+            var cardList = new HashSet<string>();
 
             var archetypeWebPage = _htmlWebPage.Load(archetypeUrl);
 
@@ -36,9 +36,9 @@ namespace archetypedata.infrastructure.WebPages
 
             foreach (var tb in tableCollection)
             {
-                var cardLinks = tb.SelectNodes("./tr/td[position() = 1]/a");
+                var cardLinks = tb.SelectNodes("./tbody/tr/td[position() =1]/a");
 
-                cardList.AddRange(cardLinks.Select(cn => cn.InnerText));
+                cardList.UnionWith(cardLinks.Select(cn => cn.InnerText));
             }
 
             var furtherResultsUrl = GetFurtherResultsUrl(archetypeWebPage);
@@ -48,7 +48,7 @@ namespace archetypedata.infrastructure.WebPages
                 if (!furtherResultsUrl.Contains("http"))
                     furtherResultsUrl = _appsettingsOptions.Value.WikiaDomainUrl + furtherResultsUrl;
 
-                cardList = cardList.Union(CardsFromFurtherResultsUrl(furtherResultsUrl)).ToList();
+                cardList.UnionWith(CardsFromFurtherResultsUrl(furtherResultsUrl));
             }
 
             return cardList;
@@ -56,7 +56,7 @@ namespace archetypedata.infrastructure.WebPages
 
         public List<string> CardsFromFurtherResultsUrl(string furtherResultsUrl)
         {
-            var cardList = new List<string>();
+            var cardList = new HashSet<string>();
 
             // change result set to 500
             var newUrl = furtherResultsUrl.Replace("limit%3D50", "limit%3D500");
@@ -66,10 +66,10 @@ namespace archetypedata.infrastructure.WebPages
 
             var cardNameList =
                 sematicSearchPage.DocumentNode.SelectNodes(
-                    "//*[@id='mw-content-text']/table/tbody/tr/td[1]/a");
+                    "//*[@id='result']/table/tbody/tr/td[1]/a");
 
             if (cardNameList != null)
-                cardList.AddRange(cardNameList.Select(cn => cn.InnerText));
+                cardList.UnionWith(cardNameList.Select(cn => cn.InnerText));
 
             return cardList.ToList();
         }

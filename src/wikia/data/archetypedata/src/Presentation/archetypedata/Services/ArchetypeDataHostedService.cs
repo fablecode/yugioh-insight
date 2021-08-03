@@ -49,14 +49,14 @@ namespace archetypedata.Services
         {
             stoppingToken.ThrowIfCancellationRequested();
 
-            _factory = new ConnectionFactory()
+            _factory = new ConnectionFactory
             {
-                HostName = _rabbitMqOptions.Value.Host, 
-                UserName = _rabbitMqOptions.Value.Username, 
-                Password = _rabbitMqOptions.Value.Password
+                HostName = _rabbitMqOptions.Value.Host,
+                UserName = _rabbitMqOptions.Value.Username,
+                Password = _rabbitMqOptions.Value.Password,
+                DispatchConsumersAsync = true
             };
 
-            _factory.DispatchConsumersAsync = true;
 
             _connection = _factory.CreateConnection();
             _channel = _connection.CreateModel();
