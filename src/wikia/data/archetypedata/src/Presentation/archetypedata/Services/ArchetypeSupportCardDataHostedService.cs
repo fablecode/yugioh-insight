@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using Serilog;
 using System;
 using System.Text;
 using System.Threading;
@@ -56,11 +55,11 @@ namespace archetypedata.Services
 
             var consumer = new EventingBasicConsumer(_channel);
 
-            consumer.Received += async (model, ea) =>
+            consumer.Received += async (_, ea) =>
             {
                 try
                 {
-                    var body = ea.Body;
+                    var body = ea.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);
 
                     var result = await _mediator.Send(new ArchetypeCardInformationConsumer { Message = message }, stoppingToken);

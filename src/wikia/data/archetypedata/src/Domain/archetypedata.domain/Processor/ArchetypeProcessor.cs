@@ -34,14 +34,14 @@ namespace archetypedata.domain.Processor
 
                 var epoch = articleDetails.Value.Revision.Timestamp;
 
-                var thumbNailUrl = await _archetypeWebPage.ArchetypeThumbnail(article.Id, article.Url);
+                var thumbNailUrl = _archetypeWebPage.ArchetypeThumbnail(articleDetails, article.Url);
 
                 var archetype = new Archetype
                 {
                     Id = article.Id,
                     Name = article.Title,
                     Revision = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(epoch),
-                    ImageUrl = ImageHelper.ExtractImageUrl(thumbNailUrl),
+                    ImageUrl = thumbNailUrl,
                     ProfileUrl = article.Url
                 };
 

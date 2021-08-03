@@ -6,6 +6,7 @@ using archetypedata.application.Configuration;
 using archetypedata.domain.WebPages;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Options;
+using wikia.Models.Article.Details;
 
 namespace archetypedata.infrastructure.WebPages
 {
@@ -78,15 +79,25 @@ namespace archetypedata.infrastructure.WebPages
             return archetypeWebPage.DocumentNode.SelectSingleNode("//span[@class='smw-table-furtherresults']/a")?.Attributes["href"].Value;
         }
 
-        public async Task<string> ArchetypeThumbnail(long articleId, string url)
+        public async Task<string> ArchetypeThumbnail(long articleId, string archetypeWebPageUrl)
         {
             var thumbNail = await _archetypeThumbnail.FromArticleId((int)articleId);
 
-            thumbNail = string.IsNullOrWhiteSpace(thumbNail)
-                ? _archetypeThumbnail.FromWebPage(url)
-                : thumbNail;
+            return ArchetypeThumbnail(thumbNail, archetypeWebPageUrl);
+        }
 
-            return thumbNail;
+        public string ArchetypeThumbnail(KeyValuePair<string, ExpandedArticle> articleDetails, string archetypeWebPageUrl)
+        {
+            var thumbNail = _archetypeThumbnail.FromArticleDetails(articleDetails);
+
+            return ArchetypeThumbnail(thumbNail, archetypeWebPageUrl);
+        }
+
+        public string ArchetypeThumbnail(string thumbNailUrl, string archetypeWebPageUrl)
+        {
+            return string.IsNullOrWhiteSpace(thumbNailUrl)
+                ? _archetypeThumbnail.FromWebPage(archetypeWebPageUrl)
+                : thumbNailUrl;
         }
     }
 }

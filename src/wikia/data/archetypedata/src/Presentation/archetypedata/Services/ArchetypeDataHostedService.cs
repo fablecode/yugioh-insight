@@ -56,16 +56,20 @@ namespace archetypedata.Services
                 Password = _rabbitMqOptions.Value.Password
             };
 
+            _factory.DispatchConsumersAsync = true;
+
             _connection = _factory.CreateConnection();
             _channel = _connection.CreateModel();
 
-            var consumer = new EventingBasicConsumer(_channel);
+            _channel.BasicQos(0, 1, false);
 
-            consumer.Received += async (model, ea) =>
+            var consumer = new AsyncEventingBasicConsumer(_channel);
+
+            consumer.Received += async (ch, ea) =>
             {
                 try
                 {
-                    var body = ea.Body;
+                    var body = ea.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);
 
                     var result = await _mediator.Send(new ArchetypeInformationConsumer { Message = message }, stoppingToken);
@@ -79,6 +83,8 @@ namespace archetypedata.Services
                     {
                         _channel.BasicNack(ea.DeliveryTag, false, false);
                     }
+
+                    await Task.Yield();
                 }
                 catch (Exception ex)
                 {
@@ -96,24 +102,30 @@ namespace archetypedata.Services
             return Task.CompletedTask;
         }
 
+
         #region private helper 
 
-        private void OnArchetypeArticleConsumerCancelled(object sender, ConsumerEventArgs e)
+        private Task OnArchetypeArticleConsumerCancelled(object sender, ConsumerEventArgs @event)
         {
             _logger.LogInformation($"Consumer '{ArchetypeArticleQueue}' Cancelled");
+            return Task.CompletedTask;
         }
 
-        private void OnArchetypeArticleConsumerUnregistered(object sender, ConsumerEventArgs e)
+        private Task OnArchetypeArticleConsumerUnregistered(object sender, ConsumerEventArgs @event)
         {
-            _logger.LogInformation($"Consumer '{ArchetypeArticleQueue}' Unregistered");}
+            _logger.LogInformation($"Consumer '{ArchetypeArticleQueue}' Unregistered");
+            return Task.CompletedTask;
+        }
 
-        private void OnArchetypeArticleConsumerRegistered(object sender, ConsumerEventArgs e)
+        private Task OnArchetypeArticleConsumerRegistered(object sender, ConsumerEventArgs @event)
         {
             _logger.LogInformation($"Consumer '{ArchetypeArticleQueue}' Registered");
+            return Task.CompletedTask;
         }
-        private void OnArchetypeArticleConsumerShutdown(object sender, ShutdownEventArgs e)
+        private Task OnArchetypeArticleConsumerShutdown(object sender, ShutdownEventArgs e)
         {
             _logger.LogInformation($"Consumer '{ArchetypeArticleQueue}' Shutdown");
+            return Task.CompletedTask;
         }
 
         #endregion

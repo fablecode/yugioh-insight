@@ -31,7 +31,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "archetypedata.infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "archetypedata.application", "Application\archetypedata.application\archetypedata.application.csproj", "{52B7D93F-B297-4383-A30F-97B20FDBE4E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypedata.application.unit.tests", "Tests\Unit\archetypedata.application.unit.tests\archetypedata.application.unit.tests.csproj", "{A379A801-2CB9-4A60-A71F-B359B291D8F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "archetypedata.application.unit.tests", "Tests\Unit\archetypedata.application.unit.tests\archetypedata.application.unit.tests.csproj", "{A379A801-2CB9-4A60-A71F-B359B291D8F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypedata.infrastructure.unit.tests", "Tests\Unit\archetypedata.infrastructure.unit.tests\archetypedata.infrastructure.unit.tests.csproj", "{45DE39F2-582C-4A39-997D-AF10AEDB1080}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{9DAB7022-6299-4B8F-A51E-7D28852E2888}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "archetypedata.infrastructure.integration.tests", "Tests\Integration\archetypedata.infrastructure.integration.tests\archetypedata.infrastructure.integration.tests.csproj", "{1B6BCA37-68C5-4F95-BA1B-361DF5BE0B33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +77,14 @@ Global
 		{A379A801-2CB9-4A60-A71F-B359B291D8F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A379A801-2CB9-4A60-A71F-B359B291D8F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A379A801-2CB9-4A60-A71F-B359B291D8F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45DE39F2-582C-4A39-997D-AF10AEDB1080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45DE39F2-582C-4A39-997D-AF10AEDB1080}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45DE39F2-582C-4A39-997D-AF10AEDB1080}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45DE39F2-582C-4A39-997D-AF10AEDB1080}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B6BCA37-68C5-4F95-BA1B-361DF5BE0B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B6BCA37-68C5-4F95-BA1B-361DF5BE0B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B6BCA37-68C5-4F95-BA1B-361DF5BE0B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B6BCA37-68C5-4F95-BA1B-361DF5BE0B33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +99,9 @@ Global
 		{DF2FE7E7-D6FE-47F0-A1C2-40D606954E29} = {7CF9BBE2-8759-4E52-87B4-B8F3B694E801}
 		{52B7D93F-B297-4383-A30F-97B20FDBE4E7} = {BE9F023B-DC12-4760-954F-89EACB0CA41C}
 		{A379A801-2CB9-4A60-A71F-B359B291D8F9} = {A9A718E2-00A1-490A-A280-CD15AC747D38}
+		{45DE39F2-582C-4A39-997D-AF10AEDB1080} = {A9A718E2-00A1-490A-A280-CD15AC747D38}
+		{9DAB7022-6299-4B8F-A51E-7D28852E2888} = {1C1E8B55-FC74-423A-8EA0-FD9096CAA4C1}
+		{1B6BCA37-68C5-4F95-BA1B-361DF5BE0B33} = {9DAB7022-6299-4B8F-A51E-7D28852E2888}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D9EFAEF2-FF3D-413A-AF5D-9F1B20F4975A}

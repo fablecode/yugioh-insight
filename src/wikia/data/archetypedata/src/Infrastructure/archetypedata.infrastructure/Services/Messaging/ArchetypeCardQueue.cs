@@ -5,6 +5,7 @@ using archetypedata.application.Configuration;
 using archetypedata.core.Models;
 using archetypedata.domain.Services.Messaging;
 using archetypedata.infrastructure.Services.Messaging.Constants;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -13,10 +14,12 @@ namespace archetypedata.infrastructure.Services.Messaging
 {
     public class ArchetypeCardQueue : IQueue<ArchetypeCard>
     {
+        private readonly ILogger<ArchetypeQueue> _logger;
         private readonly IOptions<RabbitMqSettings> _rabbitMqConfig;
 
-        public ArchetypeCardQueue(IOptions<RabbitMqSettings> rabbitMqConfig)
+        public ArchetypeCardQueue(ILogger<ArchetypeQueue> logger, IOptions<RabbitMqSettings> rabbitMqConfig)
         {
+            _logger = logger;
             _rabbitMqConfig = rabbitMqConfig;
         }
 
@@ -51,7 +54,7 @@ namespace archetypedata.infrastructure.Services.Messaging
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                _logger.LogError("Unable to send Archetype Card message to queue '{ArchetypeCardMessage}'. Exception: {Exception}", message, ex);
                 throw;
             }
 

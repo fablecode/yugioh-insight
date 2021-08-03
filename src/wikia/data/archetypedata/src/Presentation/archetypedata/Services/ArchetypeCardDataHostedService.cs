@@ -60,7 +60,7 @@ namespace archetypedata.Services
             {
                 try
                 {
-                    var body = ea.Body;
+                    var body = ea.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);
 
                     var result = await _mediator.Send(new ArchetypeCardInformationConsumer { Message = message }, stoppingToken);

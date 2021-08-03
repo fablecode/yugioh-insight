@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using archetypedata.application.Configuration;
 using archetypedata.domain.Helpers;
 using archetypedata.domain.WebPages;
 using Microsoft.Extensions.Options;
 using wikia.Api;
+using wikia.Models.Article.Details;
 
 namespace archetypedata.infrastructure.WebPages
 {
@@ -26,7 +28,12 @@ namespace archetypedata.infrastructure.WebPages
             var profileDetailsList = await _wikiArticle.Details(articleId);
             var profileDetails = profileDetailsList.Items.First();
 
-            return ImageHelper.ExtractImageUrl(profileDetails.Value.Thumbnail);
+            return FromArticleDetails(profileDetails);
+        }
+
+        public string FromArticleDetails(KeyValuePair<string, ExpandedArticle> articleDetails)
+        {
+            return ImageHelper.ExtractImageUrl(articleDetails.Value.Thumbnail);
         }
 
         public string FromWebPage(string url)

@@ -54,7 +54,26 @@ namespace archetypedata.domain.unit.tests.ArchetypeProcessorTests
         }
 
         [Test]
-        public async Task Given_A_Valid_Article_If_The_Title_Should_Not_Invoke_ArchetypeThumbnail_Method()
+        public async Task Given_A_Valid_Article_If_The_Title_Equals_Archetype_Should_Not_Invoke_WikiaArticle_Details_Method()
+        {
+            // Arrange
+            var article = new Article
+            {
+                CorrelationId = Guid.NewGuid(),
+                Id = 909890,
+                Title = "Archetype",
+                Url = "http://yugioh.wikia.com/wiki/Blue-Eyes"
+            };
+
+            // Act
+            await _sut.Process(article);
+
+            // Assert
+            await _wikiArticle.DidNotReceive().Details(Arg.Any<int>());
+        }
+
+        [Test]
+        public async Task Given_A_Valid_Article_If_The_Title_Equals_Archetype_Should_Not_Invoke_ArchetypeThumbnail_Method()
         {
             // Arrange
             var article = new Article
@@ -73,7 +92,7 @@ namespace archetypedata.domain.unit.tests.ArchetypeProcessorTests
         }
 
         [Test]
-        public async Task Given_A_Valid_Article_If_The_Title_Should_Not_Invoke_Publish_Method()
+        public async Task Given_A_Valid_Article_If_The_Title_Equals_Archetype_Should_Not_Invoke_Publish_Method()
         {
             // Arrange
             var article = new Article
@@ -107,7 +126,7 @@ namespace archetypedata.domain.unit.tests.ArchetypeProcessorTests
             {
                 Items = new Dictionary<string, ExpandedArticle>
                 {
-                    ["690148"] = new ExpandedArticle
+                    ["690148"] = new()
                     {
                         Revision = new Revision {Timestamp = 1563318260}
                     }
@@ -119,6 +138,37 @@ namespace archetypedata.domain.unit.tests.ArchetypeProcessorTests
 
             // Assert
             result.IsSuccessful.Should().BeTrue();
+        }
+
+        [Test]
+        public async Task Given_A_Valid_Article_Should_Invoke_WikiaArticle_Details_Once()
+        {
+            // Arrange
+            var article = new Article
+            {
+                CorrelationId = Guid.NewGuid(),
+                Id = 909890,
+                Title = "Blue-Eyes",
+                Url = "http://yugioh.wikia.com/wiki/Blue-Eyes"
+            };
+
+            _wikiArticle.Details(Arg.Any<int>()).Returns(new ExpandedArticleResultSet
+            {
+                Items = new Dictionary<string, ExpandedArticle>
+                {
+                    ["690148"] = new()
+                    {
+                        Revision = new Revision { Timestamp = 1563318260 }
+                    }
+                }
+            });
+
+
+            // Act
+            await _sut.Process(article);
+
+            // Assert
+            await _wikiArticle.Received(1).Details(Arg.Any<int>());
         }
 
         [Test]
@@ -137,7 +187,7 @@ namespace archetypedata.domain.unit.tests.ArchetypeProcessorTests
             {
                 Items = new Dictionary<string, ExpandedArticle>
                 {
-                    ["690148"] = new ExpandedArticle
+                    ["690148"] = new()
                     {
                         Revision = new Revision { Timestamp = 1563318260 }
                     }
@@ -149,7 +199,7 @@ namespace archetypedata.domain.unit.tests.ArchetypeProcessorTests
             await _sut.Process(article);
 
             // Assert
-            await _archetypeWebPage.Received(1).ArchetypeThumbnail(Arg.Any<long>(), Arg.Any<string>());
+            _archetypeWebPage.Received(1).ArchetypeThumbnail(Arg.Any<KeyValuePair<string, ExpandedArticle>>(), Arg.Any<string>());
         }
 
         [Test]

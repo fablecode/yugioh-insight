@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
+using archetypedata.Services;
 
 namespace archetypedata
 {
@@ -47,9 +48,11 @@ namespace archetypedata
                     services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
 
                     // hosted service
-                    //services.AddHostedService<ArchetypeDataHostedService>();
+                    services.AddHostedService<ArchetypeDataHostedService>();
                     //services.AddHostedService<ArchetypeCardDataHostedService>();
                     //services.AddHostedService<ArchetypeSupportCardDataHostedService>();
+
+                    services.AddHttpClient();
 
                     services.AddApplicationServices();
                     services.AddInfrastructureServices();
