@@ -1,7 +1,8 @@
 ﻿using archetypedata.application.Configuration;
-using archetypedata.application.MessageConsumers.ArchetypeInformation;
+using archetypedata.application.MessageConsumers.ArchetypeCardInformation;
 using MediatR;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -10,35 +11,29 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace archetypedata.Services
 {
-    public sealed class ArchetypeDataHostedService : BackgroundService
+    public sealed class ArchetypeCardDataHostedService : BackgroundService
     {
-        private const string ArchetypeArticleQueue = "archetype-article";
+        private const string ArchetypeCardArticleQueue = "archetype-cards-article";
 
-        public IServiceProvider Services { get; }
-
-        private readonly ILogger<ArchetypeDataHostedService> _logger;
+        private readonly ILogger<ArchetypeCardDataHostedService> _logger;
         private readonly IOptions<RabbitMqSettings> _rabbitMqOptions;
         private readonly IOptions<AppSettings> _appSettingsOptions;
         private readonly IMediator _mediator;
-
         private ConnectionFactory _factory;
         private IConnection _connection;
         private IModel _channel;
 
-        public ArchetypeDataHostedService
+        public ArchetypeCardDataHostedService
         (
-            ILogger<ArchetypeDataHostedService> logger,
-            IServiceProvider services, 
+            ILogger<ArchetypeCardDataHostedService> logger,
             IOptions<RabbitMqSettings> rabbitMqOptions,
             IOptions<AppSettings> appSettingsOptions,
             IMediator mediator
         )
         {
-            Services = services;
             _logger = logger;
             _rabbitMqOptions = rabbitMqOptions;
             _appSettingsOptions = appSettingsOptions;
@@ -51,8 +46,8 @@ namespace archetypedata.Services
 
             _factory = new ConnectionFactory()
             {
-                HostName = _rabbitMqOptions.Value.Host, 
-                UserName = _rabbitMqOptions.Value.Username, 
+                HostName = _rabbitMqOptions.Value.Host,
+                UserName = _rabbitMqOptions.Value.Username,
                 Password = _rabbitMqOptions.Value.Password
             };
 
@@ -68,7 +63,7 @@ namespace archetypedata.Services
                     var body = ea.Body;
                     var message = Encoding.UTF8.GetString(body);
 
-                    var result = await _mediator.Send(new ArchetypeInformationConsumer { Message = message }, stoppingToken);
+                    var result = await _mediator.Send(new ArchetypeCardInformationConsumer { Message = message }, stoppingToken);
 
 
                     if (result.IsSuccessful)
@@ -82,38 +77,39 @@ namespace archetypedata.Services
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError("RabbitMq Consumer: " + ArchetypeArticleQueue + " exception. Exception: {@Exception}", ex);
+                    _logger.LogError("RabbitMq Consumer: " + ArchetypeCardArticleQueue + " exception. Exception: {@Exception}", ex);
                 }
             };
 
-            consumer.Shutdown += OnArchetypeArticleConsumerShutdown;
-            consumer.Registered += OnArchetypeArticleConsumerRegistered;
-            consumer.Unregistered += OnArchetypeArticleConsumerUnregistered;
-            consumer.ConsumerCancelled += OnArchetypeArticleConsumerCancelled;
+            consumer.Shutdown += OnArchetypeCardArticleConsumerShutdown;
+            consumer.Registered += OnArchetypeCardArticleConsumerRegistered;
+            consumer.Unregistered += OnArchetypeCardArticleConsumerUnregistered;
+            consumer.ConsumerCancelled += OnArchetypeCardArticleConsumerCancelled;
 
-            _channel.BasicConsume(ArchetypeArticleQueue, false, consumer);
+            _channel.BasicConsume(ArchetypeCardArticleQueue, false, consumer);
 
             return Task.CompletedTask;
         }
 
-        #region private helper 
+        #region private helper
 
-        private void OnArchetypeArticleConsumerCancelled(object sender, ConsumerEventArgs e)
+        private void OnArchetypeCardArticleConsumerCancelled(object sender, ConsumerEventArgs e)
         {
-            _logger.LogInformation($"Consumer '{ArchetypeArticleQueue}' Cancelled");
+            _logger.LogInformation("Consumer '{ArchetypeCardArticleQueue}' Cancelled", ArchetypeCardArticleQueue);
         }
 
-        private void OnArchetypeArticleConsumerUnregistered(object sender, ConsumerEventArgs e)
+        private void OnArchetypeCardArticleConsumerUnregistered(object sender, ConsumerEventArgs e)
         {
-            _logger.LogInformation($"Consumer '{ArchetypeArticleQueue}' Unregistered");}
-
-        private void OnArchetypeArticleConsumerRegistered(object sender, ConsumerEventArgs e)
-        {
-            _logger.LogInformation($"Consumer '{ArchetypeArticleQueue}' Registered");
+            _logger.LogInformation("Consumer '{ArchetypeCardArticleQueue}' Unregistered", ArchetypeCardArticleQueue);
         }
-        private void OnArchetypeArticleConsumerShutdown(object sender, ShutdownEventArgs e)
+
+        private void OnArchetypeCardArticleConsumerRegistered(object sender, ConsumerEventArgs e)
         {
-            _logger.LogInformation($"Consumer '{ArchetypeArticleQueue}' Shutdown");
+            _logger.LogInformation("Consumer '{ArchetypeCardArticleQueue}' Registered", ArchetypeCardArticleQueue);
+        }
+        private void OnArchetypeCardArticleConsumerShutdown(object sender, ShutdownEventArgs e)
+        {
+            _logger.LogInformation("Consumer '{ArchetypeCardArticleQueue}' Shutdown", ArchetypeCardArticleQueue);
         }
 
         #endregion
