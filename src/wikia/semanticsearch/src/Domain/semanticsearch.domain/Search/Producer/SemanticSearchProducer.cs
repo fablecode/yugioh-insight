@@ -2,8 +2,7 @@
 using semanticsearch.core.Search;
 using semanticsearch.domain.WebPage;
 using System;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
+using System.Collections.Generic;
 
 namespace semanticsearch.domain.Search.Producer
 {
@@ -18,13 +17,10 @@ namespace semanticsearch.domain.Search.Producer
             _semanticCardSearchResults = semanticCardSearchResults;
         }
 
-        public async Task Producer(string url, ITargetBlock<SemanticCard> targetBlock)
+        public IEnumerable<SemanticCard> Producer(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
                 throw new ArgumentException(nameof(url));
-
-            if (targetBlock == null)
-                throw new ArgumentException(nameof(targetBlock));
 
             var nextPageUrl = url;
 
@@ -43,7 +39,7 @@ namespace semanticsearch.domain.Search.Producer
 
                     if (!string.IsNullOrWhiteSpace(semanticCard.Title) && !string.IsNullOrWhiteSpace(semanticCard.Url))
                     {
-                        await targetBlock.SendAsync(semanticCard);
+                        yield return semanticCard;
                     }
                 }
 
@@ -53,9 +49,6 @@ namespace semanticsearch.domain.Search.Producer
                 }
 
             } while (_semanticSearchResults.HasNextPage);
-
-            // Signals no more messages to produced or accepted.
-            targetBlock.Complete();
         }
     }
 }

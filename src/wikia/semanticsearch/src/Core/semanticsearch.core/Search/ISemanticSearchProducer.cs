@@ -1,11 +1,10 @@
-﻿using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
-using semanticsearch.core.Model;
+﻿using semanticsearch.core.Model;
+using System.Collections.Generic;
 
 namespace semanticsearch.core.Search
 {
     public interface ISemanticSearchProducer
     {
-        Task Producer(string url, ITargetBlock<SemanticCard> targetBlock);
+        IEnumerable<SemanticCard> Producer(string url);
     }
 }

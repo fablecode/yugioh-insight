@@ -8,6 +8,7 @@ using semanticsearch.core.Search;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using semanticsearch.tests.core;
 
 namespace semanticsearch.application.unit.tests.ScheduledTasksTests.CardSearchTests
@@ -28,6 +29,7 @@ namespace semanticsearch.application.unit.tests.ScheduledTasksTests.CardSearchTe
 
             _sut = new SemanticSearchCardTaskHandler
             (
+                Substitute.For<ILogger<SemanticSearchCardTaskHandler>>(),
                 _appSettingsOptions, 
                 _semanticSearchProcessor
             );
