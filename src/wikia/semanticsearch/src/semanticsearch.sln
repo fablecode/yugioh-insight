@@ -3,9 +3,88 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Core", "1. Core", "{1D4F2123-35F1-430C-83BA-E7B876E90A82}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.core", "Core\semanticsearch.core\semanticsearch.core.csproj", "{00F35A77-E9D9-43A0-8DC6-DF73A360202C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domain", "2. Domain", "{F59FC8C1-63BB-4A32-9580-FDA383769253}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.domain", "Domain\semanticsearch.domain\semanticsearch.domain.csproj", "{578F0B04-5BC0-4289-AC8E-CCD3A0DC1CC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Application", "3. Application", "{E13FFFF6-1881-49DE-BBF8-A740B400742F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.application", "Application\semanticsearch.application\semanticsearch.application.csproj", "{6C0A885C-5C45-4066-8F05-FC353181BC64}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Infrastructure", "4. Infrastructure", "{8BD641DE-F45E-41C4-A719-E4F20C8F9DFB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Presentation", "5. Presentation", "{594F5842-EB7C-4887-9F7F-018DB9E37488}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.card", "Presentation\semanticsearch.card\semanticsearch.card.csproj", "{811ED0DA-02FA-4513-824A-5735220AE099}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Tests", "6. Tests", "{E63D63AB-A2CB-4622-9BC1-6A44948F4688}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{DC4FF79E-353D-4E27-BF74-E51AA6E31513}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.application.unit.tests", "Tests\Unit\semanticsearch.application.unit.tests\semanticsearch.application.unit.tests.csproj", "{47F145A6-8126-419A-997E-50AF2DE4D23D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.domain.unit.tests", "Tests\Unit\semanticsearch.domain.unit.tests\semanticsearch.domain.unit.tests.csproj", "{7EC655E3-5BD4-4625-80D0-BDBAC07DBB91}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.tests.core", "Tests\semanticsearch.tests.core\semanticsearch.tests.core.csproj", "{E206D222-C0D3-4804-AE9F-8053AA26F6A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semanticsearch.infrastructure", "Infrastructure\semanticsearch.infrastructure\semanticsearch.infrastructure.csproj", "{2CB79853-E2B7-4F9C-B32A-FF36CF7D182A}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00F35A77-E9D9-43A0-8DC6-DF73A360202C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00F35A77-E9D9-43A0-8DC6-DF73A360202C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00F35A77-E9D9-43A0-8DC6-DF73A360202C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00F35A77-E9D9-43A0-8DC6-DF73A360202C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{578F0B04-5BC0-4289-AC8E-CCD3A0DC1CC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{578F0B04-5BC0-4289-AC8E-CCD3A0DC1CC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{578F0B04-5BC0-4289-AC8E-CCD3A0DC1CC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{578F0B04-5BC0-4289-AC8E-CCD3A0DC1CC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C0A885C-5C45-4066-8F05-FC353181BC64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C0A885C-5C45-4066-8F05-FC353181BC64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C0A885C-5C45-4066-8F05-FC353181BC64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C0A885C-5C45-4066-8F05-FC353181BC64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{811ED0DA-02FA-4513-824A-5735220AE099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{811ED0DA-02FA-4513-824A-5735220AE099}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{811ED0DA-02FA-4513-824A-5735220AE099}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{811ED0DA-02FA-4513-824A-5735220AE099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47F145A6-8126-419A-997E-50AF2DE4D23D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47F145A6-8126-419A-997E-50AF2DE4D23D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47F145A6-8126-419A-997E-50AF2DE4D23D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47F145A6-8126-419A-997E-50AF2DE4D23D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EC655E3-5BD4-4625-80D0-BDBAC07DBB91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EC655E3-5BD4-4625-80D0-BDBAC07DBB91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EC655E3-5BD4-4625-80D0-BDBAC07DBB91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EC655E3-5BD4-4625-80D0-BDBAC07DBB91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E206D222-C0D3-4804-AE9F-8053AA26F6A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E206D222-C0D3-4804-AE9F-8053AA26F6A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E206D222-C0D3-4804-AE9F-8053AA26F6A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E206D222-C0D3-4804-AE9F-8053AA26F6A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CB79853-E2B7-4F9C-B32A-FF36CF7D182A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CB79853-E2B7-4F9C-B32A-FF36CF7D182A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB79853-E2B7-4F9C-B32A-FF36CF7D182A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CB79853-E2B7-4F9C-B32A-FF36CF7D182A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{00F35A77-E9D9-43A0-8DC6-DF73A360202C} = {1D4F2123-35F1-430C-83BA-E7B876E90A82}
+		{578F0B04-5BC0-4289-AC8E-CCD3A0DC1CC5} = {F59FC8C1-63BB-4A32-9580-FDA383769253}
+		{6C0A885C-5C45-4066-8F05-FC353181BC64} = {E13FFFF6-1881-49DE-BBF8-A740B400742F}
+		{811ED0DA-02FA-4513-824A-5735220AE099} = {594F5842-EB7C-4887-9F7F-018DB9E37488}
+		{DC4FF79E-353D-4E27-BF74-E51AA6E31513} = {E63D63AB-A2CB-4622-9BC1-6A44948F4688}
+		{47F145A6-8126-419A-997E-50AF2DE4D23D} = {DC4FF79E-353D-4E27-BF74-E51AA6E31513}
+		{7EC655E3-5BD4-4625-80D0-BDBAC07DBB91} = {DC4FF79E-353D-4E27-BF74-E51AA6E31513}
+		{E206D222-C0D3-4804-AE9F-8053AA26F6A2} = {E63D63AB-A2CB-4622-9BC1-6A44948F4688}
+		{2CB79853-E2B7-4F9C-B32A-FF36CF7D182A} = {8BD641DE-F45E-41C4-A719-E4F20C8F9DFB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {14E97D5E-1613-4A78-A143-A153F534E62E}

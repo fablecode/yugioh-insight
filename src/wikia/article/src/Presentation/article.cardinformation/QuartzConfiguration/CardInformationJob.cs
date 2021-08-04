@@ -22,12 +22,6 @@ namespace article.cardinformation.QuartzConfiguration
         }
         public async Task Execute(IJobExecutionContext context)
         {
-            //const int pageSize = 500;
-            //const string tcgCards = "TCG cards";
-            //const string ocgCards = "OCG cards";
-
-            //var categories = new List<string> { tcgCards, ocgCards };
-
             var result = await _mediator.Send(new ArticleInformationTask { Category = _options.Value.Category, PageSize = _options.Value.PageSize });
 
             _logger.LogInformation("Finished processing '{Category}' category.", _options.Value.Category);
