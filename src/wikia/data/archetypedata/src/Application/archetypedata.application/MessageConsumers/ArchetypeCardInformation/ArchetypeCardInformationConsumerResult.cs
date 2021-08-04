@@ -7,8 +7,6 @@ namespace archetypedata.application.MessageConsumers.ArchetypeCardInformation
     {
         public bool IsSuccessful => !Errors.Any();
 
-        public string Message { get; set; }
-
         public List<string> Errors { get; set; } = new List<string>();
     }
 }

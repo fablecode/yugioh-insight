@@ -48,9 +48,9 @@ namespace archetypedata
                     services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection(nameof(RabbitMqSettings)));
 
                     // hosted service
-                    //services.AddHostedService<ArchetypeDataHostedService>();
+                    services.AddHostedService<ArchetypeDataHostedService>();
                     services.AddHostedService<ArchetypeCardDataHostedService>();
-                    //services.AddHostedService<ArchetypeSupportCardDataHostedService>();
+                    services.AddHostedService<ArchetypeSupportCardDataHostedService>();
 
                     services.AddHttpClient();
 

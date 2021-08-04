@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using archetypedata.application.MessageConsumers.ArchetypeInformation;
 using archetypedata.core.Models;
 using archetypedata.core.Processor;
@@ -11,6 +8,10 @@ using FluentValidation;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using NSubstitute.ExceptionExtensions;
 
 namespace archetypedata.application.unit.tests
 {
@@ -123,6 +124,28 @@ namespace archetypedata.application.unit.tests
 
             // Assert
             result.Errors.Should().NotBeNullOrEmpty();
+        }
+
+        [Test]
+        public async Task Given_A_Valid_ArchetypeInformationConsumer_If_Process_Method_Throws_Exception_Should_Invoke_LogError()
+        {
+            // Arrange
+            const int expected = 1;
+            var archetypeInformationConsumer = new ArchetypeInformationConsumer
+            {
+                Message = "{\"Id\":703544,\"CorrelationId\":\"3e2bf3ca-d903-440c-8cd5-be61c95ae1fc\",\"Title\":\"Tenyi\",\"Url\":\"https://yugioh.fandom.com/wiki/Tenyi\"}"
+            };
+
+            _validator.Validate(Arg.Any<ArchetypeInformationConsumer>())
+                .Returns(new ArchetypeInformationConsumerValidator().Validate(archetypeInformationConsumer));
+
+            _archetypeProcessor.Process(Arg.Any<Article>()).Throws<ArgumentNullException>();
+
+            // Act
+            await _sut.Handle(archetypeInformationConsumer, CancellationToken.None);
+
+            // Assert
+            _logger.Received(expected).Log(LogLevel.Error, Arg.Any<EventId>(), Arg.Any<object>(), Arg.Any<Exception>(), Arg.Any<Func<object, Exception, string>>());
         }
     }
 }

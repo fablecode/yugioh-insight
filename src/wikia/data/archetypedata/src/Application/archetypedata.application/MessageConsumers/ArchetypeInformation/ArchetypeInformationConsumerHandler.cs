@@ -52,7 +52,10 @@ namespace archetypedata.application.MessageConsumers.ArchetypeInformation
             catch (System.Exception ex)
             {
                 archetypeInformationConsumerResult.Errors.Add(ex.Message);
-                _logger.LogError("Processing archetype '{@Exception}'", ex);
+
+                var archetypeArticle = JsonConvert.DeserializeObject<Article>(request.Message);
+
+                _logger.LogError("Processing archetype '{Archetype}' '{Exception}'", archetypeArticle);
             }
 
             return archetypeInformationConsumerResult;

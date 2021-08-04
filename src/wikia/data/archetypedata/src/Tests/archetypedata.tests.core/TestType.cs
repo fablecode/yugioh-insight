@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace archetypedata.tests.core
+﻿namespace archetypedata.tests.core
 {
     public static class TestType
     {

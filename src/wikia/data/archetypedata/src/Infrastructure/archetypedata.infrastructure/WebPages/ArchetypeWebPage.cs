@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using archetypedata.application.Configuration;
 using archetypedata.domain.WebPages;
 using HtmlAgilityPack;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using wikia.Models.Article.Details;
 
@@ -48,7 +50,9 @@ namespace archetypedata.infrastructure.WebPages
                 if (!furtherResultsUrl.Contains("http"))
                     furtherResultsUrl = _appsettingsOptions.Value.WikiaDomainUrl + furtherResultsUrl;
 
-                cardList.UnionWith(CardsFromFurtherResultsUrl(furtherResultsUrl));
+                var cardsFromFurtherResultsUrl = CardsFromFurtherResultsUrl(furtherResultsUrl);
+
+                cardList.UnionWith(cardsFromFurtherResultsUrl);
             }
 
             return cardList;
@@ -58,15 +62,21 @@ namespace archetypedata.infrastructure.WebPages
         {
             var cardList = new HashSet<string>();
 
-            // change result set to 500
-            var newUrl = furtherResultsUrl.Replace("limit%3D50", "limit%3D500");
+            var uri = new Uri(furtherResultsUrl);
+            var baseUri = uri.GetComponents(UriComponents.Scheme | UriComponents.Host | UriComponents.Port | UriComponents.Path, UriFormat.UriEscaped);
+            var query = QueryHelpers.ParseQuery(uri.Query);
+            var items = query.SelectMany(x => x.Value, (col, value) => new KeyValuePair<string, string>(col.Key, value)).ToDictionary(x => x.Key, x => x.Value);
+            
+            items["limit"] = "500";
+            items["offset"] = "0";
 
-            // sematic search page
+            var qb = new QueryBuilder(items);
+
+            var newUrl = baseUri + qb.ToQueryString();
+
             var sematicSearchPage = _htmlWebPage.Load(newUrl);
 
-            var cardNameList =
-                sematicSearchPage.DocumentNode.SelectNodes(
-                    "//*[@id='result']/table/tbody/tr/td[1]/a");
+            var cardNameList = sematicSearchPage.DocumentNode.SelectNodes("//*[@id='result']/table/tbody/tr/td[1]/a");
 
             if (cardNameList != null)
                 cardList.UnionWith(cardNameList.Select(cn => cn.InnerText));

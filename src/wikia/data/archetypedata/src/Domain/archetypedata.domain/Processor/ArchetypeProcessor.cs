@@ -1,11 +1,10 @@
 ﻿using archetypedata.core.Models;
-using archetypedata.domain.Helpers;
+using archetypedata.core.Processor;
 using archetypedata.domain.Services.Messaging;
 using archetypedata.domain.WebPages;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using archetypedata.core.Processor;
 using wikia.Api;
 
 namespace archetypedata.domain.Processor
