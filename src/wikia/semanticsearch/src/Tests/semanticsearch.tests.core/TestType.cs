@@ -1,9 +1,8 @@
-﻿using System;
-
-namespace semanticsearch.tests.core
+﻿namespace semanticsearch.tests.core
 {
     public static class TestType
     {
         public const string Unit = "Unit";
+        public const string Integration = "Integration";
     }
 }

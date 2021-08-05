@@ -22,7 +22,13 @@ namespace semanticsearch.infrastructure.Messaging.Exchanges
         {
             var messageBodyBytes = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(semanticCard));
 
-            var factory = new ConnectionFactory() { HostName = _rabbitMqConfig.Value.Host, Port = _rabbitMqConfig.Value.Port};
+            var factory = new ConnectionFactory()
+            {
+                HostName = _rabbitMqConfig.Value.Host, 
+                Port = _rabbitMqConfig.Value.Port,
+                UserName = _rabbitMqConfig.Value.Username,
+                Password = _rabbitMqConfig.Value.Password
+            };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {

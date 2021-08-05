@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using semanticsearch.domain.Messaging.Exchanges;
 using semanticsearch.domain.WebPage;
 using semanticsearch.infrastructure.Messaging.Exchanges;

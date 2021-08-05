@@ -25,10 +25,11 @@ namespace semanticsearch.infrastructure.WebPage
         public HtmlNodeCollection TableRows =>
             _currentWebPage
                 .DocumentNode
-                .SelectNodes("//table[@class='sortable wikitable smwtable']/tbody/tr") ?? _currentWebPage.DocumentNode.SelectNodes("//table[@class='sortable wikitable smwtable card-list']/tbody/tr");
+                .SelectNodes("//table[contains(@class, 'sortable wikitable smwtable')]/tbody/tr") ?? _currentWebPage.DocumentNode.SelectNodes("//table[contains(@class, 'sortable wikitable smwtable card-list')]/tbody/tr");
 
         public bool HasNextPage => NextPage != null;
-        public HtmlNode NextPage => _currentWebPage.DocumentNode.SelectSingleNode("//a[contains(text(), 'Next')]");
+
+        public HtmlNode NextPage => _currentWebPage.DocumentNode.SelectSingleNode("//a[contains(text(), 'next') and contains(@title, 'Next 500 results')]");
         public string NextPageLink()
         {
             var hrefLink = $"{CurrentWebPageUri.GetLeftPart(UriPartial.Authority)}{NextPage.Attributes["href"].Value}";

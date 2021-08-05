@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using semanticsearch.core.Exceptions;
-using semanticsearch.core.Search;
+﻿using semanticsearch.core.Exceptions;
+using System.Collections.Generic;
 
 namespace semanticsearch.core.Model
 {
@@ -12,6 +11,6 @@ namespace semanticsearch.core.Model
 
         public int Processed { get; set; }
 
-        public List<SemanticCardPublishException> Failed { get; set; } = new List<SemanticCardPublishException>();
+        public List<SemanticCardPublishException> Failed { get; set; } = new();
     }
 }

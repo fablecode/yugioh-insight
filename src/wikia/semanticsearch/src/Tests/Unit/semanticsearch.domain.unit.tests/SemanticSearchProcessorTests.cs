@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using semanticsearch.core.Exceptions;
@@ -10,6 +6,10 @@ using semanticsearch.core.Model;
 using semanticsearch.core.Search;
 using semanticsearch.domain.Search;
 using semanticsearch.tests.core;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace semanticsearch.domain.unit.tests
 {
@@ -27,7 +27,7 @@ namespace semanticsearch.domain.unit.tests
             _semanticSearchProducer = Substitute.For<ISemanticSearchProducer>();
             _semanticSearchConsumer = Substitute.For<ISemanticSearchConsumer>();
 
-            _sut = new SemanticSearchProcessor(_semanticSearchProducer, _semanticSearchConsumer);
+            _sut = new SemanticSearchProcessor(Substitute.For<ILogger<SemanticSearchProcessor>>(), _semanticSearchProducer, _semanticSearchConsumer);
         }
 
         [Test]
@@ -173,18 +173,6 @@ namespace semanticsearch.domain.unit.tests
         {
             // Arrange
             const string url = "http://yugioh.fandom.com/index.php?title=Special%3AAsk&q=%5B%5BClass+1%3A%3AOfficial%5D%5D+%5B%5BCard+type%3A%3ANormal+Monster%5D%5D";
-            _semanticSearchConsumer.Process(Arg.Any<SemanticCard>()).Returns
-            (
-                new SemanticCardPublishResult
-                {
-                    Card = new SemanticCard(),
-                    IsSuccessful = true
-                },
-                new SemanticCardPublishResult
-                {
-                    Card = new SemanticCard()
-                }
-            );
 
             // Act
             var result = await _sut.ProcessUrl(url);

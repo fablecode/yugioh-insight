@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 using semanticsearch.core.Model;
@@ -21,7 +22,7 @@ namespace semanticsearch.domain.unit.tests.SemanticSearchConsumerTests
         {
             _articleHeaderExchange = Substitute.For<IArticleHeaderExchange>();
 
-            _sut = new SemanticSearchConsumer(_articleHeaderExchange);
+            _sut = new SemanticSearchConsumer(Substitute.For<ILogger<SemanticSearchConsumer>>(), _articleHeaderExchange);
         }
 
         [Test]
