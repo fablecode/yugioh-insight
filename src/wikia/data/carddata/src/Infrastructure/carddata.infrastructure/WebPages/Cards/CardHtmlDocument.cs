@@ -126,7 +126,7 @@ namespace carddata.infrastructure.WebPages.Cards
 
         private static HtmlNode ExtractHtmlCardTableNode(HtmlDocument htmlDocument)
         {
-            return htmlDocument.DocumentNode.SelectSingleNode("//div[@id='WikiaArticle']//table[contains(@class, 'cardtable')]");
+            return htmlDocument.DocumentNode.SelectSingleNode("//table[contains(@class, 'cardtable')]");
         }
 
         private string ExtractHtmlCardTableValue(string key, HtmlDocument htmlDocument)

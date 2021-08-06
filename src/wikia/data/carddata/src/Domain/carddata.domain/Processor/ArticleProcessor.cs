@@ -21,10 +21,7 @@ namespace carddata.domain.Processor
 
         public async Task<ArticleConsumerResult> Process(Article article)
         {
-            var articleJson = JsonConvert.SerializeObject(article);
-
-            var response = new ArticleConsumerResult();
-            response.Article = articleJson;
+            var response = new ArticleConsumerResult {Article = article};
 
             try
             {
@@ -43,8 +40,8 @@ namespace carddata.domain.Processor
             }
             catch (Exception ex )
             {
-                _logger.LogError(article.Title + " error. Exception: {@Exception}", ex);
-               response.Failed = new ArticleException { Article = articleJson, Exception = ex };
+                _logger.LogError(" {ArticleTitle} error. Exception: {@Exception}, Article: {Article}", article.Title, ex, article);
+               response.Failed = new ArticleException { Article = article, Exception = ex };
             }
 
             return response;

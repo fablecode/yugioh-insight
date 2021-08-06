@@ -1,4 +1,8 @@
-﻿using carddata.application.Configuration;
+﻿using System;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using carddata.application.Configuration;
 using carddata.application.MessageConsumers.CardInformation;
 using MediatR;
 using Microsoft.Extensions.Hosting;
@@ -6,16 +10,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using Serilog;
 
 namespace carddata.Services
 {
-    public sealed class CardDataHostedService : BackgroundService
+    public sealed class SemanticCardDataHostedService : BackgroundService
     {
-        private readonly ILogger<CardDataHostedService> _logger;
+        private readonly ILogger<SemanticCardDataHostedService> _logger;
         private readonly IOptions<RabbitMqSettings> _rabbitMqOptions;
         private readonly IMediator _mediator;
 
@@ -23,9 +24,9 @@ namespace carddata.Services
         private IConnection _connection;
         private IModel _channel;
 
-        public CardDataHostedService
+        public SemanticCardDataHostedService
         (
-            ILogger<CardDataHostedService> logger, 
+            ILogger<SemanticCardDataHostedService> logger, 
             IOptions<RabbitMqSettings> rabbitMqOptions,
             IMediator mediator
         )
@@ -63,7 +64,6 @@ namespace carddata.Services
 
                     var result = await _mediator.Send(new CardInformationConsumer { Message = message }, stoppingToken);
 
-
                     if (result.ArticleConsumerResult.IsSuccessfullyProcessed)
                     {
                         _channel.BasicAck(ea.DeliveryTag, false);
@@ -77,7 +77,7 @@ namespace carddata.Services
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError("RabbitMq Consumer: '{CardArticleQueue}' exception. Exception: {@Exception}", _rabbitMqOptions.Value.Queues.CardArticleQueue, ex);
+                    _logger.LogError("RabbitMq Consumer '{SemanticCardArticleQueue}'exception. Exception: {@Exception}", _rabbitMqOptions.Value.Queues.SemanticArticleQueue, ex);
                 }
             };
 
@@ -86,7 +86,7 @@ namespace carddata.Services
             consumer.Unregistered += OnCardArticleConsumerUnregistered;
             consumer.ConsumerCancelled += OnCardArticleConsumerCancelled;
 
-            _channel.BasicConsume(_rabbitMqOptions.Value.Queues.CardArticleQueue, false, consumer);
+            _channel.BasicConsume(_rabbitMqOptions.Value.Queues.SemanticArticleQueue, false, consumer);
 
             return Task.CompletedTask;
         }
@@ -98,29 +98,28 @@ namespace carddata.Services
             base.Dispose();
         }
 
-
-        #region private helper
+        #region private helper 
 
         private Task OnCardArticleConsumerCancelled(object sender, ConsumerEventArgs e)
         {
-            _logger.LogInformation("RabbitMq Consumer '{CardArticleQueue}' Cancelled", _rabbitMqOptions.Value.Queues.CardArticleQueue);
+            Log.Logger.Information("RabbitMq Consumer '{SemanticCardArticleQueue}' Cancelled", _rabbitMqOptions.Value.Queues.SemanticArticleQueue);
             return Task.CompletedTask;
         }
 
         private Task OnCardArticleConsumerUnregistered(object sender, ConsumerEventArgs e)
         {
-            _logger.LogInformation("RabbitMq Consumer '{CardArticleQueue}' Unregistered", _rabbitMqOptions.Value.Queues.CardArticleQueue);
+            Log.Logger.Information("RabbitMq Consumer '{SemanticCardArticleQueue}' Unregistered", _rabbitMqOptions.Value.Queues.SemanticArticleQueue);
             return Task.CompletedTask;
         }
 
         private Task OnCardArticleConsumerRegistered(object sender, ConsumerEventArgs e)
         {
-            _logger.LogInformation("RabbitMq Consumer '{CardArticleQueue}' Registered", _rabbitMqOptions.Value.Queues.CardArticleQueue);
+            Log.Logger.Information("RabbitMq Consumer '{SemanticCardArticleQueue}' Registered", _rabbitMqOptions.Value.Queues.SemanticArticleQueue);
             return Task.CompletedTask;
         }
         private Task OnCardArticleConsumerShutdown(object sender, ShutdownEventArgs e)
         {
-            _logger.LogInformation("RabbitMq Consumer '{CardArticleQueue}' Shutdown", _rabbitMqOptions.Value.Queues.CardArticleQueue);
+            Log.Logger.Information("RabbitMq Consumer '{SemanticCardArticleQueue}' Shutdown", _rabbitMqOptions.Value.Queues.SemanticArticleQueue);
             return Task.CompletedTask;
         }
 

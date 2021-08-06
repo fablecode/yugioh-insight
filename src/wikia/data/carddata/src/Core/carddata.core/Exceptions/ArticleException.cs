@@ -1,10 +1,11 @@
 ﻿using System;
+using carddata.core.Models;
 
 namespace carddata.core.Exceptions
 {
     public class ArticleException
     {
-        public string Article { get; set; }
+        public Article Article { get; set; }
 
         public Exception Exception { get; set; }
     }

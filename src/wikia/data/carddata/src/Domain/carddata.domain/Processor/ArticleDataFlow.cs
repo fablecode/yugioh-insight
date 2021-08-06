@@ -12,44 +12,29 @@ namespace carddata.domain.Processor
 {
     public class ArticleDataFlow : IArticleDataFlow
     {
-        private readonly BufferBlock<Article> _articleBufferBlock;
-        private readonly ConcurrentDictionary<Guid, TaskCompletionSource<ArticleCompletion>> _jobs;
+        private readonly ICardWebPage _cardWebPage;
+        private readonly IYugiohCardQueue _yugiohCardQueue;
 
         public ArticleDataFlow(ICardWebPage cardWebPage, IYugiohCardQueue yugiohCardQueue)
         {
-            _jobs = new ConcurrentDictionary<Guid, TaskCompletionSource<ArticleCompletion>>();
-
-            // Data flow options
-            var maxDegreeOfParallelism = Environment.ProcessorCount;
-            var nonGreedy = new ExecutionDataflowBlockOptions { BoundedCapacity = maxDegreeOfParallelism, MaxDegreeOfParallelism = maxDegreeOfParallelism };
-
-            // Pipeline members
-            _articleBufferBlock = new BufferBlock<Article>();
-            var yugiohDataTransformBlock = new TransformBlock<Article, ArticleProcessed>(article => cardWebPage.GetYugiohCard(article), nonGreedy);
-            var yugiohCardPublishTransformBlock = new TransformBlock<ArticleProcessed, YugiohCardCompletion>(articleProcessed => yugiohCardQueue.Publish(articleProcessed), nonGreedy);
-            var publishToQueueActionBlock = new ActionBlock<YugiohCardCompletion>(yugiohCardCompletion => FinishedProcessing(yugiohCardCompletion));
-
-            // Form the pipeline
-            _articleBufferBlock.LinkTo(yugiohDataTransformBlock);
-            yugiohDataTransformBlock.LinkTo(yugiohCardPublishTransformBlock);
-            yugiohCardPublishTransformBlock.LinkTo(publishToQueueActionBlock);
+            _cardWebPage = cardWebPage;
+            _yugiohCardQueue = yugiohCardQueue;
         }
 
 
         public async Task<ArticleCompletion> ProcessDataFlow(Article article)
         {
-            var taggedData = TagInputData(article);
-            var (jobId, taskCompletionSource) = CreateJob(taggedData);
-            var isJobAdded = _jobs.TryAdd(jobId, taskCompletionSource);
+            var articleProcessed = _cardWebPage.GetYugiohCard(article);
+            var yugiohCardCompletion = await _yugiohCardQueue.Publish(articleProcessed);
 
-            if (isJobAdded)
-                await _articleBufferBlock.SendAsync(article);
-            else
+            if (yugiohCardCompletion.IsSuccessful)
             {
-                taskCompletionSource.SetResult(new ArticleCompletion { Message = article, Exception = new Exception($"Job not created for item with id {article.Id}") });
+                return new ArticleCompletion { IsSuccessful = true, Message = yugiohCardCompletion.Article };
             }
 
-            return await taskCompletionSource.Task;
+            var exceptionMessage = $"Card Article with id '{yugiohCardCompletion.Article.Id}' and correlation id {yugiohCardCompletion.Article.CorrelationId} not processed.";
+
+            throw new ArticleCompletionException(exceptionMessage);
         }
 
         #region private helper
@@ -66,22 +51,14 @@ namespace carddata.domain.Processor
             return new KeyValuePair<Guid, TaskCompletionSource<ArticleCompletion>>(id, jobCompletionSource);
         }
 
-        private void FinishedProcessing(YugiohCardCompletion yugiohCardCompletion)
-        {
-            _jobs.TryRemove(yugiohCardCompletion.Article.CorrelationId, out var job);
-
-            if (yugiohCardCompletion.IsSuccessful)
-            {
-                job.SetResult(new ArticleCompletion { IsSuccessful = true, Message = yugiohCardCompletion.Article });
-            }
-            else
-            {
-                var exceptionMessage = $"Card Article with id '{yugiohCardCompletion.Article.Id}' and correlation id {yugiohCardCompletion.Article.CorrelationId} not processed.";
-                job.SetException(new Exception(exceptionMessage));
-            }
-        }
-
-
         #endregion
+    }
+
+    public class ArticleCompletionException : Exception
+    {
+        public ArticleCompletionException(string exceptionMessage)
+            : base (exceptionMessage)
+        {
+        }
     }
 }

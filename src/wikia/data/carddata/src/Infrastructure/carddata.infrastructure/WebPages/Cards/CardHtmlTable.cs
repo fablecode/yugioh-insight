@@ -52,7 +52,7 @@ namespace carddata.infrastructure.WebPages.Cards
         {
             var cardTable = new Dictionary<string, string>();
 
-            var htmlTableRows = htmlTable?.SelectNodes("./tr");
+            var htmlTableRows = htmlTable?.SelectNodes("./tbody/tr");
 
             if (htmlTableRows != null && htmlTableRows.Any())
             {
