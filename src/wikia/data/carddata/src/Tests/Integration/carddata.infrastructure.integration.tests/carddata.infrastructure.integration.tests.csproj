@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="fluentassertions" Version="5.10.3" />
+    <PackageReference Include="nsubstitute" Version="4.2.2" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="16.10.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+    <PackageReference Include="nunit" Version="3.13.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructure\carddata.infrastructure\carddata.infrastructure.csproj" />
+    <ProjectReference Include="..\..\carddata.tests.core\carddata.tests.core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="WebPagesTests\CardsTests\CardWebPageTests\" />
+    <Folder Include="WebPagesTests\CardsTests\CardHtmlTableTests\" />
+  </ItemGroup>
+
+</Project>
