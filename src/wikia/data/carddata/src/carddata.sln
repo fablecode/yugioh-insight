@@ -33,7 +33,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "carddata.tests.core", "Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "carddata.application.unit.tests", "Tests\Unit\carddata.application.unit.tests\carddata.application.unit.tests.csproj", "{33205BA1-C47E-4300-89A8-334B01291437}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "carddata.core.unit.tests", "Tests\Unit\carddata.core.unit.tests\carddata.core.unit.tests.csproj", "{0394936A-7D92-4A0A-A643-7E743F9B5446}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "carddata.core.unit.tests", "Tests\Unit\carddata.core.unit.tests\carddata.core.unit.tests.csproj", "{0394936A-7D92-4A0A-A643-7E743F9B5446}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "carddata.infrastructure.integration.tests", "Tests\Integration\carddata.infrastructure.integration.tests\carddata.infrastructure.integration.tests.csproj", "{EA6E0F22-DE5D-4B6E-A802-55A86A6E0343}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{7D46691D-B816-4057-9DC2-E04A15FB37C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +81,10 @@ Global
 		{0394936A-7D92-4A0A-A643-7E743F9B5446}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0394936A-7D92-4A0A-A643-7E743F9B5446}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0394936A-7D92-4A0A-A643-7E743F9B5446}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA6E0F22-DE5D-4B6E-A802-55A86A6E0343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA6E0F22-DE5D-4B6E-A802-55A86A6E0343}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA6E0F22-DE5D-4B6E-A802-55A86A6E0343}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA6E0F22-DE5D-4B6E-A802-55A86A6E0343}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +100,8 @@ Global
 		{5BAA0743-335B-4BB7-93D7-D4DE5303CD26} = {B3968768-7DAE-410E-AFC7-3BE7A8D0B3C4}
 		{33205BA1-C47E-4300-89A8-334B01291437} = {7A89D49B-A731-420F-BE4D-D4193E9FF429}
 		{0394936A-7D92-4A0A-A643-7E743F9B5446} = {7A89D49B-A731-420F-BE4D-D4193E9FF429}
+		{EA6E0F22-DE5D-4B6E-A802-55A86A6E0343} = {7D46691D-B816-4057-9DC2-E04A15FB37C4}
+		{7D46691D-B816-4057-9DC2-E04A15FB37C4} = {B3968768-7DAE-410E-AFC7-3BE7A8D0B3C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {921EAE45-31D6-4815-A415-33F4EBF7C57B}

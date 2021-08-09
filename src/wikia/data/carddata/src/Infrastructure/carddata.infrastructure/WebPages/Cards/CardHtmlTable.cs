@@ -63,7 +63,7 @@ namespace carddata.infrastructure.WebPages.Cards
 
                     if (key != null && value != null && !cardTable.ContainsKey(key.InnerText))
                     {
-                        var cardEffectTypes = key.InnerText == "Card effect types" ? string.Join(",", value.SelectNodes("./ul/li").Select(t => t.InnerText.Trim())) : value.InnerText;
+                        var cardEffectTypes = key.InnerText == "Card effect types" ? string.Join(",", value.SelectNodes("./ul/li").Select(t => t.InnerText.Trim())) : value.InnerText.Trim();
 
                         cardTable.Add(key.InnerText.Trim(), cardEffectTypes);
                     }

@@ -31,8 +31,8 @@ namespace carddata.infrastructure.WebPages.Cards
 
         public string Description(HtmlDocument htmlDocument)
         {
-            var pattern = @"(?!</?br>)<.*?>";
-            var descNode = htmlDocument.DocumentNode.SelectSingleNode("//b[text()[contains(., 'Card descriptions')]]/../table[1]/tr[1]/td/table/tr[3]/td")?.InnerHtml;
+            const string pattern = @"(?!</?br>)<.*?>";
+            var descNode = htmlDocument.DocumentNode.SelectSingleNode("//b[text()[contains(., 'Card descriptions')]]/../table[1]/tbody/tr[1]/td[1]/table[1]/tbody/tr[3]/td")?.InnerHtml;
 
             if (descNode != null)
             {
@@ -124,7 +124,7 @@ namespace carddata.infrastructure.WebPages.Cards
 
         #region private helpers
 
-        private static HtmlNode ExtractHtmlCardTableNode(HtmlDocument htmlDocument)
+        public static HtmlNode ExtractHtmlCardTableNode(HtmlDocument htmlDocument)
         {
             return htmlDocument.DocumentNode.SelectSingleNode("//table[contains(@class, 'cardtable')]");
         }
