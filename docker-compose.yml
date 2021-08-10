@@ -245,6 +245,26 @@ services:
         depends_on: 
             - rabbitmq
 
+
+    # Card Article Data
+    card-article-data:
+        container_name: card-article-data
+        build: 
+            context: ./src/wikia/data/carddata/src
+            dockerfile: ./Presentation/carddata/Dockerfile
+        environment: 
+            - RabbitMqSettings__Host=localhost
+            - RabbitMqSettings__Port=5672
+            - RabbitMqSettings__Username=guest
+            - RabbitMqSettings__Password=guest
+            - RabbitMqSettings__ContentType=application/json
+            - RabbitMqSettings__Exchanges__yugioh.headers.data__Headers__message-type=carddata
+            - RabbitMqSettings__Exchanges__yugioh.headers.data__PersistentMode=2
+            - RabbitMqSettings__Queues__CardArticleQueue=card-article
+            - RabbitMqSettings__Queues__SemanticArticleQueue=semantic-card-article
+        depends_on: 
+            - rabbitmq
+
 networks:
     rabbitmq_net:
         driver: bridge
