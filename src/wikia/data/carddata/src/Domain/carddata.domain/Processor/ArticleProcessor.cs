@@ -1,10 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using carddata.core.Exceptions;
+﻿using carddata.core.Exceptions;
 using carddata.core.Models;
 using carddata.core.Processor;
+using carddata.domain.Exceptions;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace carddata.domain.Processor
 {
@@ -38,7 +37,7 @@ namespace carddata.domain.Processor
                     _logger.LogInformation($"{article.Title} processing failed. ");
                 }
             }
-            catch (Exception ex )
+            catch (ArticleCompletionException ex )
             {
                 _logger.LogError(" {ArticleTitle} error. Exception: {@Exception}, Article: {Article}", article.Title, ex, article);
                response.Failed = new ArticleException { Article = article, Exception = ex };

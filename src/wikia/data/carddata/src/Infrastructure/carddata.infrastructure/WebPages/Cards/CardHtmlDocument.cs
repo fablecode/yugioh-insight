@@ -1,8 +1,8 @@
-﻿using System.Text.RegularExpressions;
-using System.Threading;
-using carddata.core.Helpers;
+﻿using carddata.core.Helpers;
 using carddata.domain.WebPages.Cards;
 using HtmlAgilityPack;
+using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace carddata.infrastructure.WebPages.Cards
 {
@@ -76,13 +76,13 @@ namespace carddata.infrastructure.WebPages.Cards
         public int? Level(HtmlDocument htmlDocument)
         {
             var level = ExtractHtmlCardTableValue(CardHtmlTable.Level, htmlDocument);
-            return int.TryParse(level, out var cardLevel) ? cardLevel : (int?)null;
+            return int.TryParse(level, out var cardLevel) ? cardLevel : null;
         }
 
         public int? Rank(HtmlDocument htmlDocument)
         {
             var rank = ExtractHtmlCardTableValue(CardHtmlTable.Rank, htmlDocument);
-            return int.TryParse(rank, out var cardRank) ? cardRank : (int?)null;
+            return int.TryParse(rank, out var cardRank) ? cardRank : null;
         }
 
         public string AtkDef(HtmlDocument htmlDocument)
@@ -118,7 +118,7 @@ namespace carddata.infrastructure.WebPages.Cards
         public long? PendulumScale(HtmlDocument htmlDocument)
         {
             var scale = ExtractHtmlCardTableValue(CardHtmlTable.PendulumScale, htmlDocument);
-            return long.TryParse(scale, out var cardScale) ? cardScale : (long?)null;
+            return long.TryParse(scale, out var cardScale) ? cardScale : null;
 
         }
 

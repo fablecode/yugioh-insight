@@ -25,7 +25,7 @@ namespace carddata.infrastructure.WebPages.Cards
         public string GetValue(string[] keys, HtmlNode htmlTable)
         {
             return keys
-                .Select(key => GetValue((string) key, htmlTable))
+                .Select(key => GetValue(key, htmlTable))
                 .FirstOrDefault(value => !string.IsNullOrWhiteSpace(value));
         }
 

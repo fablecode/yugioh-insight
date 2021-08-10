@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace carddata.tests.core
+﻿namespace carddata.tests.core
 {
     public static class TestType
     {

@@ -1,5 +1,4 @@
-﻿using System;
-using carddata.core.Exceptions;
+﻿using carddata.core.Exceptions;
 
 namespace carddata.core.Models
 {

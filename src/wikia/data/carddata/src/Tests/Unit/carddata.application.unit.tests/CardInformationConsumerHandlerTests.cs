@@ -51,7 +51,7 @@ namespace carddata.application.unit.tests
             // Arrange
             var cardInformationConsumer = new CardInformationConsumer
             {
-                Message = $"{{\"Id\":10917,\"Title\":\"Amazoness Archer\",\"Url\":\"https://yugioh.fandom.com/wiki/Amazoness_Archer\"}}"
+                Message = "{\"Id\":10917,\"Title\":\"Amazoness Archer\",\"Url\":\"https://yugioh.fandom.com/wiki/Amazoness_Archer\"}"
             };
 
             _validator
@@ -75,7 +75,7 @@ namespace carddata.application.unit.tests
             // Arrange
             var cardInformationConsumer = new CardInformationConsumer
             {
-                Message = $"{{\"Id\":10917,\"Title\":\"Amazoness Archer\",\"Url\":\"https://yugioh.fandom.com/wiki/Amazoness_Archer\"}}"
+                Message = "{\"Id\":10917,\"Title\":\"Amazoness Archer\",\"Url\":\"https://yugioh.fandom.com/wiki/Amazoness_Archer\"}"
             };
 
             _validator

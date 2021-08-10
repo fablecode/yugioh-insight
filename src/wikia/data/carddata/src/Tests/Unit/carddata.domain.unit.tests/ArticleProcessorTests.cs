@@ -1,7 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using carddata.core.Models;
+﻿using carddata.core.Models;
 using carddata.core.Processor;
+using carddata.domain.Exceptions;
 using carddata.domain.Processor;
 using carddata.tests.core;
 using FluentAssertions;
@@ -9,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace carddata.domain.unit.tests
 {
@@ -55,11 +55,11 @@ namespace carddata.domain.unit.tests
         }
 
         [Test]
-        public async Task Given_An_Article_If_Processed_And_An_Exception_Occur_IsSuccessfullyProcessed_Should_Be_False()
+        public async Task Given_An_Article_If_Processed_And_An_ArticleCompletionException_Occur_IsSuccessfullyProcessed_Should_Be_False()
         {
             // Arrange
             var article = new Article();
-            _articleDataFlow.ProcessDataFlow(article).Throws(new Exception());
+            _articleDataFlow.ProcessDataFlow(article).Throws(new ArticleCompletionException("Article not processed."));
 
             // Act
             var result = await _sut.Process(article);

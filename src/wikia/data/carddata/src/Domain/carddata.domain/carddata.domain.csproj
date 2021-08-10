@@ -14,4 +14,8 @@
     <ProjectReference Include="..\..\Core\carddata.core\carddata.core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
 </Project>

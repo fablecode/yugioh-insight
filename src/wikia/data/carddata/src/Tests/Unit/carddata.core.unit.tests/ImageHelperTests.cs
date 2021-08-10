@@ -1,5 +1,4 @@
-﻿using System;
-using carddata.core.Helpers;
+﻿using carddata.core.Helpers;
 using carddata.tests.core;
 using FluentAssertions;
 using NUnit.Framework;

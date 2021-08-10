@@ -1,12 +1,9 @@
 ﻿using carddata.core.Models;
 using carddata.core.Processor;
+using carddata.domain.Exceptions;
 using carddata.domain.Services.Messaging;
 using carddata.domain.WebPages.Cards;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 
 namespace carddata.domain.Processor
 {
@@ -35,30 +32,6 @@ namespace carddata.domain.Processor
             var exceptionMessage = $"Card Article with id '{yugiohCardCompletion.Article.Id}' and correlation id {yugiohCardCompletion.Article.CorrelationId} not processed.";
 
             throw new ArticleCompletionException(exceptionMessage);
-        }
-
-        #region private helper
-
-        private static KeyValuePair<Guid, Article> TagInputData(Article data)
-        {
-            return new KeyValuePair<Guid, Article>(data.CorrelationId, data);
-        }
-
-        private static KeyValuePair<Guid, TaskCompletionSource<ArticleCompletion>> CreateJob(KeyValuePair<Guid, Article> taggedData)
-        {
-            var id = taggedData.Key;
-            var jobCompletionSource = new TaskCompletionSource<ArticleCompletion>();
-            return new KeyValuePair<Guid, TaskCompletionSource<ArticleCompletion>>(id, jobCompletionSource);
-        }
-
-        #endregion
-    }
-
-    public class ArticleCompletionException : Exception
-    {
-        public ArticleCompletionException(string exceptionMessage)
-            : base (exceptionMessage)
-        {
         }
     }
 }
