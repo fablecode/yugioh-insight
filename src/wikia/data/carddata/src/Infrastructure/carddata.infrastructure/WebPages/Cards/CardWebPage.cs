@@ -37,23 +37,24 @@ namespace carddata.infrastructure.WebPages.Cards
 
         public YugiohCard GetYugiohCard(HtmlDocument htmlDocument)
         {
-            var yugiohCard = new YugiohCard();
-
-            yugiohCard.ImageUrl = _cardHtmlDocument.ImageUrl(htmlDocument);
-            yugiohCard.Name = _cardHtmlDocument.Name(htmlDocument);
-            yugiohCard.Description = _cardHtmlDocument.Description(htmlDocument);
-            yugiohCard.CardNumber = _cardHtmlDocument.CardNumber(htmlDocument);
-            yugiohCard.CardType = _cardHtmlDocument.CardType(htmlDocument);
-            yugiohCard.Property = _cardHtmlDocument.Property(htmlDocument);
-            yugiohCard.Attribute = _cardHtmlDocument.Attribute(htmlDocument);
-            yugiohCard.Level = _cardHtmlDocument.Level(htmlDocument);
-            yugiohCard.Rank = _cardHtmlDocument.Rank(htmlDocument);
-            yugiohCard.AtkDef = _cardHtmlDocument.AtkDef(htmlDocument);
-            yugiohCard.AtkLink = _cardHtmlDocument.AtkLink(htmlDocument);
-            yugiohCard.Types = _cardHtmlDocument.Types(htmlDocument);
-            yugiohCard.Materials = _cardHtmlDocument.Materials(htmlDocument);
-            yugiohCard.CardEffectTypes = _cardHtmlDocument.CardEffectTypes(htmlDocument);
-            yugiohCard.PendulumScale = _cardHtmlDocument.PendulumScale(htmlDocument);
+            var yugiohCard = new YugiohCard
+            {
+                ImageUrl = _cardHtmlDocument.ImageUrl(htmlDocument),
+                Name = _cardHtmlDocument.Name(htmlDocument),
+                Description = _cardHtmlDocument.Description(htmlDocument),
+                CardNumber = _cardHtmlDocument.CardNumber(htmlDocument),
+                CardType = _cardHtmlDocument.CardType(htmlDocument),
+                Property = _cardHtmlDocument.Property(htmlDocument),
+                Attribute = _cardHtmlDocument.Attribute(htmlDocument),
+                Level = _cardHtmlDocument.Level(htmlDocument),
+                Rank = _cardHtmlDocument.Rank(htmlDocument),
+                AtkDef = _cardHtmlDocument.AtkDef(htmlDocument),
+                AtkLink = _cardHtmlDocument.AtkLink(htmlDocument),
+                Types = _cardHtmlDocument.Types(htmlDocument),
+                Materials = _cardHtmlDocument.Materials(htmlDocument),
+                CardEffectTypes = _cardHtmlDocument.CardEffectTypes(htmlDocument),
+                PendulumScale = _cardHtmlDocument.PendulumScale(htmlDocument)
+            };
 
             return yugiohCard;
         }

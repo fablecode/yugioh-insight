@@ -124,7 +124,7 @@ namespace carddata.infrastructure.WebPages.Cards
 
         #region private helpers
 
-        public static HtmlNode ExtractHtmlCardTableNode(HtmlDocument htmlDocument)
+        private static HtmlNode ExtractHtmlCardTableNode(HtmlDocument htmlDocument)
         {
             return htmlDocument.DocumentNode.SelectSingleNode("//table[contains(@class, 'cardtable')]");
         }
