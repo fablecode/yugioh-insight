@@ -16,7 +16,7 @@ The architecture proposes a microservice oriented architecture implementation wi
 
 ## Built With
 * [Visual Studio 2019](https://www.visualstudio.com/downloads/)
-* [.NET Core 2.2](https://www.microsoft.com/net/download/core)
+* [.NET5 ](https://dotnet.microsoft.com/download)
 * [Onion Architecture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/) and [CQRS](https://martinfowler.com/bliki/CQRS.html).
 * [RabbitMq](https://www.rabbitmq.com/)
 * [Visual Studio Team Services](https://www.visualstudio.com/team-services/release-management/) for CI and deployment.
