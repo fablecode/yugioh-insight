@@ -10,7 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Mediatr" Version="9.0.0" />
+    <PackageReference Include="rabbitmq.client" Version="6.2.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\Cards.Application\Cards.Application.csproj" />
   </ItemGroup>
 
 </Project>

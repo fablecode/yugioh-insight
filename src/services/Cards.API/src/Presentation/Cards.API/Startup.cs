@@ -1,5 +1,9 @@
 ﻿using System;
 using System.IO;
+using Cards.API.Services;
+using Cards.Application;
+using Cards.Application.Configuration;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +22,10 @@ namespace Cards.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging();
+
+            services.Configure<RabbitMqSettings>(Configuration.GetSection(nameof(RabbitMqSettings)));
+
             services.AddControllers();
             services.AddRouting(options => options.LowercaseUrls = true);
 
@@ -30,6 +38,10 @@ namespace Cards.API
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
+            services.AddHostedService<CardProcessorHostedService>();
+
+            services.AddApplicationServices();
         }
 
         public void Configure(IApplicationBuilder app)
