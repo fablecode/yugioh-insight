@@ -47,7 +47,7 @@ namespace cardprocessor.application.MessageConsumers.CardData
                 }
                 else
                 {
-                    _logger.LogError(yugiohCard.Name + " error. Validation errors: {@ValidationErrors}", result.Errors);
+                    _logger.LogError(yugiohCard.Name + " error. Validation errors: {ValidationErrors}", result.Errors);
                 }
 
             }

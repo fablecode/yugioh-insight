@@ -33,8 +33,6 @@ services:
             - ./docker-conf/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
         networks:
             - rabbitmq_net
-        depends_on: 
-            - rabbitmq_net
     
     # Yugioh Archetypes
     article-archetypes:
