@@ -3,6 +3,7 @@ using System.IO;
 using Cards.API.Services;
 using Cards.Application;
 using Cards.Application.Configuration;
+using Cards.DatabaseMigration;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -42,6 +43,9 @@ namespace Cards.API
             services.AddHostedService<CardProcessorHostedService>();
 
             services.AddApplicationServices();
+
+            // Database Migrations
+            services.AddDatabaseMigrationServices(Configuration.GetConnectionString("Db"));
         }
 
         public void Configure(IApplicationBuilder app)

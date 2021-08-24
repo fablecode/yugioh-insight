@@ -17,12 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Scripts\Migrations\2021\2021-08-24 - 0.0.0.1\Script0001 - Add_Card_Table.sql" />
-    <None Remove="Scripts\Migrations\2021\2021-08-24 - 0.0.0.1\Script0002 - Add_Attribute_Table.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Exceptions\" />
+    <Folder Include="Scripts\Migrations\2021\" />
     <Folder Include="Scripts\PreDeployment\" />
     <Folder Include="Scripts\PostDeployment\" />
   </ItemGroup>

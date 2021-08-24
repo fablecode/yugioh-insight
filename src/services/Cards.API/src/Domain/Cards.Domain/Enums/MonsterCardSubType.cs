@@ -1,0 +1,89 @@
+﻿namespace Cards.Domain.Enums
+{
+    public enum MonsterCardAttribute
+    {
+        Earth,
+        Water,
+        Fire,
+        Wind,
+        Light,
+        Dark,
+        Divine
+    }
+
+    public enum MonsterCardType
+    {
+        Warrior,
+        Spellcaster,
+        Fairy,
+        Fiend,
+        Zombie,
+        Machine,
+        Aqua,
+        Pyro,
+        Rock,
+        WingedBeast,
+        Plant,
+        Insect,
+        Thunder,
+        Dragon,
+        Beast,
+        BeastWarrior,
+        Dinosaur,
+        Fish,
+        SeaSerpent,
+        Reptile,
+        Psychic,
+        DivineBeast,
+        CreatorGod,
+        Wyrm,
+        Cyberse
+    }
+
+    public enum MonsterCardSubType
+    {
+        Normal,
+        Effect,
+        Fusion,
+        Ritual,
+        Synchro,
+        Xyz,
+        Pendulum,
+        Link,
+        Tuner,
+        Gemini,
+        Union,
+        Spirit,
+        Flip,
+        Toon
+    }
+
+    public enum MonsterType
+    {
+        Warrior,
+        Spellcaster,
+        Fairy,
+        Fiend,
+        Zombie,
+        Machine,
+        Aqua,
+        Pyro,
+        Rock,
+        WingedBeast,
+        Plant,
+        Insect,
+        Thunder,
+        Dragon,
+        Beast,
+        BeastWarrior,
+        Dinosaur,
+        Fish,
+        SeaSerpent,
+        Reptile,
+        Psychic,
+        DivineBeast,
+        CreatorGod,
+        Wyrm,
+        Cyberse
+    }
+}

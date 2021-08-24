@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Application\Cards.Application\Cards.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Cards.DatabaseMigration\Cards.DatabaseMigration.csproj" />
   </ItemGroup>
 
 </Project>

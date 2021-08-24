@@ -4,11 +4,11 @@ using MediatR;
 
 namespace Cards.Application.MessageConsumers.CardData
 {
-    public sealed class CardInformationConsumerHandler : IRequestHandler<CardInformationConsumer, CardDataConsumerResult>
+    public sealed class CardInformationConsumerHandler : IRequestHandler<CardInformationConsumer, CardInformationConsumerResult>
     {
-        public Task<CardDataConsumerResult> Handle(CardInformationConsumer request, CancellationToken cancellationToken)
+        public Task<CardInformationConsumerResult> Handle(CardInformationConsumer request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(new CardDataConsumerResult {IsSuccessful = true});
+            return Task.FromResult(new CardInformationConsumerResult {IsSuccessful = true});
         }
     }
 }

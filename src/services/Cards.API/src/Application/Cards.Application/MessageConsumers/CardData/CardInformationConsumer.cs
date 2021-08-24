@@ -2,7 +2,7 @@
 
 namespace Cards.Application.MessageConsumers.CardData
 {
-    public record CardInformationConsumer : IRequest<CardDataConsumerResult>
+    public record CardInformationConsumer : IRequest<CardInformationConsumerResult>
     {
         public string Message { get; }
 

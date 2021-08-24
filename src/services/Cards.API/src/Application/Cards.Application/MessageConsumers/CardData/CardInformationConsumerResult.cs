@@ -1,6 +1,6 @@
 ﻿namespace Cards.Application.MessageConsumers.CardData
 {
-    public record CardDataConsumerResult
+    public record CardInformationConsumerResult
     {
         public bool IsSuccessful { get; init; }
     }
