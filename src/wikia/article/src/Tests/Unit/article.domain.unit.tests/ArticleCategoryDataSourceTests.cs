@@ -41,7 +41,7 @@ namespace article.domain.unit.tests
             Func<Task<List<UnexpandedArticle[]>>> act = () => _sut.Producer(category, 500).ToListAsync();
 
             // Assert
-            act.Should().Throw<ArgumentException>();
+            act.Should().ThrowAsync<ArgumentException>();
         }
 
         [Test]

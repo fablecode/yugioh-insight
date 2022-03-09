@@ -39,7 +39,7 @@ namespace article.domain.unit.tests.ArticleListTests.ProcessorTests
 
             // Assert
             act
-                .Should().Throw<ArgumentException>()
+                .Should().ThrowAsync<ArgumentException>()
                 .WithMessage(expected);
         }
 
@@ -54,7 +54,7 @@ namespace article.domain.unit.tests.ArticleListTests.ProcessorTests
 
             // Assert
             act
-                .Should().Throw<ArgumentException>()
+                .Should().ThrowAsync<ArgumentException>()
                 .WithMessage(expected);
         }
 

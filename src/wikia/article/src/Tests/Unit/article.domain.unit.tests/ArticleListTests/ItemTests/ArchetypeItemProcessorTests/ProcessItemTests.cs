@@ -77,7 +77,7 @@ namespace article.domain.unit.tests.ArticleListTests.ItemTests.ArchetypeItemProc
             Func<Task<ArticleTaskResult>> act = () => _sut.ProcessItem(null);
 
             // Assert
-            act.Should().Throw<ArgumentNullException>();
+            act.Should().ThrowAsync<ArgumentNullException>();
         }
     }
 }
