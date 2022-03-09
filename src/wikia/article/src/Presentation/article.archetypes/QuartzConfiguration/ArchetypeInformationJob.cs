@@ -3,6 +3,7 @@ using MediatR;
 using Quartz;
 using System.Threading.Tasks;
 using article.application.Configuration;
+using article.domain.Settings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 

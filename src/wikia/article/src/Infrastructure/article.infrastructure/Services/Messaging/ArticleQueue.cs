@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using article.application.Configuration;
-using article.core.Models;
+﻿using article.core.Models;
 using article.domain.Services.Messaging;
+using article.domain.Settings;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace article.infrastructure.Services.Messaging

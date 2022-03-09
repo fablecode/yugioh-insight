@@ -1,4 +1,4 @@
-﻿namespace article.application.Configuration
+﻿namespace article.domain.Settings
 {
     public record AppSettings
     {

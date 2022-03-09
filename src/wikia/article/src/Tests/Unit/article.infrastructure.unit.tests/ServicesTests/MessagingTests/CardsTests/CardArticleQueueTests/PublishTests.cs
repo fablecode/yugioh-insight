@@ -1,12 +1,12 @@
-﻿using System.Threading.Tasks;
-using article.application.Configuration;
-using article.core.Models;
+﻿using article.core.Models;
 using article.domain.Services.Messaging;
+using article.domain.Settings;
 using article.infrastructure.Services.Messaging.Cards;
 using article.tests.core;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using NUnit.Framework;
+using System.Threading.Tasks;
 using wikia.Models.Article.AlphabeticalList;
 
 namespace article.infrastructure.unit.tests.ServicesTests.MessagingTests.CardsTests.CardArticleQueueTests

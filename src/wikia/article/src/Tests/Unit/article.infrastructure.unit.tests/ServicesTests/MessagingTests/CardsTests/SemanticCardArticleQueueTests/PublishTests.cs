@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
-using article.application.Configuration;
 using article.core.Models;
 using article.domain.Services.Messaging;
 using article.infrastructure.Services.Messaging.Cards;
 using article.tests.core;
-using Microsoft.Extensions.Options;
 using NSubstitute;
 using NUnit.Framework;
 using wikia.Models.Article.AlphabeticalList;
@@ -22,7 +20,7 @@ namespace article.infrastructure.unit.tests.ServicesTests.MessagingTests.CardsTe
         public void SetUp()
         {
             _queue = Substitute.For<IQueue<Article>>();
-            _sut = new SemanticCardArticleQueue(Substitute.For<IOptions<RabbitMqSettings>>(), _queue);
+            _sut = new SemanticCardArticleQueue(_queue);
         }
 
         [Test]

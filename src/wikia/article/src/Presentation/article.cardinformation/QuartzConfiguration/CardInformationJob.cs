@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Quartz;
 using System.Threading.Tasks;
+using article.domain.Settings;
 
 namespace article.cardinformation.QuartzConfiguration
 {

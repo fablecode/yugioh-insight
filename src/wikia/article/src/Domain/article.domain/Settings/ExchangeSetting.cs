@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace article.application.Configuration
+namespace article.domain.Settings
 {
     public record ExchangeSetting
     {

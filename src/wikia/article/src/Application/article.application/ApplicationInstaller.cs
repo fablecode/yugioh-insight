@@ -14,6 +14,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System.Reflection;
+using article.domain.Settings;
 using wikia.Api;
 
 namespace article.application
@@ -55,7 +56,7 @@ namespace article.application
             services.AddTransient<IArticleItemProcessor, ArticleItemProcessor>();
 
 
-            var appSettings = services.BuildServiceProvider().GetService<IOptions<Configuration.AppSettings>>();
+            var appSettings = services.BuildServiceProvider().GetService<IOptions<AppSettings>>();
 
             services.AddSingleton<IWikiArticleList>(new WikiArticleList(appSettings.Value.WikiaDomainUrl));
 

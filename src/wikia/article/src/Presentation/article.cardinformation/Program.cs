@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Quartz;
 using Serilog;
 using System;
+using article.domain.Settings;
 
 namespace article.cardinformation
 {

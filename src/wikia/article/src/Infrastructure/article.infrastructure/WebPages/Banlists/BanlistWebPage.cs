@@ -1,5 +1,5 @@
-﻿using article.application.Configuration;
-using article.core.Enums;
+﻿using article.core.Enums;
+using article.domain.Settings;
 using article.domain.WebPages.Banlists;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Options;
